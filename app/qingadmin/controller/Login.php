@@ -17,23 +17,23 @@ class Login extends Base {
 
 			//验证码校验
 			if (!captcha_check($data['verifycode'])) {
-				return alert('验证码错误', 'login', 5);
+				return alert('验证码错误', 'index', 5);
 			};
 
 			//验证码用户名
 			$adminData = Db::name('admin')->where('user_name', $data['username'])->find();
 			if (!$adminData) {
-				return alert('用户名错误', 'login', 5);
+				return alert('用户名错误', 'index', 5);
 			}
 
 			//如果管理员有状态，status=1合法  0禁止
 			if ($adminData['status'] == 0) {
-				return alert('您的账号被禁止登录', 'login', 5);
+				return alert('您的账号被禁止登录', 'index', 5);
 			}
 
 			//密码校验
 			if ($adminData['password'] != $this->password_salt($data['password'])) {
-				return alert('密码错误', 'login', 5);
+				return alert('密码错误', 'index', 5);
 			}
 
 			Db::name('admin')->where('id', $adminData['id'])->update(['last_login_time' => time()]);

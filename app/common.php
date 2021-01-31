@@ -27,3 +27,23 @@ function alert($msg = '', $url = '', $icon = '', $time = 3) {
 	return $str;
 
 }
+
+//删除目录及文件，传入目录
+function delFileByDir($dir) {
+	$dh = opendir($dir);
+	while ($file = readdir($dh)) {
+		if ($file != "." && $file != "..") {
+
+			$fullpath = $dir . "/" . $file;
+			if (is_dir($fullpath)) {
+				delFileByDir($fullpath);
+			} else {
+				if ($fullpath !== '.gitignore') {
+					unlink($fullpath);
+				}
+
+			}
+		}
+	}
+	closedir($dh);
+}
