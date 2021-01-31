@@ -24,17 +24,17 @@ class Base extends BaseController {
 
 	}
 
-	// //后台公共删除
-	// public function del(){
-	//     $id=input('id');
-	//     $dbname=input('dbname');
-	//     $res=Db::name($dbname)->delete($id);
-	//         if($res){
-	//             return alert('操作成功',$_SERVER['HTTP_REFERER'],'6');
-	//         }else{
-	//             return alert('操作失败',$_SERVER['HTTP_REFERER'],'5');
-	//     }
-	// }
+	//后台公共删除
+	public function del() {
+		$id = input('id');
+		$dbname = input('dbname');
+		$res = Db::name($dbname)->delete($id);
+		if ($res) {
+			return alert('操作成功', $_SERVER['HTTP_REFERER'], '6');
+		} else {
+			return alert('操作失败', $_SERVER['HTTP_REFERER'], '5');
+		}
+	}
 
 	//后台密码加密盐
 	public function password_salt($str) {
