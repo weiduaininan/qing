@@ -38,4 +38,50 @@ class Config extends Base {
 			]);
 		}
 	}
+
+	//通知消息列表
+	public function notice() {
+		$noticeData = Db::name('notice')->order('id desc')->paginate(10);
+		return view('', [
+
+			'noticeData' => $noticeData,
+
+		]);
+	}
+
+	//发送通知消息
+	public function notice_send() {
+
+		if (request()->isPost()) {
+
+			$data = input('post.');
+
+			$data['time'] = time();
+
+			$id = Db::name('notice')->insertGetId($data);
+
+			return alert('操作成功', 'notice', 6, 3);
+
+		}
+		return view();
+	}
+
+	//查看消息
+	public function notice_edit() {
+		$id = request()->param('id');
+		$noticeData = Db::name('notice')->find($id);
+
+		if (request()->isPost()) {
+
+			$data = input('post.');
+
+			Db::name('notice')->update($data);
+
+			return alert('操作成功', 'notice', 6, 3);
+
+		}
+		return view('', [
+			'noticeData' => $noticeData,
+		]);
+	}
 }
