@@ -66,6 +66,14 @@ class Search extends Base {
 
 			$data = input('post.');
 
+			$name = Db::name('search')->where('name', $data['name'])->value('id');
+
+			if ($name) {
+
+				return alert('已经存在该关键词', 'index', 5, 3);
+
+			}
+
 			$res = Db::name('search')->update($data);
 
 			if ($res) {
