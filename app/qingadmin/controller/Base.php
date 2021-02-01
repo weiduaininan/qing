@@ -2,6 +2,9 @@
 namespace app\qingadmin\controller;
 
 use app\BaseController;
+use think\exception\HttpResponseException;
+use think\facade\Db;
+use think\facade\Request;
 use think\facade\View;
 
 class Base extends BaseController {
@@ -11,16 +14,16 @@ class Base extends BaseController {
 
 		//权限控制
 		//$this->adminAuth($loginAdmin);
-		//return redirect('admin/index');//只有在控制器中的方法中生效
+		//return redirect('admin/index'); //只有在控制器中的方法中生效
 
-		// //左侧菜单数据
-		// $authRuleMenuData = $this->getLeftMenu();
-		// View::assign('authRuleMenuData', $authRuleMenuData);
+		//左侧菜单数据
+		//$authRuleMenuData = $this->getLeftMenu();
+		//View::assign('authRuleMenuData', $authRuleMenuData);
 
-		// //当前用户组的权限
-		// $rulesArrTmp = Db::name('auth_group')->field('rules')->find($loginAdmin['group_id']);
-		// $rulesArr = explode(',', $rulesArrTmp['rules']);
-		// View::assign('rulesArr', $rulesArr);
+		//当前用户组的权限
+		//$rulesArrTmp = Db::name('auth_group')->field('rules')->find($loginAdmin['group_id']);
+		//$rulesArr = explode(',', $rulesArrTmp['rules']);
+		//View::assign('rulesArr', $rulesArr);
 
 	}
 
@@ -42,61 +45,53 @@ class Base extends BaseController {
 		return md5($salt . $str);
 	}
 
-	// //更改状态
-	// public function status() {
+	//更改状态
+	public function status() {
+		$id = Request::instance()->param('id', 'intval');
+		$status = Request::instance()->param('status', 'intval');
+		$dbname = input('dbname');
+		$res = Db::name($dbname)->where('id', $id)->update(['status' => $status]);
+		if ($res) {
+			return alert('操作成功！', $_SERVER['HTTP_REFERER'], 6, 3);
+		} else {
+			return alert('操作失败！', $_SERVER['HTTP_REFERER'], 5, 3);
+		}
+	}
 
-	//   $id = Request::instance()->param('id','intval');
-	//   $status = Request::instance()->param('status','intval');
-	//   $dbname=input('dbname');
+	//抛出异常的方式进行跳转
+	//https://www.jianshu.com/p/c2a1f983fe35
+	public function redirect(...$args) {
+		throw new HttpResponseException(redirect(...$args));
+	}
 
-	//   $res = Db::name($dbname)->where('id',$id)->update(['status'=>$status]);
+	//权限控制
 
-	//   if($res) {
+	public function adminAuth($loginAdmin) {
 
-	//     return alert('操作成功！',$_SERVER['HTTP_REFERER'],6,3);
+		$currentRule = request()->controller() . '/' . request()->action();
 
-	//   }else {
+		$rulesArrTmp = Db::name('auth_group')->field('rules')->find($loginAdmin['group_id']);
 
-	//     return alert('操作失败！',$_SERVER['HTTP_REFERER'],5,3);
+		$rulesArr = explode(',', $rulesArrTmp['rules']);
+		foreach ($rulesArr as $k => $v) {
+			$authRuleData = Db::name('auth_rule')->find($v);
+			if ($authRuleData['name'] == $currentRule) {
+				return true;
+			}
+		}
 
-	//   }
+		//halt('你没有权限');
+		//如果没有权限，我们就跳转到后台首页
+		$this->redirect('/qingadmin/index/welcome');
+	}
 
-	// }
-
-	// //抛出异常的方式进行跳转
-	// //https://www.jianshu.com/p/c2a1f983fe35
-	// public function redirect(...$args){
-	//   throw new HttpResponseException(redirect(...$args));
-	// }
-
-	// //权限控制
-
-	// public function adminAuth($loginAdmin){
-
-	//   $currentRule=request()->controller().'/'.request()->action();
-
-	//   $rulesArrTmp=Db::name('auth_group')->field('rules')->find($loginAdmin['group_id']);
-
-	//   $rulesArr=explode(',',$rulesArrTmp['rules']);
-	//   foreach($rulesArr as $k=>$v){
-	//     $authRuleData=Db::name('auth_rule')->find($v);
-	//     if($authRuleData['name']==$currentRule){
-	//       return true;
-	//     }
-	//   }
-
-	//   //halt('你没有权限');
-	//   //如果没有权限，我们就跳转到后台首页
-	//   $this->redirect('/qingadmin/index/welcome');
-	// }
-
-	// //左侧菜单数据
-	// public function getLeftMenu(){
-	//   $authRuleData=Db::name('auth_rule')->where('parent_id',0)->where('status',1)->order('listorder asc')->select()->toArray();
-	//   foreach($authRuleData as $k=>$v){
-	//         $authRuleData[$k]['children']=Db::name('auth_rule')->where('parent_id',$v['id'])->where('status',1)->order('listorder asc')->select()->toArray();
-	//   }
-	//   return $authRuleData;
-	// }
+	//左侧菜单数据
+	public function getLeftMenu() {
+		$authRuleData = Db::name('auth_rule')->where('parent_id', 0)->where('status', 1)->order('listorder asc')->select()->toArray();
+		foreach ($authRuleData as $k => $v) {
+			$authRuleData[$k]['children'] = Db::name('auth_rule')->where('parent_id', $v['id'])->where('status', 1)->order('listorder asc')->select()->toArray();
+		}
+		return $authRuleData;
+	}
 
 }
