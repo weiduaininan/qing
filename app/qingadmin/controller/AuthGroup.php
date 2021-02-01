@@ -70,11 +70,14 @@ class AuthGroup extends Base {
 		foreach ($authRuleData as $k => $v) {
 			$authRuleData[$k]['children'] = Db::name('auth_rule')->where('parent_id', $v['id'])->where('status', 1)->select()->toArray();
 		}
-
 		$rulesArr = explode(',', $authGroupData['rules']);
 		if (request()->isPost()) {
 			$data = input('post.');
-			$data['rules'] = implode(',', $data['rules']);
+			if (!empty($data['rules'])) {
+				$data['rules'] = implode(',', $data['rules']);
+			} else {
+				$data['rules'] = '';
+			}
 			$res = Db::name('auth_group')->update($data);
 			if ($res) {
 				return alert('操作成功！', 'index', 6, 3);

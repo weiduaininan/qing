@@ -19,7 +19,6 @@ class Authrule extends Base {
 
 		//所有数据
 		$ruleData = Db::name('auth_rule')->where($where)->select()->toArray();
-
 		//进行格式化
 		$AuthRuleModel = new AuthRuleModel();
 		$ruleDataTree = $AuthRuleModel->sort($ruleData);
@@ -85,15 +84,15 @@ class Authrule extends Base {
 	}
 
 	//加号展开与收缩
-	// public function ajaxlst(){
-	//     if(request()->isAjax()){
-	//     $ruleid=input('ruleid');
-	//     $AuthRuleModel=new AuthRuleModel();
-	//     $sonids=$AuthRuleModel->childrenids($ruleid);
-	//     echo json_encode($sonids);
-	//     }else{
-	//         $this->error('非法操作！');
-	//     }
+	// public function ajaxlst() {
+	// 	if (request()->isAjax()) {
+	// 		$ruleid = input('ruleid');
+	// 		$AuthRuleModel = new AuthRuleModel();
+	// 		$sonids = $AuthRuleModel->childrenids($ruleid);
+	// 		echo json_encode($sonids);
+	// 	} else {
+	// 		$this->error('非法操作！');
+	// 	}
 	// }
 
 }
