@@ -155,18 +155,23 @@
                                             </td>
 
                                         </tr>
-                                        {/volist}
-                                    {/if}
+                                                {volist name="$vo1.children1" id="vo2"}
+                                                <tr>
+                                                    <td style="padding-left:55px;">
+                                                        <label style="padding-right:15px;">
+                                                            <input class="colored-success checkbox-parent checkbox-child-child" id="{$vo2.id}"
+                                                                value="{$vo2.id}" name="rules[]" dataid="id-{$vo.id}-{$vo1.id}-{$vo2.id}" type="checkbox" {php}
+                                                                if(in_array($vo2['id'],$rulesArr)){echo 'checked';}
+                                                                {/php}>
+                                                            <span class="text">{$vo2.title}</span>
+                                                        </label>
+                                                    </td>
+                                                </tr>
+                                                {/volist}
+                                        {/volist}                                
+                                    {/if}                                       
+
                                 {/volist}
-
-
-                                
-
-
-
-
-
-
                             </tbody>
 
                         </table>
@@ -254,7 +259,7 @@
                 $('input.checkbox-child').on('change', function () {
 
                     var dataid = $(this).attr("dataid");
-
+ 
                     dataid = dataid.substring(0, dataid.lastIndexOf("-"));
 
                     var parent = $('input[dataid=' + dataid + ']');
@@ -270,11 +275,11 @@
                             dataid = dataid.substring(0, dataid.lastIndexOf("-"));
 
                             parent = $('input[dataid=' + dataid + ']');
-
+                            
                             parent.prop('checked', true);
 
+                            $('input[dataid^=' + dataid + '-]').prop('checked', $(this).is(':checked'));
                         }
-
                     } else {
 
                         //父级
@@ -304,7 +309,31 @@
                     }
 
                 });
+                $('input.checkbox-child-child').on('change', function () {
 
+                    var dataid = $(this).attr("dataid");
+ 
+                    dataid = dataid.substring(0, dataid.lastIndexOf("-"));
+
+                    var parent = $('input[dataid=' + dataid + ']');
+
+                    if ($(this).is(':checked')) {
+
+                        parent.prop('checked', true);
+
+                        //循环到顶级
+
+                        while (dataid.lastIndexOf("-") != 2) {
+
+                            dataid = dataid.substring(0, dataid.lastIndexOf("-"));
+
+                            parent = $('input[dataid=' + dataid + ']');
+                            
+                            parent.prop('checked', true);
+                            //$('input[dataid^=' + dataid + '-]').prop('checked', $(this).is(':checked'));
+                        }
+                    }
+                });
             });
 
         </script>

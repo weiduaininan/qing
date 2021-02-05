@@ -69,6 +69,9 @@ class AuthGroup extends Base {
 		$authRuleData = Db::name('auth_rule')->where('parent_id', 0)->where('status', 1)->select()->toArray();
 		foreach ($authRuleData as $k => $v) {
 			$authRuleData[$k]['children'] = Db::name('auth_rule')->where('parent_id', $v['id'])->where('status', 1)->select()->toArray();
+			foreach ($authRuleData[$k]['children'] as $key => $value) {
+				$authRuleData[$k]['children'][$key]['children1'] = Db::name('auth_rule')->where('parent_id', $value['id'])->where('status', 1)->select()->toArray();
+			}
 		}
 		$rulesArr = explode(',', $authGroupData['rules']);
 		if (request()->isPost()) {
@@ -85,6 +88,7 @@ class AuthGroup extends Base {
 				return alert('操作失败！', 'index', 5, 3);
 			}
 		}
+		// halt($authRuleData);
 		return view('admin/group_power', [
 			'authGroupData' => $authGroupData,
 			'authRuleData' => $authRuleData,
