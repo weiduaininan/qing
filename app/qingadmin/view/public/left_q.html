@@ -12,18 +12,18 @@
 		{/php}
 		<dl id="menu-article">
 
-			<dt class="selected"><i class="Hui-iconfont">{$vo.icon|raw}</i> {$vo.title}<i class="Hui-iconfont menu_dropdown-arrow"></i>
+			<dt><i class="Hui-iconfont">{$vo.icon|raw}</i> {$vo.title}<i class="Hui-iconfont menu_dropdown-arrow"></i>
 			</dt>
 
-			<dd style="display: block;">
+			<dd>
 
 				<ul>
-					<li><a data-href="qingadmin\{$vo.name}" data-title="{$vo.title}" href="javascript:void(0)">{$vo.title}</a>
+					<li><a data-href="/qingadmin/{$vo.name}" data-title="{$vo.title}" href="javascript:void(0)">{$vo.title}</a>
 					</li>
 					{volist name="$vo.children" id="vo1"}
 					{php}
 						if(in_array($vo1['id'],$rulesArr)){{/php}
-					<li><a data-href="qingadmin\{$vo1.name}" data-title="{$vo1.title}" href="javascript:void(0)">{$vo1.title}</a>
+					<li><a data-href="/qingadmin/{$vo1.name}" data-title="{$vo1.title}" href="javascript:void(0)">{$vo1.title}</a>
 					</li>
 					{php}}{/php}
 					{/volist}

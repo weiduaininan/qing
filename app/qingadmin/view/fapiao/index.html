@@ -45,7 +45,7 @@
 						<td>{$vo.code}</td>
 						<td>{$vo.money}</td>
 						<td>{$vo.email}</td>
-						<td>{$vo.time}</td>
+						<td>{$vo.time|date='Y-m-d'}</td>
 						<td>
 							{if condition="$vo.status eq 0"}
 								<a onclick="status_confirm('{:url('fapiao/status',array('id'=>$vo.id))}')" href="javascript:;" style="color: #f00;">未开具</a>

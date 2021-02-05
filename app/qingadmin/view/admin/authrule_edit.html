@@ -64,7 +64,7 @@
 
 		<div class="formControls col-xs-8 col-sm-9">
 
-			<input type="text" class="input-text" name="icon" value="{$ruleData.icon}" required="true">
+			<input type="text" class="input-text" name="icon" value="{$ruleData.icon}" >
 
 		</div>
 
@@ -81,7 +81,18 @@
 		</div>
 
 	</div>
+	<div class="row cl">
 
+		<label class="form-label col-xs-4 col-sm-3">是否显示在左侧：</label>
+
+		<div class="formControls col-xs-8 col-sm-9">
+
+			<input type="radio"  name="is_left" value="1" {if condition='$ruleData.status eq 1'}checked{/if}>&nbsp;显示
+			<input type="radio"  name="is_left" value="0" {if condition='$ruleData.status eq 0'}checked{/if}>&nbsp;隐藏
+
+		</div>
+
+	</div>
 
 	<div class="row cl">
 

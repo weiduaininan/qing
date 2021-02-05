@@ -13,17 +13,16 @@ class Base extends BaseController {
 		View::assign('loginUser', $loginAdmin['user_name']);
 
 		//权限控制
-		//$this->adminAuth($loginAdmin);
-		//return redirect('admin/index'); //只有在控制器中的方法中生效
+		$this->adminAuth($loginAdmin);
 
 		//左侧菜单数据
-		//$authRuleMenuData = $this->getLeftMenu();
-		//View::assign('authRuleMenuData', $authRuleMenuData);
+		$authRuleMenuData = $this->getLeftMenu();
+		View::assign('authRuleMenuData', $authRuleMenuData);
 
 		//当前用户组的权限
-		//$rulesArrTmp = Db::name('auth_group')->field('rules')->find($loginAdmin['group_id']);
-		//$rulesArr = explode(',', $rulesArrTmp['rules']);
-		//View::assign('rulesArr', $rulesArr);
+		$rulesArrTmp = Db::name('auth_group')->field('rules')->find($loginAdmin['group_id']);
+		$rulesArr = explode(',', $rulesArrTmp['rules']);
+		View::assign('rulesArr', $rulesArr);
 
 	}
 
@@ -80,17 +79,19 @@ class Base extends BaseController {
 			}
 		}
 
-		//halt('你没有权限');
+		//echo '你没有权限';
 		//如果没有权限，我们就跳转到后台首页
-		$this->redirect('/qingadmin/index/welcome');
+		//$this->redirect('/qingadmin/index/welcome');
 	}
 
 	//左侧菜单数据
 	public function getLeftMenu() {
-		$authRuleData = Db::name('auth_rule')->where('parent_id', 0)->where('status', 1)->order('listorder asc')->select()->toArray();
+		$authRuleData = Db::name('auth_rule')->where('parent_id', 0)->where('status', 1)->where('is_left', 1)->order('listorder asc')->select()->toArray();
+		//echo Db::name('auth_rule')->getLastSql();die;
 		foreach ($authRuleData as $k => $v) {
-			$authRuleData[$k]['children'] = Db::name('auth_rule')->where('parent_id', $v['id'])->where('status', 1)->order('listorder asc')->select()->toArray();
+			$authRuleData[$k]['children'] = Db::name('auth_rule')->where('parent_id', $v['id'])->where('status', 1)->where('is_left', 1)->order('listorder asc')->select()->toArray();
 		}
+		//halt($authRuleData);
 		return $authRuleData;
 	}
 
