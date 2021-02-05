@@ -51,10 +51,9 @@ class Admin extends Base {
 
 	public function edit() {
 		$id = input('id');
-
 		if (request()->post()) {
 			$data = input('post.');
-
+			//$data1 = input('get.');
 			if (!empty($data['password'])) {
 				$data['password'] = $this->password_salt($data['password']);
 			} else {

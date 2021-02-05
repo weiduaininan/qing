@@ -16,23 +16,4 @@ class AuthRule extends Model {
 		}
 		return $arr;
 	}
-
-	//获取子栏目id
-
-	// public function childrenids($ruleid) {
-	// 	$data = $this->field('id,parent_id')->select();
-	// 	return $this->_childrenids($data, $ruleid);
-	// }
-
-	// private function _childrenids($data, $ruleid) {
-	// 	static $arr = array();
-	// 	foreach ($data as $k => $v) {
-	// 		if ($v['parent_id'] == $ruleid) {
-	// 			$arr[] = $v['id'];
-	// 			$this->_childrenids($data, $v['id']);
-	// 		}
-	// 	}
-
-	// 	return $arr;
-	// }
 }

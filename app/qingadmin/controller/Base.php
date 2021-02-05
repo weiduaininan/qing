@@ -78,8 +78,8 @@ class Base extends BaseController {
 				return true;
 			}
 		}
-
-		//echo '你没有权限';
+		//alert('你没有权限!', '/qingadmin/index/welcome', '', 3);
+		halt('您没有权限,请向管理员申请该权限，谢谢！');
 		//如果没有权限，我们就跳转到后台首页
 		//$this->redirect('/qingadmin/index/welcome');
 	}

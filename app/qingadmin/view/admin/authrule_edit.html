@@ -87,8 +87,8 @@
 
 		<div class="formControls col-xs-8 col-sm-9">
 
-			<input type="radio"  name="is_left" value="1" {if condition='$ruleData.status eq 1'}checked{/if}>&nbsp;显示
-			<input type="radio"  name="is_left" value="0" {if condition='$ruleData.status eq 0'}checked{/if}>&nbsp;隐藏
+			<input type="radio"  name="is_left" value="1" {if condition='$ruleData.is_left eq 1'}checked{/if}>&nbsp;显示
+			<input type="radio"  name="is_left" value="0" {if condition='$ruleData.is_left eq 0'}checked{/if}>&nbsp;隐藏
 
 		</div>
 
@@ -133,11 +133,11 @@
 
 <!--请在下方写此页面业务相关的脚本-->
 
-<script type="text/javascript" src="lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
+<script type="text/javascript" src="//public/static/admin/lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
 
-<script type="text/javascript" src="lib/jquery.validation/1.14.0/validate-methods.js"></script> 
+<script type="text/javascript" src="//public/static/admin/lib/jquery.validation/1.14.0/validate-methods.js"></script> 
 
-<script type="text/javascript" src="lib/jquery.validation/1.14.0/messages_zh.js"></script> 
+<script type="text/javascript" src="//public/static/admin/lib/jquery.validation/1.14.0/messages_zh.js"></script> 
 
 <script type="text/javascript">
 

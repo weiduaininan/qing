@@ -75,15 +75,13 @@
 
 {include file="public/foot" /}
 
-
-
 <!--请在下方写此页面业务相关的脚本-->
 
-<script type="text/javascript" src="lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
+<script type="text/javascript" src="/public/static/admin/lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
 
-<script type="text/javascript" src="lib/jquery.validation/1.14.0/validate-methods.js"></script> 
+<script type="text/javascript" src="/public/static/admin/lib/jquery.validation/1.14.0/validate-methods.js"></script> 
 
-<script type="text/javascript" src="lib/jquery.validation/1.14.0/messages_zh.js"></script> 
+<script type="text/javascript" src="/public/static/admin/lib/jquery.validation/1.14.0/messages_zh.js"></script> 
 
 <script type="text/javascript">
 
@@ -171,15 +169,16 @@ $(function(){
 
 				type: 'post',
 
-				url: "xxxxxxx" ,
+				url: "edit" ,
 
 				success: function(data){
 
-					layer.msg('添加成功!',{icon:1,time:1000});
+					layer.msg('编辑成功!',{icon:1,time:1000});
+					self.location.href="index";
 
 				},
 
-                error: function(XmlHttpRequest, textStatus, errorThrown){
+        error: function(XmlHttpRequest, textStatus, errorThrown){
 
 					layer.msg('error!',{icon:1,time:1000});
 
