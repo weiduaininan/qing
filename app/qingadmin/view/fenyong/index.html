@@ -1,0 +1,59 @@
+<!--包含头部文件-->
+
+{include file="public/head" /}
+
+<body>
+
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 分佣列表 </nav>
+
+<div class="page-container">
+
+
+	<div class="mt-20">
+
+			<table class="table table-border table-bordered table-bg table-hover table-sort mt-20">
+
+				<thead>
+
+					<tr class="text-c">
+
+						<th width="50">序号</th>
+
+						<th width="250">用户</th>
+
+						<th width="250">介绍人</th>		
+						<th width="250">介绍时间</th>					
+
+					</tr>
+
+				</thead>
+
+				<tbody>
+					{volist name="$userData" id="vo"}
+					<tr class="text-c">
+
+						<td>{$vo.id}</td>
+						<td>{$vo.username}</td>
+
+						<td>{$vo.parent_id|getUserById}</td>
+
+						<td>{$vo.time|date='Y-m-d'}</td>
+
+					</tr>
+					{/volist}
+					
+
+				</tbody>
+
+			</table>
+
+			{$userData|raw}
+
+	</div>
+
+</div>
+
+<!--包含头部文件-->
+
+{include file="public/foot" /}
+

@@ -1,4 +1,5 @@
 <?php
+use think\facade\Db;
 // 应用公共文件
 
 /**
@@ -46,4 +47,13 @@ function delFileByDir($dir) {
 		}
 	}
 	closedir($dh);
+}
+
+//通过id获取用户信息
+function getUserById($id) {
+	$userData = Db::name('user')->find($id);
+	if (empty($userData)) {
+		return '其他途径';
+	}
+	return $userData['username'];
 }
