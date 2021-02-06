@@ -2,7 +2,7 @@
 namespace app\qingadmin\controller;
 
 use app\BaseController;
-use think\exception\HttpResponseException;
+//use think\exception\HttpResponseException;
 use think\facade\Db;
 use think\facade\Request;
 use think\facade\View;
@@ -59,9 +59,9 @@ class Base extends BaseController {
 
 	//抛出异常的方式进行跳转
 	//https://www.jianshu.com/p/c2a1f983fe35
-	public function redirect(...$args) {
-		throw new HttpResponseException(redirect(...$args));
-	}
+	// public function redirect(...$args) {
+	// 	throw new HttpResponseException(redirect(...$args));
+	// }
 
 	//权限控制
 
@@ -78,10 +78,13 @@ class Base extends BaseController {
 				return true;
 			}
 		}
-		//alert('你没有权限!', '/qingadmin/index/welcome', '', 3);
-		halt('您没有权限,请向管理员申请该权限，谢谢！');
+		//return alert('你没有权限!', '/qingadmin/index/welcome', '5', 3);die;
+		//halt('您没有权限,请向管理员申请该权限，谢谢！');
 		//如果没有权限，我们就跳转到后台首页
 		//$this->redirect('/qingadmin/index/welcome');
+		echo "<script>alert('您没有权限,请向管理员申请该权限，谢谢！');</script>";
+		echo "<meta http-equiv='Refresh' content='0;URL=/qingadmin/index/welcome'>";die;
+		//redirect('/qingadmin/index/welcome')->send();die;
 	}
 
 	//左侧菜单数据
