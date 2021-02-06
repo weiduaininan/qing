@@ -1,0 +1,123 @@
+<!--包含头部文件-->
+
+{include file="public/head" /}
+
+<div class="cl pd-5 bg-1 bk-gray mt-20"> 修改</div>
+
+<article class="page-container">
+
+  <form class="form form-horizontal" id="form-article-add" method="post" action="{:url('coupons/update')}" enctype="multipart/form-data" >
+
+    <div class="row cl">
+
+      <label class="form-label col-xs-4 col-sm-2">名称：</label>
+
+      <div class="formControls col-xs-8 col-sm-6">
+
+        <input type="text" class="input-text" value="{$couponsData.name}" placeholder="" id="" name="name">
+
+        <input type="hidden" class="input-text" value="{$couponsData.id}" placeholder="" id="" name="id">
+
+      </div>
+
+    </div>
+
+    <div class="row cl">
+
+      <label class="form-label col-xs-4 col-sm-2">数量：</label>
+
+      <div class="formControls col-xs-8 col-sm-6">
+
+        <input type="number" class="input-text" value="{$couponsData.count}" placeholder="" min="1" max="1000" name="count">
+
+      </div>
+
+    </div>
+
+
+
+    <div class="row cl">
+
+      <label class="form-label col-xs-4 col-sm-2">条件金额：</label>
+
+      <div class="formControls col-xs-8 col-sm-6">
+
+        <input type="text" class="input-text" value="{$couponsData.money1}" placeholder="" id="" name="money1">
+
+      </div>
+
+    </div>
+
+    <div class="row cl">
+
+      <label class="form-label col-xs-4 col-sm-2">优惠金额：</label>
+
+      <div class="formControls col-xs-8 col-sm-6">
+
+        <input type="text" class="input-text" value="{$couponsData.money2}" placeholder="" id="" name="money2">
+
+      </div>
+
+    </div>
+
+    <div class="row cl">
+
+      <label class="form-label col-xs-4 col-sm-2">开始时间：</label>
+
+      <div class="formControls col-xs-8 col-sm-6">
+
+        <input type="text" onfocus="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss' })" id="datemin"
+        class="input-text Wdate" name="time1" style="width:180px;" value="{$couponsData.time1|date='Y-m-d'}">
+
+      </div>
+
+    </div>
+
+    <div class="row cl">
+
+      <label class="form-label col-xs-4 col-sm-2">结束时间：</label>
+
+      <div class="formControls col-xs-8 col-sm-6">
+
+        <input type="text" onfocus="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss' })" id="datemin"
+          class="input-text Wdate" name="time2" style="width:180px;" value="{$couponsData.time2|date='Y-m-d'}">
+
+      </div>
+
+    </div>
+
+
+
+    <div class="row cl">
+
+      <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+
+        <button onClick="article_save_submit();" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 提交</button>
+
+      </div>
+
+    </div>
+
+  </form>
+
+</article>
+
+<script>
+
+  /**定义页面全局变量**/
+
+  var SCOPE = {};
+
+
+
+</script>
+
+<!--包含头部文件-->
+
+{include file="public/foot" /}
+
+
+
+</body>
+
+</html>

@@ -7,7 +7,6 @@ class Number extends Base {
 
 	//列表
 	public function order() {
-
 		return view();
 	}
 
@@ -92,7 +91,6 @@ class Number extends Base {
 
 		$number = [$number1, $number2, $number3, $number4, $number5, $number6, $number7, $number8, $number9, $number10, $number11, $number12];
 		$date = [$date1, $date2, $date3, $date4, $date5, $date6, $date7, $date8, $date9, $date10, $date11, $date12];
-
 		return json(['number' => $number, 'date' => $date]);
 	}
 

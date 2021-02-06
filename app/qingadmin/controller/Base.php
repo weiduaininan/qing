@@ -72,15 +72,15 @@ class Base extends BaseController {
 		$rulesArrTmp = Db::name('auth_group')->field('rules')->find($loginAdmin['group_id']);
 
 		$rulesArr = explode(',', $rulesArrTmp['rules']);
-		if ($currentRule == 'login/index') {
-			foreach ($rulesArr as $k => $v) {
-				$authRuleData = Db::name('auth_rule')->find($v);
-				if ($authRuleData['name'] == $currentRule) {
-					return true;
-				}
-			}
-		} else {
+		//halt($rulesArr);
+		if ($currentRule == 'Login/index') {
 			return true;
+		}
+		foreach ($rulesArr as $k => $v) {
+			$authRuleData = Db::name('auth_rule')->find($v);
+			if ($authRuleData['name'] == $currentRule) {
+				return true;
+			}
 		}
 		//return alert('你没有权限!', '/qingadmin/index/welcome', '5', 3);die;
 		//halt('您没有权限,请向管理员申请该权限，谢谢！');
@@ -88,7 +88,6 @@ class Base extends BaseController {
 		//$this->redirect('/qingadmin/index/welcome');
 		echo "<script>alert('您没有权限,请向管理员申请该权限，谢谢！');</script>";
 		echo "<meta http-equiv='Refresh' content='0;URL=/qingadmin/index/welcome'>";die;
-		//redirect('/qingadmin/index/welcome')->send();die;
 	}
 
 	//左侧菜单数据
