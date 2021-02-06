@@ -1,5 +1,6 @@
 <?php
 namespace app\qingadmin\controller;
+use think\facade\Db;
 
 class Index extends Base {
 	public function index() {
@@ -7,11 +8,15 @@ class Index extends Base {
 	}
 
 	public function welcome() {
+		$count1 = Db::name('goods')->count();
+		$count2 = Db::name('user')->count();
+		$count3 = Db::name('order')->count();
+		$count4 = Db::name('comment')->count();
 		return view('', [
-			'count1' => 100,
-			'count2' => 100,
-			'count3' => 100,
-			'count4' => 100,
+			'count1' => $count1,
+			'count2' => $count2,
+			'count3' => $count3,
+			'count4' => $count4,
 		]);
 	}
 

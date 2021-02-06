@@ -72,11 +72,15 @@ class Base extends BaseController {
 		$rulesArrTmp = Db::name('auth_group')->field('rules')->find($loginAdmin['group_id']);
 
 		$rulesArr = explode(',', $rulesArrTmp['rules']);
-		foreach ($rulesArr as $k => $v) {
-			$authRuleData = Db::name('auth_rule')->find($v);
-			if ($authRuleData['name'] == $currentRule) {
-				return true;
+		if ($currentRule == 'login/index') {
+			foreach ($rulesArr as $k => $v) {
+				$authRuleData = Db::name('auth_rule')->find($v);
+				if ($authRuleData['name'] == $currentRule) {
+					return true;
+				}
 			}
+		} else {
+			return true;
 		}
 		//return alert('你没有权限!', '/qingadmin/index/welcome', '5', 3);die;
 		//halt('您没有权限,请向管理员申请该权限，谢谢！');
