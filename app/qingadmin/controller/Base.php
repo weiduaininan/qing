@@ -112,9 +112,8 @@ class Base extends BaseController {
 	public function listorder($id, $model, $listorder) {
 
 		$data = input('post.');
-
 		$res = Db::name($model)->where('id', $id)->update(['listorder' => $listorder]);
-
+		//halt($res);
 		if ($res) {
 
 			return ['data' => $_SERVER['HTTP_REFERER'], 'code' => 1];
