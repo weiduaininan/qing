@@ -101,4 +101,30 @@ class Base extends BaseController {
 		return $authRuleData;
 	}
 
+	/*
+
+		      **公共排序方法
+
+		      **需要在排序html中传入下面三个参数
+
+	*/
+
+	public function listorder($id, $model, $listorder) {
+
+		$data = input('post.');
+
+		$res = Db::name($model)->where('id', $id)->update(['listorder' => $listorder]);
+
+		if ($res) {
+
+			return ['data' => $_SERVER['HTTP_REFERER'], 'code' => 1];
+
+		} else {
+
+			return ['data' => $_SERVER['HTTP_REFERER'], 'code' => 0, 'msg' => '失败！'];
+
+		}
+
+	}
+
 }
