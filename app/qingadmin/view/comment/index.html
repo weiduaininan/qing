@@ -1,0 +1,103 @@
+<!--包含头部文件-->
+
+{include file="public/head" /}
+
+<body>
+
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>列表 </nav>
+
+<div class="page-container">
+
+
+
+	<form acction="" method="get">
+
+		<div class="text-c">
+
+			<input type="text" class="input-text" style="width:20%" placeholder="{$search_key|default='输入手机号查询'}" name="search_key">
+
+			<button type="submit" class="btn btn-success radius"><i class="Hui-iconfont">&#xe665;</i>搜索</button>
+
+		</div>
+
+	</form>
+
+
+
+	<div class="mt-20">
+
+			<table class="table table-border table-bordered table-bg table-hover table-sort mt-20">
+
+				<thead>
+
+					<tr class="text-c">
+
+						<th width="50">ID</th>
+
+						<th width="150">商品</th>
+
+						<th width="250">用户名</th>	
+
+						<th width="250">手机号</th>	
+
+						<th width="550">评论内容</th>	
+						<th width="250">评分</th>	
+
+						<th width="250">时间</th>
+
+						<th width="50">操作</th>						
+
+					</tr>
+
+				</thead>
+
+				<tbody>
+
+					{volist name="commentData" id="vo"}
+
+					<tr class="text-c">
+
+						<td>{$vo.id}</td>
+
+						<td><a href="{:url('mobile/goods/index',array('goods_id'=>$vo.goods_id))}" target="_blank"><img src="{$vo.goods_thumb}" width="100"></a></td>
+
+						<td>{$vo.username}</td>
+
+						<td>{$vo.mobile}</td>
+
+						<td>{$vo.content}</td>
+						<td>{$vo.star}</td>
+
+						<td>{$vo.time|date="Y-m-d H:s"}</td>
+
+						<td>
+
+							<a style="text-decoration:none" class="ml-5" onclick="delete_confirm('{:url('comment/del',array('id'=>$vo.id,'dbname'=>'comment'))}')" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a>
+
+
+						</td>
+
+						
+
+					</tr>
+
+					{/volist}
+
+					
+
+				</tbody>
+
+			</table>
+
+
+
+			{$commentData|raw}
+
+	</div>
+
+</div>
+
+<!--包含头部文件-->
+
+{include file="public/foot" /}
+
