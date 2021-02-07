@@ -1,0 +1,84 @@
+<!--包含头部文件-->
+
+{include file="public/head" /}
+
+<div class="cl pd-5 bg-1 bk-gray mt-20"> 详细内容</div>
+
+<article class="page-container">
+
+  <form class="form form-horizontal" id="form-article-add" method="post" action="{:url('article/update')}" enctype="multipart/form-data" >
+
+    <div class="row cl">
+
+      <label class="form-label col-xs-4 col-sm-2">姓名：</label>
+
+      <div class="formControls col-xs-8 col-sm-6">
+
+        <input type="text" class="input-text" value="{$messageData.name}"  name="title" disabled="true">
+
+      </div>
+
+    </div>
+
+
+
+    <div class="row cl">
+
+      <label class="form-label col-xs-4 col-sm-2">邮箱：</label>
+
+      <div class="formControls col-xs-8 col-sm-6">
+
+        <input type="text" class="input-text" value="{$messageData.email}"  name="title" disabled="true">
+
+      </div>
+
+    </div>
+
+
+
+
+
+
+
+      <div class="row cl">
+
+
+
+        <label class="form-label col-xs-4 col-sm-2">咨询内容：</label>
+
+<div class="formControls col-xs-8 col-sm-6">
+
+        <input type="text" class="input-text" value="{$messageData.content}"  name="title" disabled="true">
+
+      </div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+   
+
+  </form>
+
+</article>
+
+
+
+<!--包含头部文件-->
+
+{include file="public/foot" /}
+
+
+
+</body>
+
+</html>
