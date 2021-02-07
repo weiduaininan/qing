@@ -30,7 +30,7 @@ class Uploader extends Base {
 
 		//exit(json_encode($return));
 
-		halt($savename);
+		//halt($savename);
 
 	}
 
@@ -48,12 +48,12 @@ class Uploader extends Base {
 		//     return json(['info'=>'没有图片','status'=>0]);
 		// }
 
-		// $path=app()->getRootPath().$path;
-		// if(file_exists($path)){
-		//     unlink($path);
-		//     return json(['info'=>'删除成功','status'=>1]);
-		// }else{
-		//     return json(['info'=>'没有找到该图片','status'=>0]);
+		// $path = app()->getRootPath() . $path;
+		// if (file_exists($path)) {
+		// 	unlink($path);
+		// 	return json(['info' => '删除成功', 'status' => 1]);
+		// } else {
+		// 	return json(['info' => '没有找到该图片', 'status' => 0]);
 		// }
 
 	}

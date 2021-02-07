@@ -103,7 +103,7 @@ class News extends Base {
 	public function del() {
 		$id = input('id');
 		$newsData = Db::name('news')->find($id);
-
+		$path = input('post.cover'); //图片路径
 		delImg($path);
 
 		$res = Db::name('news')->delete($id);

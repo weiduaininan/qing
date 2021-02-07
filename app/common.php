@@ -57,3 +57,18 @@ function getUserById($id) {
 	}
 	return $userData['username'];
 }
+
+//删除图片,传递过来图片路径
+function delImg($path) {
+	if (empty($path)) {
+		return false;
+	}
+
+	$path = app()->getRootPath() . $path;
+	if (file_exists($path)) {
+		unlink($path);
+		return true;
+	} else {
+		return false;
+	}
+}

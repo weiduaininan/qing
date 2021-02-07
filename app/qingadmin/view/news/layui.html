@@ -27,7 +27,7 @@
 
 <div class="box">
   <div class="img_box">
-    <img src="/public/static/index/images/thumb.jpg" />
+    <img src="/public/static/index/images/thumb.jpg" id="thumb" />
     <input type="hidden" value="">
     <div class="del" onclick="delImg()">删除</div>
   </div>
@@ -62,6 +62,38 @@
   //删除图片逻辑
   function delImg(){
     //先获取路径，再post到remove_img
+    var cover = $("#thumb").attr('src');//图片路径
+    var url = "/index.php/qingadmin/uploader/remove_img";//请求服务端
+    layer.confirm('是否删除？', {
+
+        btn: ['确定', '取消'] //按钮
+
+    }, function () {
+        $.post(url, {cover:cover}, function (result) {
+
+            //弹出提示消息
+
+            if (result.status==1) { 
+
+                // $("#WU_FILE_0 .info").remove();
+                // $("#WU_FILE_0").removeClass('upload-state-done');
+                $("#thumb").attr('src','/public/static/index/images/thumb.jpg');
+                $(".img_box").children(".del").css("display","none")
+                layer.msg(result.info, {icon: 1})
+
+            } else {
+
+                layer.msg(result.info, {icon: 2})
+
+            }
+
+        });
+
+    }, function () {
+
+        layer.close();
+
+    });
   }
   </script>
 
