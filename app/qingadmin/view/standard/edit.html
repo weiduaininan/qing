@@ -1,0 +1,104 @@
+<!--包含头部文件-->
+{include file="public/head" /}
+<div class="cl pd-5 bg-1 bk-gray mt-20"> 修改属性 <span class="tishi">删除属性操作请慎重，删除属性会导致拥有该属性的商品无法筛选</span></div>
+<article class="page-container">
+  <form class="form form-horizontal" id="form-article-add" method="post" action="{:url('update')}" enctype="multipart/form-data" >
+    <div class="row cl">
+      <label class="form-label col-xs-4 col-sm-2">属性名称：</label>
+      <div class="formControls col-xs-8 col-sm-6">
+        <input type="text" class="input-text" value="{$standardData.name}" name="name" required>
+        <input type="hidden" class="input-text" value="{$standardData.id}"  name="standard_id">
+        <input type="hidden" class="input-text" value="{$standardData.type_id}"  name="type_id">
+      </div>
+    </div>
+
+    {volist name="$attrData" id="vo"}
+    <div class="row cl">
+      <label class="form-label col-xs-4 col-sm-2">属性值：</label>
+      <div class="formControls col-xs-8 col-sm-6">
+        <div class="l standard_value_box">
+          <input type="text" class="input-text" value="{$vo.standard_value}" name="standard_value" required>
+          <input type="hidden" class="input-text" value="{$vo.id}" name="id" required>
+        </div>
+        <div class="l btn100" style="color: #5a98de;" onclick="updateStandValue(this)">更新</div>
+        <div class="l btn100" style="color: #f00;" onclick="deleteStandValue(this)">删除</div>
+        ;
+      </div>
+    </div>
+    {/volist}
+
+    <div class="row cl">
+      <label class="form-label col-xs-4 col-sm-2">属性值：</label>
+      <div class="formControls col-xs-8 col-sm-6">
+        <div class="l standard_value_box"><input type="text" class="input-text l" value="" name="standard_value"></div>
+        <div class="l" style="margin-left: 15px;" onclick="addStandValue(this)">+添加</div>
+      </div>
+    </div>
+
+
+  </form>
+</article>
+<style>
+  .btn100{
+    cursor: pointer;
+    margin-left: 15px;
+  }
+</style>
+<!--包含头部文件-->
+{include file="public/foot" /}
+<script type="text/javascript" src="__STATIC__/admin/lib/ueditor/1.4.3/ueditor.config.js"></script>
+<script type="text/javascript" src="__STATIC__/admin/lib/ueditor/1.4.3/ueditor.all.min.js"> </script>
+<script type="text/javascript" src="__STATIC__/admin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
+<script src="__STATIC__/admin/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+
+<script>
+
+  function addStandValue(a){
+    var standard_id=$("input[name='standard_id']").val();//standard_id
+    var standard_value=$(a).parent().children('.standard_value_box').children().val();//standard_value
+    if(standard_value.length==0){
+      alert('请填写属性值');
+      return false;
+    }
+    url ="/qingadmin/standard/add_standard_value";
+    postData = {'standard_id':standard_id,'standard_value':standard_value};
+    $.post(url,postData,function(result){
+      if(result.status==1){
+        alert('添加成功');
+        location.reload();
+      }
+    }, 'json');
+  }
+
+  function updateStandValue(a){
+    var standard_value=$(a).parent().children('.standard_value_box').children("input[name='standard_value']").val();//standard_value
+    var id=$(a).parent().children('.standard_value_box').children("input[name='id']").val();//id
+    if(standard_value.length==0){
+      alert('请填写属性值');
+      return false;
+    }
+    url ="/qingadmin/standard/update_standard_value";
+    postData = {'id':id,'standard_value':standard_value};
+    $.post(url,postData,function(result){
+      if(result.status==1){
+        alert('更新成功');
+      }
+    }, 'json');
+  }
+
+  function deleteStandValue(a){
+    layer.confirm('您确定删除吗？', {btn: ['确定','取消']},function(){
+        var id=$(a).parent().children('.standard_value_box').children("input[name='id']").val();//id
+        url ="/qingadmin/standard/del_standard_value";
+        postData = {'id':id};
+        $.post(url,postData,function(result){
+          if(result.status==1){
+            location.reload();
+          }
+        }, 'json');
+    });
+  }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!--包含头部文件-->
+{include file="public/head" /}
+<div class="cl pd-5 bg-1 bk-gray mt-20"> 添加属性</div>
+<article class="page-container">
+  <form class="form form-horizontal" id="form-article-add" method="post" action="{:url('add')}" enctype="multipart/form-data" >
+    <div class="row cl">
+      <label class="form-label col-xs-4 col-sm-2">属性名称：</label>
+      <div class="formControls col-xs-8 col-sm-6">
+        <input type="text" class="input-text"  name="name" required>
+        <input type="hidden" class="input-text" value="{$type_id}"  name="type_id">
+      </div>
+    </div>
+
+   <!--  <div class="row cl">
+      <label class="form-label col-xs-4 col-sm-2">属性类型：</label>
+      <div class="formControls col-xs-8 col-sm-6">
+        <input type="radio" name="attr_type" value="0" checked="checked" /> 单选 
+        <input type="radio" name="attr_type" value="1"  /> 多选 
+      </div>
+    </div> -->
+
+    <div class="row cl">
+      <label class="form-label col-xs-4 col-sm-2">属性可选值：</label>
+      <div class="formControls col-xs-8 col-sm-6">
+         <textarea name="attr_option_values" class="textarea" rows="3" class="60" placeholder="如果是多个值，请用英文逗号隔开" required></textarea>
+      </div>
+    </div>
+
+
+    <div class="row cl">
+      <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+        <button onClick="article_save_submit();" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 提交</button>
+      </div>
+    </div>
+  </form>
+</article>
+<script>
+  /**定义页面全局变量**/
+  var SCOPE = {};
+
+</script>
+<!--包含头部文件-->
+{include file="public/foot" /}
+<script type="text/javascript" src="__STATIC__/admin/lib/ueditor/1.4.3/ueditor.config.js"></script>
+<script type="text/javascript" src="__STATIC__/admin/lib/ueditor/1.4.3/ueditor.all.min.js"> </script>
+<script type="text/javascript" src="__STATIC__/admin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
+<script src="__STATIC__/admin/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+
+<script>
+  $(function(){
+    var ue = UE.getEditor('editor');
+  });
+</script>
+</body>
+</html>

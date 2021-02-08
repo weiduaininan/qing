@@ -1,0 +1,276 @@
+<!--包含头部文件-->
+
+{include file="public/header" /}
+
+<div class="cl pd-5 bg-1 bk-gray mt-20"> 添加商品信息</div>
+
+<article class="page-container">
+
+  <form class="form form-horizontal" id="form-article-add" method="post" action="{:url('goods/attrsave')}" enctype="multipart/form-data" >
+
+    基本信息：
+
+    <div class="row cl">
+
+      <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>商品名称：</label>
+
+      <div class="formControls col-xs-8 col-sm-6">
+
+        <input type="text" class="input-text" value="{$goods.goods_name}" placeholder="" id="" name="goods_name" disabled="true">
+
+      </div>
+
+    </div>
+
+
+
+
+
+    <div class="row cl">
+
+      <label class="form-label col-xs-4 col-sm-2">缩略图：</label>
+
+      <div class="formControls col-xs-8 col-sm-9">
+
+        <img src="\{$goods.goods_thumb}" width="200">
+
+      </div>
+
+    </div>
+
+    <input type="hidden" class="input-text" value="{$goods.goods_id}" placeholder="" id="" name="goods_id">
+
+
+
+    <div class="row cl">
+
+      <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>所属类型：</label>
+
+      <div class="formControls col-xs-8 col-sm-6">
+
+        <span class="select-box">
+
+        <select name="type_id" class="select">
+
+                  <option value="">所属类型</option>
+
+                  {volist name="types" id="vo1"}
+
+                  <option value="{$vo1.id}">{$vo1.type_name}</option>
+
+                  {/volist}
+
+        </select>
+
+        </span>
+
+        <div class="formControls" id="attr_container" style="margin-top: 20px;"></div>
+
+
+
+      </div>
+
+    </div>
+
+   
+
+    <div class="row cl">
+
+      <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+
+        <button onClick="article_save_submit();" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 提交</button>
+
+      </div>
+
+    </div>
+
+  </form>
+
+</article>
+
+<script>
+
+  /**定义页面全局变量**/
+
+  var SCOPE = {};
+
+
+
+</script>
+
+<!--包含头部文件-->
+
+{include file="public/footer" /}
+
+<script type="text/javascript" src="__STATIC__/admin/lib/ueditor/1.4.3/ueditor.config.js"></script>
+<script type="text/javascript" src="__STATIC__/admin/lib/ueditor/1.4.3/ueditor.all.min.js"> </script>
+<script type="text/javascript" src="__STATIC__/admin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
+<script src="__STATIC__/admin/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+
+<script>
+
+  $(function(){
+
+    var ue = UE.getEditor('editor');
+
+    var ue = UE.getEditor('editor2');
+
+  });
+
+</script>
+
+
+
+<script>
+
+
+
+// 当选择类型时执行AJAX取出类型的属性
+
+$("select[name=type_id]").change(function(){
+
+  // 获取选中的类型的id
+
+  var type_id = $(this).val();
+
+  if(type_id != "")
+
+  {
+
+    $.ajax({
+
+      type : "GET",
+
+      // 大U生成的地址默认带后缀，如：/index.php/Admin/Goods/ajaxGetAttr.html/type_id/+type_id
+
+      // 第三个参数就是去掉.html后缀否则TP会报错
+
+      url : "{:url('goods/ajaxGetAttr?type_id=')}"+type_id,
+
+      dataType : "json",
+
+      success : function(data)
+
+      {
+
+        var html = "";
+
+        // 循环服务器返回的属性的JSON数据
+
+        $(data).each(function(k,v){
+
+          html += "<p>";
+
+          html += v.attr_name + " : ";
+
+          // 根据属性的类型生成不同的表单元素：
+
+          // 1. 如果属性是可选的那么就有一个+号
+
+          // 2. 如果属性有可选值就是一个下拉框
+
+          // 3. 如果属性是唯一的就生成一个文本框
+
+          if(v.attr_type == 1)
+
+            html += " <a onclick='addnew(this);' href='javascript:void(0);'>[+]</a> ";
+
+          // 判断是否是但你选
+
+          if(v.attr_type == 0)
+
+            html += "<input type='text' class='input-text' style='width:70%' name='ga["+v.id+"][]' />";
+
+          else
+
+          {
+
+            // 先把可选值转化成数组
+
+            var _attr = v.attr_option_values.split(",");
+
+            html += "<span class='select-box' style='width:40%'><select name='ga["+v.id+"][]' class='select'>";
+
+            html += "<option value=''>请选择</option>";
+
+            // 循环每个可选值构造option
+
+            for(var i=0; i<_attr.length; i++)
+
+            {
+
+              html += "<option value='"+_attr[i]+"'>"+_attr[i]+"</option>";
+
+            }
+
+            html += "</select></span>";
+
+          }
+
+          if(v.attr_type == 1)
+
+            html += "&nbsp;属性价格：￥ <input class='input-text' style='width:20%' name='attr_price["+v.id+"][]' type='text' /> 元";
+
+          html += "</p>";
+
+        });
+
+        $("#attr_container").html(html);
+
+      }
+
+    }); 
+
+  }
+
+  else
+
+    $("#attr_container").html("");
+
+});
+
+
+
+
+
+// 点击+号
+
+function addnew(a)
+
+{
+
+  // 选中a标签所在的p标签
+
+  var p = $(a).parent();
+
+  // 先获取A标签中的内容
+
+  if($(a).html() == "[+]")
+
+  {
+
+    // 把p克隆一份
+
+    var newP = p.clone();
+
+    // 把克隆出来的P里面的a标签变成-号
+
+    newP.find("a").html("[-]");
+
+    // 放在后面
+
+    p.after(newP);
+
+  }
+
+  else
+
+    p.remove();
+
+}
+
+</script>
+
+</body>
+
+</html>

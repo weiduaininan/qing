@@ -1,0 +1,31 @@
+<!--包含头部文件-->
+{include file="public/head" /}
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 商品类型列表 </nav>
+<div class="page-container">
+<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"> <a class="btn btn-primary radius"  href="{:url('type/add')}"><i class="Hui-iconfont">&#xe600;</i> 添加类型</a></span> <span class="r tishi" style="margin-top: 7px;">注意：请谨慎删除类型，删除类型会删除该类型的属性以及属性值！</span> </div>
+	<div class="mt-20">
+			<table class="table table-border table-bordered table-bg table-hover table-sort mt-20">
+				<thead>
+					<tr class="text-c">
+						<th width="50">ID</th>
+						<th width="250">类型名称</th>						
+						<th width="50">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					{volist name="types" id="vo"}
+					<tr class="text-c">
+						<td>{$vo.id}</td>
+						<td>{$vo.type_name}</td>
+						<td class="td-manage"><a style="text-decoration:none" class="ml-5" href="{:url('standard/index',array('type_id'=>$vo.id))}" title="属性"><i class="Hui-iconfont">&#xe64b;</i></a><a style="text-decoration:none" class="ml-5" href="{:url('type/edit',array('id'=>$vo.id))}" title="修改"><i class="Hui-iconfont">&#xe6df;</i></a><a style="text-decoration:none" class="ml-5" onClick="delete_confirm('{:url('type/del', ['id'=>$vo.id])}')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+					</tr>
+					{/volist}
+					
+				</tbody>
+			</table>
+			{$types|raw}
+	</div>
+</div>
+<!--包含头部文件-->
+{include file="public/foot" /}

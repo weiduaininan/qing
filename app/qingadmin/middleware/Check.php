@@ -13,6 +13,7 @@ class Check {
 	 */
 	public function handle($request, \Closure $next) {
 		if (empty(session('adminSessionData')) && !preg_match('/login/', $request->pathinfo())) {
+			// echo "<meta http-equiv='Refresh' content='0;URL=/qingadmin/index/welcome'>";die;
 			return redirect((string) url('login/index'));
 		}
 		return $next($request);
