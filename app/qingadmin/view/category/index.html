@@ -1,0 +1,65 @@
+<!--包含头部文件-->
+{include file="public/head" /}
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 分类管理 <span class="c-gray en">&gt;</span> 分类列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+	<form action="{:url('category/search')}" method="post">
+		<div class="text-c">
+			<input type="text" class="input-text" style="width:20%" placeholder="请输入搜索关键字" name="cate_name">
+			<button type="submit" class="btn btn-success radius"><i class="Hui-iconfont">&#xe665;</i>搜索</button>
+		</div>
+	</form>
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> 
+		<span class="l"> <a class="btn btn-primary radius" href="{:url('category/add')}"><i class="Hui-iconfont">&#xe600;</i> 添加分类</a></span> 
+		<span class="r tishi" style="margin-top: 7px;">注意：请谨慎删除栏目，删除栏目会删除该栏目的所有子类，以及所属商品！</span> 
+	</div>
+	<div class="mt-20">
+		<table class="table table-border table-bordered table-bg table-hover table-sort">
+			<thead>
+				<tr class="text-c th">
+				    <th width="30">伸缩</th>
+					<th width="50">ID</th>
+					<th width="150">分类名称</th>
+					<th width="50">排序序号<br><span class="tishi" style="font-weight: normal;">数字越小越靠前</span></th>
+					<th width="100">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{volist name="categorys" id="vo"}
+				<tr class="text-c" id="{$vo.id}" parentid="{$vo.parent_id}">
+					<td align="center"><span class="open">+</span></td>
+					<td>{$vo.id}</td>
+					<td style="text-align: left;{if condition='$vo.cate_level eq 0'}font-weight:bold;{/if}">
+
+				  		<a href="{:url('content/index',array('cate_id'=>$vo.id))}" {if condition='$vo.status eq 0'}style="color: #aaa;"{/if}><?php echo str_repeat('-', 8*$vo['cate_level']); ?>{$vo.cate_name}</a>
+
+					</td>
+					<td class="text-c listorder">
+						<input size="10" attr-id="{$vo.id}" attr-model="category" name="listorder"  value="{$vo.listorder}"/>
+					</td>
+					<td class="td-manage"><a style="text-decoration:none" class="ml-5" href="{:url('category/edit',array('id'=>$vo.id))}" title="修改"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onclick="delete_confirm('{:url('category/del',array('id'=>$vo.id,'dbname'=>'flink'))}')" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+				</tr>
+				{/volist}
+			</tbody>
+		</table>
+	</div>
+</div>
+<!--包含头部文件-->
+{include file="public/foot" /}
+<script>
+	//栏目伸缩状态js
+	   $('tr[parentid!=0]').hide();
+	   $('.open').click(function(){
+		   var id=$(this).parents('tr').attr('id');
+		   if($(this).text()=='+'){
+			   $(this).text('-');
+			   $('tr[parentid='+id+']').show();
+		   }else{
+			   $(this).text('+');
+			   $('tr[parentid='+id+']').hide();
+		   }
+	   });
+   </script>
+
+</body>
+</html>

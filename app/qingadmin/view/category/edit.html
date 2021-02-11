@@ -1,0 +1,220 @@
+<!--包含头部文件-->
+
+{include file="public/head" /}
+
+<body>
+
+<div class="page-container">
+
+	<form class="form form-horizontal form-o2o-add" id="form-o2o-add" method="post" action="{:url('category/update')}" enctype="multipart/form-data">
+
+		<div id="tab-system" class="HuiTab">
+			<div class="tabBar cl">
+				<span>基本信息</span>
+				<span>SEO信息</span>
+				<span>栏目内容</span>
+			</div>
+			<div class="tabCon">
+
+				<div class="row cl">
+
+					<label class="form-label col-xs-4 col-sm-2">分类名称：</label>
+
+					<div class="formControls col-xs-8 col-sm-9">
+
+						<input type="text" class="input-text" value="{$categoryData.cate_name}" name="cate_name" required="required">
+						<span class="tishi">如果为批量添加多个栏目，请用英文逗号隔开</span>
+
+						<input type="hidden" class="input-text" value="{$categoryData.id}" name="id">
+
+
+					</div>
+
+				</div>
+
+
+				
+				<div class="row cl">
+
+						<label class="form-label col-xs-4 col-sm-2">上级栏目：</label>
+	
+						<div class="formControls col-xs-8 col-sm-9">
+	
+							<span class="select-box">
+	
+							<select name="parent_id" class="select">
+	
+								<option value="0">顶级分类</option>
+	
+								{volist name="categoryTree" id="vo"}
+	
+								<option value="{$vo.id}" {if condition="$vo['id'] eq $categoryData['parent_id']"}selected="selected"{/if}><?php echo str_repeat('-', 8*$vo['cate_level']); ?>{$vo.cate_name}</option>
+	
+								{/volist}
+								
+	
+							</select>
+	
+							</span>
+	
+						</div>
+	
+					</div>
+				
+				<div class="row cl">
+
+					<label class="form-label col-xs-4 col-sm-2">商品类型：</label>
+
+					<div class="formControls col-xs-8 col-sm-9">
+
+						<span class="select-box">
+
+								<select name="type_id" class="select">
+
+										{volist name="typeData" id="vo"}
+			
+										<option value="{$vo.id}" {if condition='$vo.id eq $categoryData.type_id'}selected{/if}>{$vo.type_name}</option>
+			
+										{/volist}
+			
+									</select>
+
+						</span>
+
+					</div>
+
+				</div>
+
+				
+			
+				<div class="row cl">
+
+				      <label class="form-label col-xs-4 col-sm-2">外部链接：</label>
+
+				      <div class="formControls col-xs-8 col-sm-6">
+
+				        <input type="text" class="input-text" value="{$categoryData.link}" placeholder="" name="link" >
+
+				      </div>
+
+				</div>
+
+				<div class="row cl">
+
+				      <label class="form-label col-xs-4 col-sm-2">是否显示：</label>
+
+				      <div class="formControls col-xs-8 col-sm-6">
+
+				        <input value="1" name="status" type="radio" {if condition='$categoryData.status eq 1'}checked="checked"{/if}> 是&nbsp;&nbsp;
+				        <input value="0" name="status" type="radio" {if condition='$categoryData.status eq 0'}checked="checked"{/if}> 否
+
+				      </div>
+
+				</div>
+
+			     {include file="public/categoryimg_upload" /}
+
+			</div>
+
+			<!-- SEO信息 -->
+			<div class="tabCon">
+						
+				<div class="row cl">
+
+			      <label class="form-label col-xs-4 col-sm-2">SEO标题：</label>
+
+			      <div class="formControls col-xs-8 col-sm-9">
+
+			        <input type="text" class="input-text"  name="seo_title">
+
+			      </div>
+
+			    </div>
+
+			    <div class="row cl">
+
+			      <label class="form-label col-xs-4 col-sm-2">SEO关键词：</label>
+
+			      <div class="formControls col-xs-8 col-sm-9">
+
+			        <input type="text" class="input-text"  name="seo_keywords">
+
+			      </div>
+
+			    </div>
+
+			    <div class="row cl">
+
+			      <label class="form-label col-xs-4 col-sm-2">SEO描述：</label>
+
+			      <div class="formControls col-xs-8 col-sm-9">
+
+			        <textarea name="seo_description" class="textarea"></textarea>
+
+			      </div>
+
+			    </div>
+
+			</div>
+
+
+			<!-- 栏目内容 -->
+			<div class="tabCon">
+
+				<div class="row cl">
+			      <label class="form-label col-xs-4 col-sm-2">内容：</label>
+			      <div class="formControls col-xs-8 col-sm-9">
+			        <script id="editor"  type="text/plain" name="content" style="width:100%;height:370px;">{$categoryData.content|raw}</script>
+
+			      </div>
+			    </div>
+
+			</div>
+
+		</div>
+
+
+		<div class="row cl">
+
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+
+				<button  type="submit" class="btn btn-primary radius" ><i class="Hui-iconfont">&#xe632;</i> 保存</button>
+
+				<button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+
+			</div>
+
+		</div>
+
+
+	</form>
+
+</div>
+
+</div>
+
+
+
+<!--包含头部文件-->
+
+{include file="public/foot" /}
+
+
+<script>
+  $(function(){
+    var ue = UE.getEditor('editor');
+  });
+</script>
+
+<script type="text/javascript">
+$(function(){
+	$('.skin-minimal input').iCheck({
+		checkboxClass: 'icheckbox-blue',
+		radioClass: 'iradio-blue',
+		increaseArea: '20%'
+	});
+	$("#tab-system").Huitab({
+		index:0
+	});
+});
+</script>

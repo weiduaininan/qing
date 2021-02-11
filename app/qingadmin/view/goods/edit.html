@@ -448,7 +448,7 @@
   $("select[name=type_id]").change(function () {
 
     // 获取选中的类型的id
-
+    $("#createTable").css("display", "none");
     var type_id = $(this).val();
 
     if (type_id != "") {
@@ -562,6 +562,7 @@ Creat_Table: function () {
   //开始创建Table表
 
   if (bCheck == true) {
+    $("#createTable").css("display", "inline-block");
 
     var RowsCount = 0;
 
@@ -877,7 +878,6 @@ doExchange: function (doubleArrays) {
 
     $(".single_standard1_content").css("display", "none");
     $(".single_standard2_content").css("display", "block");
-
   });
 
 

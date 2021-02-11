@@ -1,7 +1,7 @@
 <?php
 namespace app\qingadmin\controller;
 
-use app\qingadmin\model\AuthRule as AuthRuleModel;
+use app\common\model\AuthRule as AuthRuleModel;
 use think\Controller;
 use think\facade\Db;
 

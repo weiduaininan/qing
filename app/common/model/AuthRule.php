@@ -1,5 +1,5 @@
 <?php
-namespace app\qingadmin\model;
+namespace app\common\model;
 use think\Model;
 
 class AuthRule extends Model {
