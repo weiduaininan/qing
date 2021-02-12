@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+
+    <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_1646840_6dboo9fuop6.css"/>
+
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/user.css"/>
+
+    <link rel="stylesheet" href="/public/static/index/layui/css/layui.css">
+    <link rel="stylesheet" href="/public/static/index/css/common.css">
+
+    <script src="/public/static/index/js/jquery-3.4.1.min.js"></script>
+
+    <title>会员登录</title>
+
+    <meta name="keywords" content="">
+
+    <meta name="description" content="">
+
+
+
+</head>
+
+<body>
+
+
+    {include file="public/head"}
+
+
+
+<div class="loginbg">
+    <div class="login_box">
+
+        <div class="user_entrence_box">
+    
+            <div class="title_box">
+    
+                <div class="item current">会员登录</div>
+    
+                <div class="item "><a href="{:url('index/user/register')}">会员注册</a></div>
+    
+            </div>
+    
+            <form class="info_box" method="post" action="">
+    
+                <div class="item">
+    
+                    <div class="icon"><i class="iconfont iconwo"></i></div>
+    
+                    <div class="input_box"><input type="text" required name="mobile" placeholder="手机号码" class="input"></div>
+    
+                </div>
+    
+                <div class="item">
+    
+                    <div class="icon"><i class="iconfont iconmima"></i></div>
+    
+                    <div class="input_box"><input type="password" required  minlength="6" maxlength="25" name="password" placeholder="密码" class="input" oninvalid="setCustomValidity('密码长度大于6位');" oninput="setCustomValidity('');"></div>
+    
+                </div>
+    
+                <div class="item1">
+    
+                    <a href="{:url('shop/user/weixindenglu')}"><i class="iconfont iconweixin1" style="color: #00b62f;font-size: 22px;"></i></a>
+    
+                    <a href="{:url('shop/user/resetPassword')}" class="color888">忘记密码</a>
+    
+                </div>
+    
+                <button class="btn">登录</button>
+    
+            </form>
+    
+        </div>
+    
+    
+    
+    </div>
+    
+</div>
+
+
+
+
+
+{include file="public/foot2"}
+
+
+
+</body>
+
+</html>
+
+
+

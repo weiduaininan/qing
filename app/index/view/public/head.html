@@ -1,0 +1,58 @@
+
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_1646840_wwuv2y1aefe.css"/>
+<div class="top">
+
+    <div class="wrap top_box">
+
+        <div class="top_left">
+            <a href="{:url('shop/user/login')}">登录</a>
+            <a href="{:url('shop/user/register')}">注册</a>
+
+        </div>
+
+        <div class="top_right">
+
+            <a href="/shop/">首页</a>
+
+            <a href="{:url('shop/user/index')}">会员中心</a>
+            <a href="{:url('shop/user/notice')}">通知消息</a>
+
+            <a href="#">联系客服</a>
+
+            <a href="#" class="cart"><i class="icongouwuche iconfont"></i> 购物车( 5 )</a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+<div class="header" >
+
+    <div class="wrap header_box">
+
+        <div class="logo"><a href="/shop"><img src="/public/static/index/images/shop_logo.jpg"></a></div>
+        <div class="nav">
+            <div class="item"><a href="/">首页</a></div>
+            <div class="item"><a href="{:url('shop/lists/index',array('id'=>1))}">手机</a></div>
+            <div class="item"><a href="{:url('shop/lists/index',array('id'=>1))}">电视</a></div>
+            <div class="item"><a href="{:url('shop/lists/index',array('id'=>1))}">女装</a></div>
+            <div class="item"><a href="{:url('shop/lists/index',array('id'=>1))}">当季流行</a></div>
+        </div>
+
+        <form class="search_box" method="post" action="{:url('shop/lists/search')}">
+
+            <input type="text" placeholder="输入搜索关键字" name="searchkey" class="input">
+
+            <button type="submit" class="btn"><i class="icontubiao1 iconfont"></i></button>
+
+        </form>
+
+    </div>
+
+</div>
+
