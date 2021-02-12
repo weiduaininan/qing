@@ -157,7 +157,7 @@ class User extends Base {
 				return alert('该手机号已经注册过了，请登录', 'login', 5);
 			}
 			if ($userData['status'] == -1) {
-				return alert('该手机账号已经封号，请更换其他账号', 'register', 5);
+				return alert('该手机账号已经封号，请联系管理员', 'register', 5);
 			}
 
 			$smscode = '123456';
@@ -320,5 +320,4 @@ class User extends Base {
 		]);
 
 	}
-
 }

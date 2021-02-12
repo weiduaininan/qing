@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/shop.css"/>
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/user.css"/>
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/public/static/index/layui/css/layui.css">
+    <script src="/public/static/index/js/jquery-3.4.1.min.js"></script>
+    <script src="/public/static/index/layui/layui.js"></script>
+    <script src="/public/static/index/js/common.js"></script>
+    <title>{$web_title}</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+</head>
+<body>
+
+{include file="public/head"}
+<div class="header_line"></div>
+<div class="wrap">
+
+    {include file="public/ad"}
+
+    <div class="user_position">
+        当前位置：<a href="/shop/">首页</a> > 欢迎你！王大力
+    </div>
+    <div class="user_box">
+        {include file="user/left_menu"}
+        <div class="user_box_right">
+            <div class="current_title">收货地址</div>
+            <div class="user_content_box">
+                <p><a href="{:url('shop/address/address_add')}" class="color1">+新增收货地址</a></p>
+                <form class="index_form" method="post" action="{:url('/shop/user/index_update')}">
+                    <div class="item">
+                        <div class="label">昵称：</div>
+                        <div class="input_box"><input type="text" name="username" value="{$userData.username}" class="layui-input"></div>
+                    </div>
+                    <div class="item">
+                        <div class="label">电话：</div>
+                        <div class="input_box"><input type="text" name="mobile" value="{$userData.mobile}" class="layui-input"></div>
+                    </div>
+                    <div class="item">
+                        <div class="label">邮箱：</div>
+                        <div class="input_box"><input type="email" name="email" value="{$userData.email}" class="layui-input"></div>
+                    </div>
+                    <div class="item">
+                        <div class="label">星座：</div>
+                        <div class="input_box"><input type="text" {if condition="$userData.xingzuo"}disabled="disabled"{/if}
+                            name="xingzuo" value="{$userData.xingzuo}" class="layui-input"></div>
+                    </div>
+                    <div class="item">
+                        <div class="label"></div>
+                        <div class="input_box"><span class="tishi">星座一旦设置不可修改</span></div>
+                    </div>
+                    <div class="item">
+                        <div class="label">密码：</div>
+                        <div class="input_box"><input type="password" name="password" placeholder="不修改不需要填写" value=""  class="layui-input"></div>
+                    </div>
+
+                    <div class="item">
+                        <div class="label"></div>
+                        <div class="input_box"><button class="button">提交保存</button></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="lists_goods">
+       {volist name="hotGoods" id="vo"}
+        <a class="item" href="{:url('shop/goods/index',array('id'=>$vo.goods_id))}">
+            <div class="pic"><img src="{$vo.goods_thumb}"></div>
+            <div class="info">
+                <div class="goods_name">{$vo.goods_name}</div>
+                <div class="price">{$vo.goods_price}</div>
+                <div class="icon"><i class="fa fa-shopping-cart"></i></div>
+            </div>
+        </a>
+        {/volist}
+    </div>
+    
+</div>
+
+
+{include file="public/footer"}
+<script>
+
+
+    layui.use('upload', function () {
+      var upload = layui.upload;
+
+      //执行上传实例
+      var uploadInst = upload.render({
+        elem: '#test1' //绑定元素
+        , url: '/qingadmin/uploader/upload' //上传接口
+        , field: 'file'
+        , done: function (res) {
+          //上传完毕回调
+          console.log(res);
+          //path = JSON.stringify(res.path);
+          //path = path.replace("\"", "").replace("\"", "");
+          $(".public_thumb_input").val(res.path);
+          $(".public_thumb").attr("src", res.path);
+          $(".public_thumb_box").css("display", "flex");
+          $(".delete_img").css("display", "block");
+          
+        }
+        , error: function () {
+          //请求异常回调
+        }
+      });
+    });
+
+
+    //实时删除图片
+    $(".delete_img").click(function(){
+        var path=$(this).parent().children(".public_thumb_input").val();
+        var url="/qingadmin/uploader/remove_img";
+        var model = $(this).parent().attr('attr-model');//编辑默认删除图片
+        var id=$("input[name='id']").val();//编辑默认删除图片
+        postData = {'path':path,'model':model,'id':id};
+        $.post(url,postData,function(result){
+          //result=JSON.parse(result);
+          if(result.status==1){
+            $(".public_thumb_input").val("");
+            $(".public_thumb").attr("src", "");
+            $(".public_thumb_box").css("display", "none");
+            layui.use('layer', function(){
+              var layer = layui.layer;
+              layer.msg('已经删除成功！');
+            }); 
+          }
+        });
+    });
+
+    </script>
+
+
+
+</body>
+</html>
+

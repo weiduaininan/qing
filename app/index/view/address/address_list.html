@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/shop.css"/>
+
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/user.css"/>
+
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/font-awesome.min.css"/>
+
+    <link rel="stylesheet" href="/public/static/index/layui/css/layui.css">
+
+    <script src="/public/static/index/js/jquery-3.4.1.min.js"></script>
+
+    <script type="text/javascript" src="/public/static/index/js/layer-v3.1.1/layer.js"></script>
+
+    <script src="/public/static/index/js/common.js"></script>
+
+    <script src="/public/static/index/js/user.js"></script>
+
+    <title>收货地址</title>
+
+    <meta name="keywords" content="">
+
+    <meta name="description" content="">
+
+
+
+</head>
+
+<body>
+
+
+
+{include file="public/head"}
+<div class="wrapbg">
+
+<div class="wrap">
+
+
+
+    <div class="user_position">
+
+        当前位置：<a href="/shop/">首页</a> > 收货地址
+
+    </div>
+
+    <div class="user_box">
+
+        {include file="user/left_menu"}
+
+        <div class="user_box_right">
+
+            <div class="current_title">收货地址</div>
+
+            <div class="user_content_box">
+
+                <p><a  class="color1 add_address">+新增收货地址</a></p>
+
+                <table class="layui-table">
+
+
+
+                    <thead>
+
+                      <tr>
+
+                        <th>省份</th>
+
+                        <th>城市</th>
+
+                        <th>地区</th>
+
+                        <th>详细地址</th>
+
+                        <th>姓名</th>
+
+                        <th>电话</th>
+
+                        <th>操作</th>
+
+                      </tr> 
+
+                    </thead>
+
+                    <tbody>
+
+                      
+
+                     {volist name="$addressData" id="vo"}
+
+                      <tr>
+
+                        <td>{$vo.province}</td>
+
+                        <td>{$vo.city}</td>
+
+                        <td>{$vo.district}</td>
+
+                        <td>{$vo.shou_address}</td>
+
+                        <td>{$vo.shou_name}</td>
+
+                        <td>{$vo.shou_mobile}</td>
+
+                        <td style="text-align: center;" attr-id="{$vo.id}">
+
+                            <a href="{:url('address/address_edit',array('id'=>$vo.id))}" class="colorblue">修改</a>
+
+                            <a  class="colorblue delete_address" style="cursor: pointer;">删除</a>
+
+                            <br>
+
+                            <a  class="{if condition='$vo.isdefault eq 1'}color1{/if} setdefault" href="{:url('index/address/address_set_default',array('id'=>$vo.id))}" style="cursor: pointer;">默认地址</a>
+
+                        </td>
+
+                      </tr>
+
+                      {/volist}
+
+                    
+
+                    </tbody>
+
+                  </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    
+
+</div>
+</div>
+
+
+
+
+
+
+{include file="public/foot2"}
+
+<script src="/public/static/index/js/distpicker.data.js"></script>
+
+<script src="/public/static/index/js/distpicker.js"></script>
+
+<!-- 修改地址弹出框 -->
+
+<div class="mask"></div>
+
+<div class="address_box">
+
+    <div class="address_close"><i class="layui-icon layui-icon-close color888" style="font-size: 30px;"></i></div>
+
+    <div class="address_title text_center f24 mar_t_30">收货地址添加</div>
+
+    <form class="address_form " method="post" action="{:url('index/address/add_address_save')}">
+
+        <div class="city" data-toggle="distpicker">
+
+
+
+            <div class="city_box">
+
+                <label class="" for="province1">省份：</label>
+
+                <select class="input" id="province1" name="province"></select>
+
+            </div>
+
+            <div class="city_box">
+
+                <label class="" for="city1">城市：</label>
+
+                <select class="input" id="city1" name="city"></select>
+
+            </div>
+
+            <div class="city_box">
+
+                <label class="" for="district1">地区：</label>
+
+                <select class="input" id="district1" name="district"></select>
+
+            </div>
+
+        </div>
+
+
+
+
+
+
+
+        <div class="item address_info">
+
+            <label>详细地址：</label>
+
+            <div class="item_right">
+
+                <input type="text" name="shou_address"  placeholder="请填写详细地址" class="input" required>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="item ">
+
+            <label>姓名：</label>
+
+            <div class="item_right">
+
+                <input type="text"  name="shou_name"  placeholder="请填写姓名" class="input" required>
+
+            </div>
+
+        </div>
+
+        <div class="item ">
+
+            <label>电话：</label>
+
+            <div class="item_right">
+
+                <input type="text"  name="shou_mobile"  placeholder="请填写电话" class="input" required>
+
+            </div>
+
+        </div>
+
+        <div class="btn_box text_center mar_t_30 clear_both">
+
+            <button class="btn">确定</button>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
+
+
+

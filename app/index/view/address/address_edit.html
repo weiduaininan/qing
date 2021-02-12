@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/shop.css"/>
+
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/user.css"/>
+
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/font-awesome.min.css"/>
+
+    <link rel="stylesheet" href="/public/static/index/layui/css/layui.css">
+
+    <script src="/public/static/index/js/jquery-3.4.1.min.js"></script>
+
+    <script type="text/javascript" src="/public/static/index/js/layer-v3.1.1/layer.js"></script>
+
+    <script src="/public/static/index/js/common.js"></script>
+
+    <script src="/public/static/index/js/user.js"></script>
+
+    <title>收货地址</title>
+
+    <meta name="keywords" content="">
+
+    <meta name="description" content="">
+
+
+
+</head>
+
+<body>
+
+
+
+{include file="public/head"}
+
+<div class="wrapbg">
+
+<div class="wrap">
+
+
+
+    {include file="public/ad"}
+
+
+
+    <div class="user_position">
+
+        当前位置：<a href="/shop/">首页</a> > 欢迎你！王大力
+
+    </div>
+
+    <div class="user_box">
+
+        {include file="user/left_menu"}
+
+        <div class="user_box_right">
+
+            <div class="current_title">收货地址</div>
+
+            <div class="user_content_box">
+
+                <form class="address_form " method="post" action="{:url('shop/address/update_address')}">
+
+                    <div class="city" data-toggle="distpicker" id="target">
+
+            
+
+                        <div class="city_box">
+
+                            <label class="" for="province1">省份：</label>
+
+                            <select class="input" id="province1" name="province"></select>
+
+                        </div>
+
+                        <div class="city_box">
+
+                            <label class="" for="city1">城市：</label>
+
+                            <select class="input" id="city1" name="city">
+
+                                <option value="{$addressData.city}">{$addressData.city}</option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="city_box">
+
+                            <label class="" for="district1">地区：</label>
+
+                            <select class="input" id="district1" name="district">
+
+                                <option value="{$addressData.district}">{$addressData.district}</option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+            
+
+            
+
+            
+
+                    <div class="item address_info">
+
+                        <label>详细地址：</label>
+
+                        <div class="item_right">
+
+                            <input type="text" name="shou_address" required value="{$addressData.shou_address}" class="input" >
+
+                            <input type="hidden" name="id" required value="{$addressData.id}" class="input" >
+
+                        </div>
+
+                    </div>
+
+            
+
+                    <div class="item ">
+
+                        <label>姓名：</label>
+
+                        <div class="item_right">
+
+                            <input type="text"  name="shou_name" value="{$addressData.shou_name}" required placeholder="请填写姓名" class="input">
+
+                        </div>
+
+                    </div>
+
+                    <div class="item ">
+
+                        <label>电话：</label>
+
+                        <div class="item_right">
+
+                            <input type="text"  name="shou_mobile" value="{$addressData.shou_mobile}" required placeholder="请填写电话" class="input">
+
+                        </div>
+
+                    </div>
+
+                    <div class="btn_box text_center mar_t_30 clear_both">
+
+                        <button class="btn">确定</button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    
+
+</div>
+
+
+</div>
+
+{include file="public/foot2"}
+
+<script src="/public/static/index/js/distpicker.data.js"></script>
+
+<script src="/public/static/index/js/distpicker.js"></script>
+
+
+
+<script>
+
+$(function(){
+
+    $("#target").distpicker('destroy');
+
+    $("#target").distpicker({
+
+        province:'{$addressData.province}',
+
+        city:'{$addressData.city}',
+
+        district:'{$addressData.district}'
+
+    });
+
+});
+
+</script>
+
+
+
+
+
+
+
+</body>
+
+</html>
+
+
+
