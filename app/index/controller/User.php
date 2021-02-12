@@ -242,6 +242,30 @@ class User extends Base {
 		}
 
 	}
+	//修改会员资料
+	public function info() {
+
+		$sessionUserData = $this->isLogin();
+
+		$userData = Db::name('user')->find($sessionUserData['id']);
+
+		return view('', [
+
+			'userData' => $userData,
+			'left_menu' => 41,
+		]);
+	}
+
+	//全网昵称唯一
+	public function checkUsername() {
+		$data = input('post.');
+		$userData = Db::name('user')->where('username', $data['username'])->where('id', '<>', $data['id'])->find();
+		if ($userData) {
+			return json(['code' => 1]);
+		} else {
+			return json(['code' => 0]);
+		}
+	}
 
 	//修改密码
 	public function edit_password() {
@@ -270,6 +294,31 @@ class User extends Base {
 		} else {
 			return view();
 		}
+	}
+
+	//我的收藏列表
+
+	public function collect() {
+
+		$sessionUserData = $this->isLogin();
+
+		$collectData = Db::name("collect")->alias("a")
+
+			->join("goods b", "a.goods_id=b.goods_id")
+
+			->where("a.user_id", $sessionUserData['id'])
+
+			->field("a.*,b.goods_name,b.goods_thumb,goods_price,market_price")->order('time desc')
+
+			->paginate(10);
+		//echo Db::name('collect')->getLastSql();die;
+		return view('', [
+
+			'collectData' => $collectData,
+			'left_menu' => 21,
+
+		]);
+
 	}
 
 }

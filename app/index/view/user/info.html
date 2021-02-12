@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/shop.css" />
+
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/user.css" />
+
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/font-awesome.min.css" />
+
+    <link rel="stylesheet" href="/public/static/index/layui/css/layui.css">
+
+    <script src="/public/static/index/js/jquery-3.4.1.min.js"></script>
+
+    <script src="/public/static/index/layui/layui.js"></script>
+
+    <script src="/public/static/index/js/common.js"></script>
+
+    <title>{$web_title}</title>
+
+    <meta name="keywords" content="">
+
+    <meta name="description" content="">
+
+
+
+</head>
+
+<body>
+
+
+
+    {include file="public/head"}
+
+    <div class="wrapbg">
+
+        <div class="wrap ">
+
+
+
+            <div class="user_position">
+
+                当前位置：<a href="/">首页</a> > <a href="{:url('user/index')}">会员中心</a> > 个人资料
+
+            </div>
+
+            <div class="user_box">
+
+                {include file="user/left_menu"}
+
+                <div class="user_box_right">
+
+
+                    <!-- <div class="xingyun_info">您是本网站第<span class="color1">563</span>位付款幸运客户。截至到现在为止本网站总营销额<span
+                            class="color1">51063</span>元，感谢您对我们的支持。</div> -->
+
+                    <form class="index_info_form" method="post" action="{:url('user/index_update')}">
+
+                        <div class="left_content">
+
+                                <div class="face"><img src="{$userData.face|default='/public/static/index/images/face.jpg'}" class="img"></div>
+
+                                <div class="input_box">
+
+                                    <button type="button" class="layui-btn" id="test1">
+
+                                        <i class="layui-icon">&#xe67c;</i>更改头像
+
+                                    </button>
+
+                                    <div class="public_thumb_box" {if condition="$userData['face']"
+                                        }style="display:flex" {/if} attr-model="user">
+
+                                        <input type="hidden" name="face" value="{$userData.face}"
+                                            class="public_thumb_input layui-input" style="width: 500px">
+                                      
+                                    </div>
+
+                                </div>
+
+                        </div>
+
+                        <div class="right_content">
+                            <div class="item">
+
+                                <div class="label">昵称：</div>
+
+                                <div class="input_box username"><input type="text" name="username" value="{$userData.username}"
+                                        class="layui-input "><i class="iconfont iconduihao"></i><i class="iconfont iconcuo" style="display: none;"></i><span class="tishi">昵称全网唯一</span></div>
+
+                            </div>
+                           
+
+                            <div class="item">
+
+                                <div class="label">电话：</div>
+
+                                <div class="input_box"><input type="text" name="mobile" value="{$userData.mobile}"
+                                        class="layui-input"></div>
+
+                            </div>
+
+                            <div class="item">
+
+                                <div class="label">邮箱：</div>
+
+                                <div class="input_box"><input type="email" name="email" value="{$userData.email}"
+                                        class="layui-input"></div>
+
+                            </div>
+
+                            <div class="item">
+
+                                <div class="label">星座：</div>
+
+                                <div class="input_box"><input type="text" {if condition="$userData.xingzuo"
+                                        }disabled="disabled" {/if} name="xingzuo" value="{$userData.xingzuo}"
+                                        class="layui-input"></div>
+
+                            </div>
+
+                            
+
+                           
+                            <div class="item">
+
+                                <div class="label"></div>
+
+                                <div class="input_box"><button class="button">提交保存</button></div>
+
+                            </div>
+                        </div>
+
+
+
+                    </form>
+
+                </div>
+
+            </div>
+
+
+
+
+        </div>
+
+    </div>
+
+    <div class="foot_line"></div>
+
+    {include file="public/foot2"}
+
+    <script>
+
+    //实时监测用户名唯一性
+    $('.username input').blur(function(){
+        var username=$('.username input').val();
+        if(username.length<1){
+            layer.msg('请填写用户名信息！');
+            $('.username input').focus();
+            return false;
+        }
+        var postData = {
+            'username' : username,
+            'id':{$userData.id}
+        };
+        var url ='checkUsername';
+        $.post(url, postData, function(result){
+        if(result.code == 1) {
+            $(".iconcuo").css('display','block');
+            $(".iconduihao").css('display','none');
+            $(".tishi").html("<span style=' color: #ff6709;'>昵称已经被占用！请更换昵称！</span>");
+            $(".button").attr('disabled','true');
+        }else {
+            $(".iconduihao").css('display','block');
+            $(".tishi").text('昵称可用！');
+            $(".button").attr('disabled','false');
+            $(".iconcuo").css('display','none');
+            $(".button").removeAttr('disabled');
+        }
+    },"json");
+    });
+
+
+        layui.use('upload', function () {
+
+            var upload = layui.upload;
+
+
+
+            //执行上传实例
+
+            var uploadInst = upload.render({
+
+                elem: '#test1' //绑定元素
+
+                , url: 'upload' //上传接口
+
+                , field: 'file'
+
+                , done: function (res) {
+
+                    //上传完毕回调
+
+                    console.log(res);
+
+                    //path = JSON.stringify(res.path);
+
+                    //path = path.replace("\"", "").replace("\"", "");
+
+                    $(".public_thumb_input").val(res.path);
+
+                    $(".face .img").attr("src", res.path);
+
+                    $(".public_thumb_box").css("display", "flex");
+
+                }
+
+                , error: function () {
+
+                    //请求异常回调
+
+                }
+
+            });
+
+        });
+
+
+
+    </script>
+
+
+
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+<div class="user_box_left">
+
+    <div class="title">订单中心</div>
+    <li> · <a href="#">全部订单</a></li>
+    <li> · <a href="#">待收货订单</a></li>
+    <li> · <a href="#">待付款订单</a></li>
+
+
+    <div class="title">个人中心</div>
+    <li {if condition="$left_menu eq 21"}class='current'{/if}> · <a href="/index/user/collect.html">我的收藏</a></li>
+    <li> · <a href="/index/user/address_list.html">收货地址</a></li>
+    <li> · <a href="/index/user/comment_list.html">我的评价</a></li>
+    <li {if condition="$left_menu eq 24"}class='current'{/if}> · <a href="/index/user/coupons.html">优惠券</a></li>
+    <li> · <a href="/index/user/fenyong.html">我的分佣</a></li>
+    <li {if condition="$left_menu eq 26"}class='current'{/if}> · <a href="/index/user/mytrace.html">我的足迹</a></li>
+    <li> · <a href="/index/cart/index.html">我的购物车</a></li>
+
+    <div class="title">积分管理</div>
+    <li> · <a href="/index/user/myscore.html">我的积分</a></li>
+    <li {if condition="$left_menu eq 32"}class='current'{/if}> · <a href="/index/User/score_shop.html">积分商城</a></li>
+
+    <div class="title">账户中心</div>
+    <li  {if condition="$left_menu eq 41"}class='current'{/if}> · <a href="/index/user/info.html" >个人资料</a></li>
+    <li {if condition="$left_menu eq 42"}class='current'{/if}> · <a href="/index/user/edit_password.html">修改密码</a></li>
+    <li  {if condition="$left_menu eq 43"}class='current'{/if}> · <a href="/index/user/notice.html">消息通知</a></li>
+    <li  {if condition="$left_menu eq 44"}class='current'{/if}> · <a href="/index/user/fapiao.html">发票申请</a></li>
+    <li> · <a href="/index/user/login_out.html">安全退出</a></li>
+
+</div>

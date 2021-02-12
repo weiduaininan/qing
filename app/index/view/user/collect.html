@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/shop.css"/>
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/user.css"/>
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/public/static/index/layui/css/layui.css">
+    <script src="/public/static/index/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="/public/static/index/js/layer-v3.1.1/layer.js"></script>
+    <script src="/public/static/index/js/common.js"></script>
+    <script src="/public/static/index/js/user.js"></script>
+    <title>我的收藏</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+</head>
+<body>
+
+{include file="public/head"}
+
+<div class="wrapbg">
+<div class="wrap">
+
+    <div class="user_position">
+        当前位置：<a href="/shop/">首页</a> > <a href="{:url('user/index')}">会员中心</a> > 我的收藏
+    </div>
+    <div class="user_box">
+        {include file="user/left_menu"}
+        <div class="user_box_right">
+            <div class="user_content_box">
+
+                <div class="collect_box">
+                    {volist name="$collectData" id="vo"}
+                    <div class="item">
+                        <div class="pic"><img src="{$vo.goods_thumb}"></div>
+                        <div class="title">{$vo.goods_name}</div>
+                        <div class="price_box"><span class="price">￥{$vo.goods_price}</span><span class="market">{$vo.market_price}</span></div>
+                        <div class="btn_box">
+                            <a href="{:url('index/user/delete_goods_collect')}" class="color888 del">删除</a>
+                            <a href="{:url('index/goods/index',array('goods_id'=>$vo.goods_id))}" class="color1 detail">查看详情</a>
+                        </div>
+                        <input type="hidden" name="goods_id" value="{$vo.goods_id}">
+                    </div>
+                    {/volist}
+                </div>
+                {$collectData|raw}
+                
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+</div>
+
+
+
+
+{include file="public/foot2"}
+
+
+</body>
+</html>
+
