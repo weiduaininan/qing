@@ -89,7 +89,7 @@ class Base extends BaseController {
 
 	//获取关键字
 	public function getSearch() {
-		$searchData = Db::name('search')->order('id desc')->limit(2)->select()->toArray();
+		$searchData = Db::name('search')->order('id desc')->limit(6)->select()->toArray();
 		return $searchData;
 	}
 
