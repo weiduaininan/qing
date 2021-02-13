@@ -11,8 +11,16 @@ class Base extends BaseController {
 	public function initialize() {
 
 		$this->getConfig(); //获取配置信息
+
 		$sessionUserData = session('sessionUserData');
 		View::assign('sessionUserData', $sessionUserData);
+
+		$searchData = $this->getSearch(); //获取关键字
+		$cartCount = $this->getCartCount(); //获取购物车数量
+
+		View::assign('searchData', $searchData);
+		View::assign('cartCount', $cartCount);
+
 	}
 
 	//配置信息
@@ -79,10 +87,23 @@ class Base extends BaseController {
 		}
 	}
 
+	//获取关键字
+	public function getSearch() {
+		$searchData = Db::name('search')->order('id desc')->limit(10)->select()->toArray();
+		return $searchData;
+	}
+
 	//前台密码加密盐
 	public function password_salt($str) {
 		$salt = 'zxc69vbn';
 		return md5($salt . $str);
+	}
+
+	//获取购物车数量
+	public function getCartCount() {
+		$sessionUserData = session('sessionUserData');
+		$cartCount = Db::name('cart')->where('user_id', $sessionUserData['id'])->count();
+		return $cartCount;
 	}
 
 	//发送验证码
@@ -100,6 +121,25 @@ class Base extends BaseController {
 
 	}
 
+	//通过sku获取属性值  3,5,23
+	public function getAttrBySku($sku) {
+		$skuStr = '';
+		if (empty($sku)) {
+			return $skuStr;
+		}
+		$skuArr = explode(',', $sku);
+		foreach ($skuArr as $k => $v) {
+			$str = Db::name('standard_value')->where('id', $v)->value('standard_value');
+			if ($k == 0) {
+				$skuStr = $str;
+			} else {
+				$skuStr = $skuStr . ',' . $str;
+			}
+
+		}
+		return $skuStr;
+	}
+
 	public function isLogin() {
 		$sessionUserData = session('sessionUserData');
 		if (empty($sessionUserData)) {
@@ -114,6 +154,31 @@ class Base extends BaseController {
 
 	public function redirect(...$args) {
 		throw new HttpResponseException(redirect(...$args));
+	}
+
+	//获取当前的位置信息
+	public function getPositionByCatId($cateId) {
+
+		// $x=5;
+		// while(0<=$x && $x<=5) {
+		//     echo "数字是：$x <br>";
+		//     $x--;
+		//  }
+
+		$positionData = array();
+		while ($cateId) {
+			$cates = Db::name('category')->where('id=' . $cateId)->find();
+			$positionData[] = array(
+				'id' => $cates['id'],
+				'cate_name' => $cates['cate_name'],
+				'parent_id' => $cates['parent_id'],
+			);
+			$cateId = $cates['parent_id'];
+		}
+
+		//将取出的当前位置信息数组 倒序
+		$positionData = array_reverse($positionData);
+		return $positionData;
 	}
 
 }
