@@ -7,6 +7,7 @@ use app\common\validate\User as UserValidate;
 use think\Controller;
 use think\exception\ValidateException;
 use think\facade\Db;
+use think\facade\view;
 
 class User extends Base {
 	//会员首页
@@ -295,4 +296,41 @@ class User extends Base {
 			return view();
 		}
 	}
+	//我的评价
+	public function comment_list() {
+		$sessionUserData = $this->isLogin();
+		$commentData = Db::name('comment')
+			->alias('c')
+			->join('goods g', 'c.goods_id = g.goods_id')
+			->join('user u', 'c.user_id = u.id')
+			->where('user_id', $sessionUserData['id'])
+			->field('c.*,u.username,g.goods_thumb')
+			->order('c.id desc')
+			->paginate(3);
+		// echo Db::name('comment')->getLastSql();die;
+		return view('', [
+			'left_menu' => 23,
+			'commentData' => $commentData,
+		]);
+	}
+	//  //我的评论列表
+	// public function comment_list() {
+	// 	$sessionUserData = $this->isLogin();
+	// 	$commentData = Db::view('comment', 'id,content,star,time')
+	// 		->view('goods', 'goods_thumb,goods_id', 'comment.goods_id=goods.goods_id')
+	// 		->view('user', 'username', 'comment.user_id=user.id')
+	// 		->where('comment.user_id', $sessionUserData['id'])
+	// 		->order('comment.id desc')
+	// 		->paginate(2);
+	// 	View::assign(
+	// 		[
+	// 			'left_menu' => 23,
+	// 			'commentData' => $commentData,
+	// 		]);
+	// 	return View::fetch();
+	// 	// return view('', [
+	// 	// 	'left_menu' => 23,
+	// 	// 	'commentData' => $commentData,
+	// 	// ]);
+	// }
 }

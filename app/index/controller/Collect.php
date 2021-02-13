@@ -23,7 +23,6 @@ class Collect extends Base {
 			->paginate(6);
 		//echo Db::name('collect')->getLastSql();die;
 		return view('', [
-
 			'collectData' => $collectData,
 			'left_menu' => 21,
 

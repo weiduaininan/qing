@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/shop.css"/>
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/user.css"/>
+    <link rel="stylesheet" href="/public/static/index/layui/css/layui.css">
+    <script src="/public/static/index/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="/public/static/index/js/layer-v3.1.1/layer.js"></script>
+    <script src="/public/static/index/js/common.js"></script>
+    <script src="/public/static/index/js/user.js"></script>
+    <title>我的评价</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+</head>
+<body>
+
+{include file="public/head"}
+
+<div class="wrapbg">
+<div class="wrap">
+
+    <div class="user_position">
+        当前位置：<a href="/shop/">首页</a> > <a href="{:url('user/index')}">会员中心</a> > 我的评价
+    </div>
+    <div class="user_box">
+        {include file="public/left_menu"}
+        <div class="user_box_right">
+            <div class="user_content_box">
+
+                <div class="mycomment_box">
+                    {volist name="$commentData" id="vo"}
+                    <div class="item">
+                        <div class="pic"><a href="{:url('index/goods/index',array('goods_id'=>$vo.goods_id))}"><img src="{$vo.goods_thumb}" style="max-height: 300px"></a></div>
+                        <div class="info">
+                          <div class="username">{$vo.username}</div>
+                          <div class="time">{$vo.time|date='Y-m-d'}</div>
+                          <div class="content">{$vo.content}</div>
+                        </div>
+                        <div class="score_box">
+
+                          <i class="layui-icon layui-icon-rate-solid isstar"></i>
+                          <i class="layui-icon layui-icon-rate-solid {if condition='$vo.star > 1'}isstar{/if}"></i>
+                          <i class="layui-icon layui-icon-rate-solid {if condition='$vo.star > 2'}isstar{/if}"></i>
+                          <i class="layui-icon layui-icon-rate-solid {if condition='$vo.star > 3'}isstar{/if}"></i>
+                          <i class="layui-icon layui-icon-rate-solid {if condition='$vo.star > 4'}isstar{/if}"></i>
+                      </div>
+                    </div>
+                    {/volist}
+                </div>
+                {$commentData|raw}
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+</div>
+
+
+
+
+{include file="public/foot"}
+
+
+</body>
+</html>
+
