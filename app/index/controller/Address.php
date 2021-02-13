@@ -1,5 +1,6 @@
 <?php
 namespace app\index\controller;
+use app\common\model\Address as AddressModel;
 use think\facade\Db;
 
 /**
@@ -64,5 +65,39 @@ class Address extends Base {
 		Db::name('address')->where('id', $id)->update(['isdefault' => 1]);
 		return redirect('address_list');
 
+	}
+	//编辑页面
+	public function address_edit() {
+		$sessionUserData = $this->isLogin();
+		//接收id
+		$id = input('id');
+		$addressData = Db::name("address")->find($id);
+		//halt($addressData);
+		return view('address/address_edit', [
+			'addressData' => $addressData,
+			'left_menu' => 22,
+		]);
+	}
+	//更新操作
+	public function update_address() {
+		$sessionUserData = $this->isLogin();
+		$data = input("post.");
+		$res = AddressModel::update($data);
+		if ($res) {
+			return alert('操作成功！', 'address_list', 6);
+		} else {
+			return alert('操作失败！', 'address_list', 5);
+		}
+	}
+	//删除操作
+	public function delete_address() {
+		$id = input('post.id');
+		// $id = input('id');
+		// $id = request()->post('id');
+		// $id = Request::instance()->param('id');
+		// $id = $this->request->param('id', 'intval');
+		// $res = AddressModel::destroy($id);
+		$status = Db::name('address')->delete($id);
+		return json(['status' => $status]);
 	}
 }
