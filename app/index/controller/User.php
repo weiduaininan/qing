@@ -243,7 +243,7 @@ class User extends Base {
 		}
 
 	}
-	//修改会员资料
+	//用户详情
 	public function info() {
 
 		$sessionUserData = $this->isLogin();
@@ -265,6 +265,30 @@ class User extends Base {
 			return json(['code' => 1]);
 		} else {
 			return json(['code' => 0]);
+		}
+	}
+	//修改会员资料更新
+
+	public function index_update() {
+
+		if (request()->isPost()) {
+
+			$sessionUserData = $this->isLogin();
+			$user_id = $sessionUserData['id'];
+			$data = input('post.');
+			unset($data['file']);
+			//validate校验
+			$validate = new \app\common\validate\User();
+			if (!$validate->scene('info')->check($data)) {
+				return alert($validate->getError(), 'info', 5, 3);
+			}
+			//更新数据库操作
+			$res = Db::name('user')->where('id', $user_id)->update($data);
+			if ($res) {
+				return alert('操作成功！', 'index', 6, 3);
+			} else {
+				return alert('操作失败！', 'index', 5, 3);
+			}
 		}
 	}
 
