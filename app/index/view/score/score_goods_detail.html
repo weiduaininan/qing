@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/shop.css"/>
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/user.css"/>
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/public/static/index/layui/css/layui.css">
+    <script src="/public/static/index/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="/public/static/index/js/layer-v3.1.1/layer.js"></script>
+    <script src="/public/static/index/js/common.js"></script>
+    <script src="/public/static/index/js/user.js"></script>
+    <title>积分商品详细信息</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+</head>
+<body>
+
+{include file="public/head"}
+
+<div class="wrapbg">
+<div class="wrap">
+
+
+    <div class="user_position">
+        当前位置：<a href="/shop/">首页</a> > <a href="{:url('user/index')}">会员中心</a> > 积分商城
+    </div>
+    <div class="user_box">
+        {include file="public/left_menu"}
+        <div class="user_box_right">
+            <div class="user_content_box">
+
+                <div class="score_goods_box">
+                    <div class="score_goods_left"><img src="{$scoreGoodsData.thumb}" style="max-width: 300px"></div>
+                    <div class="score_goods_right">
+                        <div class="box">
+                            <div class="title">{$scoreGoodsData.title}</div>
+                            <div class="description" style="color: #ff5b00;font-size: 24px;">{$scoreGoodsData.score}积分</div>
+                           
+                            {if condition='$total_socre egt $scoreGoodsData.score'}
+                            <div class="btn btn1" onclick="exchange(this)">立即兑换</div>
+                            {else/}
+                            <div class="btn btn2">积分不足</div>
+                            {/if}
+                            <div style="color: #888;margin-top: 15px;">注：实物快递地址为<a href="{:url('index/address/address_list')}" style="color: #ff5b00;">默认收货地址</a></div>
+                            
+                            <input type="hidden" name="id" value="{$scoreGoodsData.id}">
+
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="score_goods_title">商品详情</div>
+                <div class="score_goods_content">{$scoreGoodsData.content|raw}</div>
+
+                
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+</div>
+
+
+
+
+{include file="public/foot2"}
+
+
+
+
+<script type="text/javascript">
+
+    //删除收藏操作
+    function exchange() {
+      var id = $("input[ name='id' ]").val();
+      layer.confirm('确定兑换此商品吗？', {
+        btn: ['确定','取消'] //按钮
+        }, function(){
+
+            //抛送数据
+            postData = {'id':id};
+            url='score_exchange';
+            $.post(url,postData,function(result){
+                
+                //错误提示信息，正确的话就直接跳转了
+                if(result.status==1){
+                    layer.alert(result.msg,function(){
+                        window.location.href='/index/score/myscore_record';
+                    })
+                }
+                if(result.status==-1){
+                    layer.alert(result.msg)
+                }
+                
+            },'json');
+
+        }, function(){
+            layer.closeAll();
+            return false;
+      });
+    
+      
+    }
+    
+    </script>
+</body>
+</html>
+

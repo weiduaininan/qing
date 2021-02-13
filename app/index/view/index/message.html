@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/shop.css"/>
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/user.css"/>
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/public/static/index/layui/css/layui.css">
+    <script src="/public/static/index/js/jquery-3.4.1.min.js"></script>
+    <script src="/public/static/index/js/common.js"></script>
+    <title>申请退换货</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+</head>
+<body>
+
+    {include file="public/head"}
+
+
+<div class="header_line"></div>
+<div class="graybg">
+
+    <div class="wrap">
+       <div class="page_box">
+        <div class="page_left">
+
+                <li class="title item">新手入门指南</li>
+
+                <li class="item"><a href="/shop/index/page/id/4.html" >商品购买政策</a></li>
+
+                <li class="item"><a href="/shop/index/page/id/5.html" >商品购买流程</a></li>
+
+                <li class="item"><a href="/shop/index/page/id/6.html" >如何注册会员</a></li>
+
+                <li class="item"><a href="/shop/index/page/id/7.html" >交易条款说明</a></li>
+
+                <li class="title item">售后服务</li>
+
+                <li class="item"><a href="/shop/index/page/id/8.html" >售后服务规则</a></li>
+
+                <li class="item"><a href="/shop/index/message1.html" class="color1">申请退换货</a></li>
+
+                <li class="title item">客服中心</li>
+
+                <li class="item"><a href="/shop/index/message.html" >意见反馈</a></li>
+
+                <li class="item"><a href="/shop/index/page/id/9.html" >常见问题</a></li>
+
+
+
+           </div>
+           <div class="page_right">
+                <div class="title">申请退换货</div>
+                <div class="content">
+                    <form class="index_form" method="post" action="">
+                        <div class="item">
+                            <div class="label">称呼：</div>
+                            <div class="input_box"><input type="text" name="name" placeholder="您的称呼" class="layui-input"></div>
+                        </div>
+                        <div class="item">
+                            <div class="label">电话：</div>
+                            <div class="input_box"><input type="text" name="mobile" placeholder="您的联系电话" class="layui-input"></div>
+                        </div>
+                        <div class="item">
+                            <div class="label">微信号：</div>
+                            <div class="input_box"><input type="text" name="weixin" placeholder="您的微信" class="layui-input"></div>
+                        </div>
+                        <div class="item">
+                            <div class="label">订单号：</div>
+                            <div class="input_box"><input type="text" name="dingdan" placeholder="填写订单号" class="layui-input"></div>
+                        </div>
+                        <div class="item">
+                            <div class="label"></div>
+                            <div class="input_box" style="text-align: left;"><span class="tishi">（在[用户中心]-[订单列表]中查找对应订单号）</span></div>
+                        </div>
+                        <div class="item">
+                            <div class="label">备注内容：</div>
+                            <div class="input_box"><textarea type="text" name="content" class="layui-textarea"></textarea></div>
+                        </div>
+                        {:token_field()}
+                        <div class="item">
+                            <div class="label"></div>
+                            <div class="input_box"><button class="button">提交</button></div>
+                        </div>
+                    </form>
+                </div>
+           </div>
+       </div>
+    </div>
+  
+</div>
+
+
+{include file="public/footer"}
+
+</body>
+</html>
+

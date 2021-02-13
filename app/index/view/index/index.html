@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/shop.css"/>
+
+    <link rel="stylesheet" type="text/css" href="/public/static/index/layui/css/layui.css"/>
+
+    <link rel="stylesheet" href="/public/static/index/css/swiper.min.css">
+
+    <script src="/public/static/index/js/jquery-3.4.1.min.js"></script>
+
+    <script src="/public/static/index/js/swiper.min.js"></script>
+    <script src="/public/static/index/layui/layui.js"></script>
+
+    <script src="/public/static/index/js/common.js"></script>
+
+    <title>{$web_title}</title>
+
+    <meta name="keywords" content="">
+
+    <meta name="description" content="">
+
+
+
+</head>
+
+<body>
+
+
+
+<style>
+
+    body{
+
+        background: #f5f5f5;
+
+    }    
+
+</style>
+
+
+
+{include file="public/head"}
+
+
+
+<div class="wrap">
+
+    <div class="index_content">
+
+        <div class="index_content_left">
+
+            <div class="nav_box">
+
+                {volist name="$indexCate" id="vo"}
+                
+                <div class="item">
+
+                    <a href="/index/lists/index.html?cate_id={$vo.id}" class="colorfff">{$vo.cate_name}</a>
+
+                    <a href="javascript::(void)" class="colorfff">&gt;</a>
+
+                    
+                    <div class="sub_content" style="display: none;">
+
+                            {php}if(isset($vo['children'])){{/php}
+                                {volist name="$vo.children" id="vo1"}
+                                <div class="item1">
+                                    <a href="/index/lists/index.html?cate_id={$vo1.id}"><b>{$vo1.cate_name}</b></a>
+                                    {php}if(isset($vo1['children'])){{/php}
+                                        {volist name="$vo1.children" id="vo2"}
+                                        <div class="">
+                                            <a href="/index/lists/index.html?cate_id={$vo2.id}">{$vo2.cate_name}</a>
+                
+                                        </div>
+                                        {/volist}
+                                    {php}}{/php}
+                                </div>
+                                {/volist}
+                            {php}}{/php}
+                    </div>
+
+                    
+                </div>
+                {/volist}
+                
+            </div>
+
+        </div>
+
+        <div class="index_content_middle">
+
+            <section class="index_banner">
+
+                <div class="swiper-wrapper">
+
+                    {volist name="$bannerData" id="vo"}
+                    <div class="swiper-slide">
+
+                        <a href="{$vo.url}"><img src="{$vo.thumb}"></a>
+
+                    </div>
+                    {/volist}
+
+                </div>
+
+        
+
+                <div class="swiper-pagination"></div>
+
+            </section>
+
+            <script>
+
+                var swiper = new Swiper('.index_banner', {
+
+                    pagination: {
+
+                        el: '.swiper-pagination',
+
+                        clickable: true,
+
+                    },
+
+                    loop:'true',
+
+                  
+
+                });
+
+            </script>
+
+        </div> 
+
+      
+
+    </div>
+
+
+    <div class="index_ad_box">
+        <div class="item"><a href="{:url('index/goods/index',array('goods_id'=>6))}"><img src="/public/static/index/images/ad1.jpg"></a></div>
+        <div class="item"><a href="{:url('index/goods/index',array('goods_id'=>3))}"><img src="/public/static/index/images/ad2.jpg"></a></div>
+        <div class="item"><a href="{:url('index/goods/index',array('goods_id'=>7))}"><img src="/public/static/index/images/ad3.jpg"></a></div>
+        <div class="item"><a href="{:url('index/goods/index',array('goods_id'=>1))}"><img src="/public/static/index/images/ad1.jpg"></a></div>
+    </div>
+
+    <div class="index_floor">
+        <div class="title_box">
+            <div class="title">手机</div>
+            <div class="nav">
+                {volist name="$goodsCate18" id="vo"}
+                <a class="item" href="{:url('index/lists/index',array('cate_id'=>$vo.id))}">{$vo.cate_name}</a>
+                {/volist}
+            </div>
+        </div>
+        <div class="goods_box">
+            <div class="left_content"><a href="{:url('/shop/lists/index',array('cate_id'=>16))}"><img src="/public/static/index/images/t1.webp"></a></div>
+            <div class="right_content">
+                {volist name="$goodsData18" id="vo"}
+                <a class="item" href="{:url('index/goods/index',array('goods_id'=>$vo.goods_id))}">
+                    <div class="pic"><img src="{$vo.goods_thumb}"></div>
+                    <div class="title">{$vo.goods_name}</div>
+                    <div class="description">{$vo.goods_short_name}</div>
+                    <div class="price_box"><span class="price">{$vo.goods_price}元起</span><span class="market">{$vo.market_price}元起</span></div>
+                </a>
+                {/volist}
+                <a class="item" href="{:url('index/goods/index',array('goods_id'=>3))}">
+                    <div class="pic"><img src="/public/static/index/images/indexm2.jpg"></div>
+                    <div class="title">Redmi K30</div>
+                    <div class="description">双模5G，120Hz流速屏</div>
+                    <div class="price_box"><span class="price">1500元起</span><span class="market">1500元起</span></div>
+                </a>
+                <a class="item" href="{:url('index/goods/index',array('goods_id'=>3))}">
+                    <div class="pic"><img src="/public/static/index/images/indexm3.jpg"></div>
+                    <div class="title">Redmi 8</div>
+                    <div class="description">5000mAh超长续航</div>
+                    <div class="price_box"><span class="price">1500元起</span><span class="market">1500元起</span></div>
+                </a>
+                <a class="item" href="{:url('index/goods/index',array('goods_id'=>3))}">
+                    <div class="pic"><img src="/public/static/index/images/indexm4.jpg"></div>
+                    <div class="title">小米10</div>
+                    <div class="description">骁龙865处理器 / 1亿像素相机</div>
+                    <div class="price_box"><span class="price">1500元起</span><span class="market">1500元起</span></div>
+                </a>
+                <a class="item" href="{:url('index/goods/index',array('goods_id'=>3))}">
+                    <div class="pic"><img src="/public/static/index/images/indexm5.jpg"></div>
+                    <div class="title">Redmi 8A</div>
+                    <div class="description">5000mAh超长续航</div>
+                    <div class="price_box"><span class="price">1500元起</span><span class="market">1500元起</span></div>
+                </a>
+               
+               
+            </div>
+        </div>
+    </div>
+
+    <div class="index_floor">
+        <div class="title_box">
+            <div class="title">女装</div>
+            <div class="nav">
+                <a class="item" href="{:url('/shop/lists/index',array('cate_id'=>16))}">浪漫裙装</a>
+                <a class="item" href="{:url('/shop/lists/index',array('cate_id'=>16))}">阔腿裤</a>
+                <a class="item" href="{:url('/shop/lists/index',array('cate_id'=>16))}">针织衫</a>
+                <a class="item" href="{:url('/shop/lists/index',array('cate_id'=>16))}">牛仔裤</a>
+            </div>
+        </div>
+        <div class="goods_box">
+            <div class="left_content"><a href="{:url('/shop/lists/index',array('cate_id'=>16))}"><img src="/public/static/index/images/t4.jpg"></a></div>
+            <div class="right_content">
+                <div class="item">
+                    <div class="pic"><img src="/public/static/index/images/shop_311.jpg"></div>
+                    <div class="title">北极绒吊带背心</div>
+                    <div class="description">肩带可调节</div>
+                    <div class="price_box"><span class="price">1500元起</span><span class="market">1500元起</span></div>
+                </div>
+                <div class="item">
+                    <div class="pic"><img src="/public/static/index/images/shop_31.jpg"></div>
+                    <div class="title">南极绒冲锋裤</div>
+                    <div class="description">加绒加厚</div>
+                    <div class="price_box"><span class="price">1500元起</span><span class="market">1500元起</span></div>
+                </div>
+                <div class="item">
+                    <div class="pic"><img src="/public/static/index/images/shop_3122.jpg"></div>
+                    <div class="title">修身长袖双排扣亮丝高腰包臀裙</div>
+                    <div class="description">2020春格子</div>
+                    <div class="price_box"><span class="price">1500元起</span><span class="market">1500元起</span></div>
+                </div>
+                <div class="item item_r_0">
+                    <div class="pic"><img src="/public/static/index/images/shop_3101.jpg"></div>
+                    <div class="title">高领衬衣气质上衣</div>
+                    <div class="description">真丝蚕桑丝 印花 高领</div>
+                    <div class="price_box"><span class="price">1500元起</span><span class="market">1500元起</span></div>
+                </div>
+                <div class="item">
+                    <div class="pic"><img src="/public/static/index/images/shop_3111.jpg"></div>
+                    <div class="title">宽松七分袖连衣裙小香风</div>
+                    <div class="description">提花面料拼接 A型宽松</div>
+                    <div class="price_box"><span class="price">1500元起</span><span class="market">1500元起</span></div>
+                </div>
+                <div class="item">
+                    <div class="pic"><img src="/public/static/index/images/shop_3123.jpg"></div>
+                    <div class="title">豆绿色长袖衬衫</div>
+                    <div class="description">豆绿色 面料柔软舒适</div>
+                    <div class="price_box"><span class="price">1500元起</span><span class="market">1500元起</span></div>
+                </div>
+                <div class="item">
+                    <div class="pic"><img src="/public/static/index/images/shop_3124.jpg"></div>
+                    <div class="title">收腰显瘦气质粉红色</div>
+                    <div class="description">2020春季新款</div>
+                    <div class="price_box"><span class="price">1500元起</span><span class="market">1500元起</span></div>
+                </div>
+                <div class="item">
+                    <div class="pic"><img src="/public/static/index/images/shop_3125.jpg"></div>
+                    <div class="title">夏季真丝绣花套头纯色裙子</div>
+                    <div class="description">时尚长身印花</div>
+                    <div class="price_box"><span class="price">1500元起</span><span class="market">1500元起</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="index_floor">
+        <div class="title_box">
+            <div class="title">生活电器</div>
+            <div class="nav">
+                {volist name="$goodsCate4" id="vo"}
+                <a class="item" href="{:url('index/lists/index',array('cate_id'=>$vo.id))}">{$vo.cate_name}</a>
+                {/volist}
+            </div>
+        </div>
+        <div class="goods_box">
+            <div class="right_content">
+                <div class="item item_l_0">
+                    <img src="/public/static/index/images/t2.webp">
+                </div>
+                {volist name="$goodsData4" id="vo"}
+                <a class="item" href="{:url('index/goods/index',array('goods_id'=>$vo.goods_id))}">
+                    <div class="pic"><img src="{$vo.goods_thumb}"></div>
+                    <div class="title">{$vo.goods_name}</div>
+                    <div class="description">{$vo.goods_short_name}</div>
+                    <div class="price_box"><span class="price">{$vo.goods_price}元起</span><span class="market">{$vo.market_price}元起</span></div>
+                </a>
+                {/volist}
+                <a class="item" href="{:url('index/goods/index',array('goods_id'=>4))}">
+                    <div class="pic"><img src="/public/static/index/images/shop_34.jpg"></div>
+                    <div class="title">Redmi 8</div>
+                    <div class="description">5000mAh超长续航</div>
+                    <div class="price_box"><span class="price">1500元起</span><span class="market">1500元起</span></div>
+                </a>
+                <div class="item item_l_0">
+                    <div class="pic"><img src="/public/static/index/images/shop_35.jpg"></div>
+                    <div class="title">Redmi 8</div>
+                    <div class="description">5000mAh超长续航</div>
+                    <div class="price_box"><span class="price">1500元起</span><span class="market">1500元起</span></div>
+                </div>
+                <div class="item ">
+                    <div class="pic"><img src="/public/static/index/images/shop_36.jpg"></div>
+                    <div class="title">Redmi 8</div>
+                    <div class="description">5000mAh超长续航</div>
+                    <div class="price_box"><span class="price">1500元起</span><span class="market">1500元起</span></div>
+                </div>
+                
+                <a class="item" href="{:url('index/goods/index',array('goods_id'=>4))}">
+                    <div class="pic"><img src="/public/static/index/images/shop_38.jpg"></div>
+                    <div class="title">Redmi 8</div>
+                    <div class="description">5000mAh超长续航</div>
+                    <div class="price_box"><span class="price">1500元起</span><span class="market">1500元起</span></div>
+                </a>
+                <a class="item" href="{:url('index/goods/index',array('goods_id'=>4))}">
+                    <div class="pic"><img src="/public/static/index/images/shop_389.jpg"></div>
+                    <div class="title">Redmi 8</div>
+                    <div class="description">5000mAh超长续航</div>
+                    <div class="price_box"><span class="price">1500元起</span><span class="market">1500元起</span></div>
+                </a>
+                <a class="item" href="{:url('index/goods/index',array('goods_id'=>4))}">
+                    <div class="pic"><img src="/public/static/index/images/shop_400.jpg"></div>
+                    <div class="title">Redmi 8</div>
+                    <div class="description">5000mAh超长续航</div>
+                    <div class="price_box"><span class="price">1500元起</span><span class="market">1500元起</span></div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="index_rexiao">
+
+        <div class="title">热销推荐</div>
+
+        <div class="goods_box">
+
+           {volist name="$goodsData5" id="vo"}
+
+            <a href="{:url('index/goods/index',array('goods_id'=>$vo.goods_id))}" class="item">
+
+                <div class="pic"><img src="{$vo.goods_thumb}"></div>
+
+                <div class="info">
+
+                    <div class="goods_name">{$vo.goods_name}</div>
+
+                    <div class="price">￥{$vo.goods_price}</div>
+
+                </div>
+
+            </a>
+
+            {/volist}
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<div class="wuyou">
+
+    <div class="wrap wuyou_box">
+
+        <div class="item">
+
+            <div class="pic"><i class="iconfont iconweixiu"></i></div>
+
+            <div class="title">预约维修服务</div>
+
+        </div>
+
+        <div class="item">
+
+            <div class="pic"><i class="iconfont iconsevenday"></i></div>
+
+            <div class="title">7天无理由退货</div>
+
+        </div>
+
+        <div class="item">
+
+            <div class="pic"><i class="iconfont icontian"></i></div>
+
+            <div class="title">15天免费换货</div>
+
+        </div>
+
+        <div class="item">
+
+            <div class="pic"><i class="iconfont icongift"></i></div>
+
+            <div class="title">满99元包邮</div>
+
+        </div>
+        <div class="item">
+
+            <div class="pic"><i class="iconfont iconweizhi"></i></div>
+
+            <div class="title">520余家售后网点</div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+{include file="public/footer"}
+
+
+
+</body>
+
+</html>
+
+
+

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/shop.css"/>
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/user.css"/>
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/public/static/index/layui/css/layui.css">
+    <script src="/public/static/index/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="/public/static/index/js/layer-v3.1.1/layer.js"></script>
+    <script src="/public/static/index/js/common.js"></script>
+    <script src="/public/static/index/js/user.js"></script>
+    <title>积分商城</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+</head>
+<body>
+
+{include file="public/head"}
+
+<div class="wrapbg">
+<div class="wrap">
+
+
+    <div class="user_position">
+        当前位置：<a href="/shop/">首页</a> > <a href="{:url('user/index')}">会员中心</a> > 积分商城
+    </div>
+    <div class="user_box">
+        {include file="public/left_menu"}
+        <div class="user_box_right">
+            <div class="user_content_box">
+
+                <div class="score_shop_box">
+                    {volist name="$scoreGoodsData" id="vo"}
+                    <div class="item">
+                        <div class="pic"><img src="{$vo.thumb}"></div>
+                        <div class="title">{$vo.title}</div>
+                        <div class="price_box"><span class="price">{$vo.score}积分</span></div>
+                        <a href="{:url('index/score/score_goods_detail',array('id'=>$vo.id))}" class="color1 detail_btn">立即兑换</a>
+                    </div>
+                    {/volist}
+                </div>
+                {$scoreGoodsData|raw}
+                
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+</div>
+
+
+
+
+{include file="public/foot2"}
+
+
+
+
+</body>
+</html>
+

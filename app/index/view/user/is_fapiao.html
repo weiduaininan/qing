@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/shop.css"/>
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/user.css"/>
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/public/static/index/layui/css/layui.css">
+    <script src="/public/static/index/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="/public/static/index/js/layer-v3.1.1/layer.js"></script>
+    <script src="/public/static/index/js/common.js"></script>
+    <script src="/public/static/index/js/user.js"></script>
+    <title>我的发票</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+</head>
+<body>
+
+{include file="public/head"}
+
+<div class="wrapbg">
+<div class="wrap">
+
+
+    <div class="user_position">
+        当前位置：<a href="/">首页</a> > <a href="{:url('user/index')}">会员中心</a> > 我的发票
+    </div>
+    <div class="user_box">
+        {include file="user/left_menu"}
+        <div class="user_box_right">
+            <div class="user_content_box">
+               
+                <div class="myscore_title">
+                    <div class="title_box">
+                        <a href="{:url('fapiao')}" class="title1 ">发票申请</a>
+                       <a href="{:url('is_fapiao')}" class="title2 current">已开发票</a>
+                    </div>
+                </div>
+                <div class="myscore_box">
+                    <div class="item title">
+                        <div class="content1">ID</div>
+                        <div class="content3">公司名称</div>
+                        <div class="content3">纳税人识别号</div>
+                        <div class="content3">金额</div>
+                        <div class="content3">收票邮箱</div>
+                        <div class="content3">备注</div>
+                        <div class="content3">申请时间</div>
+                        <div class="content3">状态</div>
+                    </div>
+                   {volist name="$fapiaoData" id="vo"}
+                    <div class="item">
+                        <div class="content1">{$vo.id}</div>
+                        <div class="content3">{$vo.company}</div>
+                        <div class="content3">{$vo.code}</div>
+                        <div class="content3">{$vo.money}</div>
+                        <div class="content3">{$vo.email}</div>
+                        <div class="content3">{$vo.beizhu}</div>
+                        <div class="content3">{$vo.time|date='Y-m-d'}</div>
+                        <div class="content3">{if condition='$vo.status eq 1'}已开具{else/}<span class="color1">未开具</span>{/if}</div>
+                        
+                    </div>
+                    {/volist}
+                    {$fapiaoData|raw}
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+</div>
+
+
+
+
+{include file="public/foot2"}
+
+
+
+
+</body>
+</html>
+

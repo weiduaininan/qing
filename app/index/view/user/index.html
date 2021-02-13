@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/shop.css" />
+
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/user.css" />
+
+    <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_1646840_fj05m4s1s4h.css" />
+
+    <link rel="stylesheet" href="/public/static/index/layui/css/layui.css">
+
+    <script src="/public/static/index/js/jquery-3.4.1.min.js"></script>
+
+    <script src="/public/static/index/layui/layui.js"></script>
+
+    <script src="/public/static/index/js/common.js"></script>
+
+    <title>会员中心-{$web_title}</title>
+
+    <meta name="keywords" content="">
+
+    <meta name="description" content="">
+
+
+
+</head>
+
+<body>
+
+
+
+    {include file="public/head"}
+
+    <div class="wrapbg">
+
+        <div class="wrap ">
+
+
+
+            <div class="user_position">
+
+                当前位置：<a href="/">首页</a> > <a href="{:url('user/index')}">会员中心</a> >
+
+            </div>
+
+            <div class="user_box">
+
+                {include file="public/left_menu"}
+
+                <div class="user_box_right">
+
+                   <div class="user_index_content1">
+                        <div class="left_content">
+                            <div class="pic"><img src="{$sessionUserData.face|default='/public/static/index/images/face.jpg'}" class="img"></div>
+                        
+                            <div class="info">
+                                <div class="title">{$sessionUserData.username}</div>
+                                <div class="description">上次登录：{$sessionUserData.last_login_time|date="Y-m-d H:s:i"}</div>
+                                <div class="description1"><a href="{:url('sign')}" class="color1">签到赚取积分</a></div>
+                            </div>
+                        </div>
+                        <div class="left_content">
+                        
+                            <div class="info">
+                                <div class="description1"><a href="{:url('user/info')}" class="colorblue">修改资料 ></a></div>
+                                <div class="description2">绑定手机：{$sessionUserData.mobile}</div>
+                                <div class="description2">绑定邮箱：{$sessionUserData.email|default='未绑定'}</div>
+                            </div>
+                        </div>
+                   </div>
+                   <div class="user_index_content2">
+                        <div class="item">
+                            <div class="icon bg1"> <i class="iconquanbudingdan iconfont"></i></div>
+                            <div class="info">
+                                <div class="title">
+                                    <span class="span1">全部订单：</span>
+                                    <span class="span2">1</span>
+                                </div>
+                                <div class="description"><a href="#" >查看全部付订单 <i class="iconchevron-copy-copy-copy-copy-copy iconfont"></i></a></div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="icon bg2"> <i class="icondaifukuan iconfont"></i></div>
+                            <div class="info">
+                                <div class="title">
+                                    <span class="span1">待支付的订单：</span>
+                                    <span class="span2">2</span>
+                                </div>
+                                <div class="description"><a href="#" >查看待支付订单 <i class="iconchevron-copy-copy-copy-copy-copy iconfont"></i></a></div>
+                            </div>
+                        </div>
+                        <div class="item ">
+                            <div class="icon bg3"> <i class="icondaishouhuo iconfont"></i></div>
+                            <div class="info">
+                                <div class="title">
+                                    <span class="span1">待收货的订单：</span>
+                                    <span class="span2">3</span>
+                                </div>
+                                <div class="description"><a href="#" >查看待收货订单 <i class="iconchevron-copy-copy-copy-copy-copy iconfont"></i></a></div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="icon bg4"> <i class="iconshoucang iconfont"></i></div>
+                            <div class="info">
+                                <div class="title">
+                                    <span class="span1">查看收藏商品：</span>
+                                    <span class="span2">{$collectCount}</span>
+                                </div>
+                                <div class="description"><a href="{:url('index/collect/collect')}" >查看收藏商品 <i class="iconchevron-copy-copy-copy-copy-copy iconfont"></i></a></div>
+                            </div>
+                        </div>
+                   </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    {include file="public/foot2"}
+
+
+
+
+
+
+</body>
+
+</html>

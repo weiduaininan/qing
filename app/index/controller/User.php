@@ -2,6 +2,7 @@
 
 namespace app\index\controller;
 
+use app\common\lib\Uploader;
 use app\common\model\User as UserModel;
 use app\common\validate\User as UserValidate;
 use think\Controller;
@@ -13,7 +14,11 @@ class User extends Base {
 	//会员首页
 	public function index() {
 		$sessionUserData = $this->isLogin();
-		echo '会员主页';
+		$collectCount = Db::name('collect')->where('user_id', $sessionUserData['id'])->count();
+		return view('', [
+			'left_menu' => 0,
+			'collectCount' => $collectCount,
+		]);
 	}
 
 	//会员登录
@@ -284,6 +289,8 @@ class User extends Base {
 			}
 			//更新数据库操作
 			$res = Db::name('user')->where('id', $user_id)->update($data);
+			$userData = Db::name('user')->find($user_id);
+			session('sessionUserData', $userData);
 			if ($res) {
 				return alert('操作成功！', 'index', 6, 3);
 			} else {
@@ -317,7 +324,9 @@ class User extends Base {
 			}
 
 		} else {
-			return view();
+			return view('', [
+				'left_menu' => 42,
+			]);
 		}
 	}
 	//我的评价
@@ -357,4 +366,38 @@ class User extends Base {
 	// 	// 	'commentData' => $commentData,
 	// 	// ]);
 	// }
+
+	//会员签到
+	public function sign() {
+		$sessionUserData = $this->isLogin();
+
+		//先检测今天是否签到
+		$scoreData = Db::name('score')->where('user_id', $sessionUserData['id'])->whereDay('time')->where('source', 1)->order('id desc')->find();
+		if (!empty($scoreData)) {
+			return alert('你今天已经签到了', 'index', 5);
+		}
+
+		$res = Db::name('score')->insert([
+			'user_id' => $sessionUserData['id'],
+			'time' => time(),
+			'score' => 10,
+			'info' => '签到赚取积分',
+		]);
+		if ($res) {
+			return alert('签到成功', 'index', 6);
+		} else {
+			return alert('签到失败', 'index', 5);
+		}
+	}
+	//头像上传
+	public function upload() {
+		$upload = new Uploader();
+		$upload->upload();
+	}
+	//会员退出
+	public function login_out() {
+		session('sessionUserData', null);
+		return redirect('/');
+	}
+
 }

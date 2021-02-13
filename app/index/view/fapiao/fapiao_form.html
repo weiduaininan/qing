@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/shop.css"/>
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/user.css"/>
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/public/static/index/layui/css/layui.css">
+    <script src="/public/static/index/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="/public/static/index/js/layer-v3.1.1/layer.js"></script>
+    <script src="/public/static/index/js/common.js"></script>
+    <script src="/public/static/index/js/user.js"></script>
+    <title>我的发票</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+</head>
+<body>
+
+{include file="public/head"}
+
+<div class="wrapbg">
+<div class="wrap">
+
+
+    <div class="user_position">
+        当前位置：<a href="/">首页</a> > <a href="{:url('user/index')}">会员中心</a> > 我的发票
+    </div>
+    <div class="user_box">
+        {include file="public/left_menu"}
+        <div class="user_box_right">
+            <div class="user_content_box">
+               
+                <div class="myscore_title">
+                    <div class="title_box">
+                        <a href="{:url('fapiao')}" class="title1 current">发票申请</a>
+                       <a href="{:url('is_fapiao')}" class="title2 ">已开发票</a>
+                    </div>
+                   
+                </div>
+                 <div class="xingyun_info">默认开具普通电子发票，并将在3个工作日内电子发票发送至收票邮箱。请认真填写如下信息，不重复开具。</div>
+                <form class="index_form" method="post" action="" style="margin-top: 30px;">
+                    <div class="item">
+                        <div class="label">公司名称：</div>
+                        <div class="input_box"><input type="text" name="company" placeholder="公司名称" class="layui-input" required></div>
+                    </div>
+
+                    <div class="item">
+                        <div class="label">纳税人识别号：</div>
+                        <div class="input_box"><input type="text" name="code" placeholder="纳税人识别号" class="layui-input" required></div>
+                    </div>
+
+                    <div class="item">
+                        <div class="label">开票金额：</div>
+                        <div class="input_box"><input type="text" name="money" value="{$orderData.total_price}" class="layui-input" disabled></div>
+                    </div>
+
+                    <div class="item">
+                        <div class="label">收票邮箱：</div>
+                        <div class="input_box"><input type="text" name="email" placeholder="收票邮箱" class="layui-input" required></div>
+                    </div>
+
+                    <div class="item">
+                        <div class="label">备注：</div>
+                        <div class="input_box"><input type="text" name="beizhu" placeholder="备注" class="layui-input"></div>
+                    </div>
+
+                    <div class="item">
+                        <div class="label"></div>
+                        <div class="input_box"><button class="button">提交</button></div>
+                    </div>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+</div>
+
+
+
+
+{include file="public/foot2"}
+
+
+
+
+
+</body>
+</html>
+

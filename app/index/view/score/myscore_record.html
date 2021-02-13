@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/shop.css"/>
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/user.css"/>
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/public/static/index/layui/css/layui.css">
+    <script src="/public/static/index/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="/public/static/index/js/layer-v3.1.1/layer.js"></script>
+    <script src="/public/static/index/js/common.js"></script>
+    <script src="/public/static/index/js/user.js"></script>
+    <title>换购历史记录    </title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+</head>
+<body>
+
+{include file="public/head"}
+
+<div class="wrapbg">
+<div class="wrap">
+
+
+    <div class="user_position">
+        当前位置：<a href="/shop/">首页</a> > <a href="{:url('user/index')}">会员中心</a> > 我的积分
+    </div>
+    <div class="user_box">
+        {include file="public/left_menu"}
+        <div class="user_box_right">
+            <div class="user_content_box">
+                <div class="myscore_current_status">
+                    <h3><span>您当前赚取积分</span> <a href="" target="_blank" class="color888">积分规则</a></h3>
+                    <p>{$total_socre}</p>
+                    <div class="link_box">
+                        <span>积分土豪的都喜欢来这里，</span>
+                        <a href="{:url('score_shop')}" class="color1">积分商城</a>
+                    </div>
+                </div>
+                <div class="myscore_title">
+                    <div class="title_box">
+                        <a href="{:url('myscore')}" class="title1">积分历史记录</a>
+                       <a href="{:url('myscore_record')}" class="title2 current">换购历史记录</a>
+                    </div>
+                    <div class="time"></div>
+                </div>
+                <div class="myscore_box">
+                    <div class="item title">
+                        <div class="content1">换购商品</div>
+                        <div class="content2">消费积分</div>
+                        <div class="content2">快递单号</div>
+                        <div class="content3">时间</div>
+                    </div>
+                    {volist name="$scoreGoodsRecordData" id="vo"}
+                    <a class="item" href="{:url('index/index/score_goods_detail',array('id'=>$vo.id))}">
+                        <div class="content1"><img src="{$vo.thumb}"></div>
+                        <div class="content2">{$vo.score}</div>
+                        <div class="content2">{$vo.empress}</div>
+                        <div class="content3">{$vo.time|date="Y-m-d"}</div>
+                    </a>
+                    {/volist}
+                    
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+</div>
+
+
+
+
+{include file="public/foot2"}
+
+
+
+
+<script type="text/javascript">
+
+    //删除收藏操作
+    function collectDel() {
+      var id = $("input[ name='id' ]").val();
+      var goods_id=$("input[ name='goods_id' ]").val();
+    
+      //抛送数据
+      postData = {'id':id,'goods_id':goods_id};
+      url='/shop/user/delete_goods_collect';
+      $.post(url,postData,function(result){
+           
+           //错误提示信息，正确的话就直接跳转了
+           if(result.status==0){
+                dialog.alert({
+                    msg:result.msg,
+                    buttons:['确定']
+                });
+           }
+           if(result.status==1){
+                location.reload();
+           }
+      },'json');
+    }
+    
+    </script>
+</body>
+</html>
+
