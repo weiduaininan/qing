@@ -55,7 +55,10 @@
             <button type="submit" class="btn"><i class="icontubiao1 iconfont"></i></button>
 
             <div class="search_key_box">
-                <!--  -->            </div>
+                {volist name="$searchData" id="vo"}
+                <a href="{:url('index/lists/search',array('keywords'=>$vo.name))}" class="item">{$vo.name}</a>
+                {/volist}
+            </div>
 
         </form>
 
