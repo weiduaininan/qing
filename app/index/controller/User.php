@@ -146,6 +146,7 @@ class User extends Base {
 	public function register() {
 		if (request()->isPost()) {
 			$data = input('post.');
+			$code = input('get.code'); //推荐码
 
 			try {
 				validate(UserValidate::class)
@@ -178,17 +179,62 @@ class User extends Base {
 			$data['time'] = time();
 			$data['username'] = $data['mobile'];
 			unset($data['smscode']);
-			$res = Db::name('user')->insert($data);
-			if ($res) {
+			if ($code) {
+				Db::startTrans();
+				try {
+					$newUserId = Db::name('user')->insertGetId($data);
+					$this->fenyongScore($newUserId, $code);
+
+					// 提交事务
+					Db::commit();
+				} catch (\Exception $e) {
+					// 回滚事务
+					Db::rollback();
+					return alert('注册失败', 'register', 5);
+				}
+
 				return alert('注册成功，请登录', 'login', 6);
+
 			} else {
-				return alert('注册失败', 'register', 5);
+				$newUserId = Db::name('user')->insertGetId($data);
+				if ($newUserId) {
+					return alert('注册成功，请登录', 'login', 6);
+				} else {
+					return alert('注册失败', 'register', 5);
+				}
+
 			}
 
 		} else {
 			return view();
 		}
+	}
+	//推荐返佣积分逻辑
+	public function fenyongScore($newUserId, $code) {
+		//推荐人数据
+		$userDataT = Db::name('user')->where('code', $code)->find();
 
+		//更新新用户的parent_id
+		Db::name('user')->where('id', $newUserId)->update(['parent_id' => $userDataT['id']]);
+
+		//添加新用户积分
+		Db::name('score')->insert([
+			'user_id' => $newUserId,
+			'score' => 200,
+			'time' => time(),
+			'source' => 2,
+			'info' => '新用户奖励',
+		]);
+
+		//推荐人积分
+		Db::name('score')->insert([
+			'user_id' => $userDataT['id'],
+			'score' => 100,
+			'source' => 2,
+			'time' => time(),
+			'info' => '推荐返佣',
+		]);
+		return true;
 	}
 
 	//微信登录绑定手机号
