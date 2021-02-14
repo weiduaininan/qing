@@ -56,8 +56,7 @@ class User extends Base {
 			if ($userData['password'] != $this->password_salt($data['password'])) {
 				return alert('密码错误', 'login', 5);
 			}
-
-			Db::name('user')->where('id', $userData['id'])->update(['last_login_time' => time()]);
+			Db::name('user')->where('id', $userData['id'])->update(['last_login_time' => time(), 'last_login_ip' => $_SERVER['REMOTE_ADDR']]);
 			session('sessionUserData', $userData);
 
 			return alert('登录成功', 'index', 6);
@@ -178,6 +177,7 @@ class User extends Base {
 			$data['password'] = $this->password_salt($data['password']);
 			$data['time'] = time();
 			$data['username'] = $data['mobile'];
+			$data['code'] = 'YJ' . time();
 			unset($data['smscode']);
 			if ($code) {
 				Db::startTrans();
