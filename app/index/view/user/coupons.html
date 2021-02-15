@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/shop.css"/>
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/user.css"/>
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/public/static/index/layui/css/layui.css">
+    <script src="/public/static/index/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="/public/static/index/js/layer-v3.1.1/layer.js"></script>
+    <script src="/public/static/index/js/common.js"></script>
+    <script src="/public/static/index/js/user.js"></script>
+    <title>优惠券</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+</head>
+<body>
+
+{include file="public/head"}
+
+<div class="wrapbg">
+<div class="wrap">
+
+
+    <div class="user_position">
+        当前位置：<a href="/shop/">首页</a> > <a href="{:url('user/index')}">会员中心</a> > 优惠券
+    </div>
+    <div class="user_box">
+        {include file="public/left_menu"}
+        <div class="user_box_right">
+            <div class="user_content_box">
+
+                <div class="myscore_title coupons_title" style="margin-top: 0;">
+                    <div class="title_box">
+                        <div class="title title1 current">未使用</div>
+                        <div class="title title1 ">已使用</div>
+                        <div class="title title2 ">已过期</div>
+                    </div>
+                </div>
+               
+                <div class="coupons_box">
+                   {volist name="$couponsData0" id="vo"}
+                    <div class="item item1">
+                        <div class="title">{$vo.name}</div>
+                        <div class="description">满{$vo.money1}元可用{$vo.money2}元</div>
+                        <div class="time">开始时间：{$vo.time1|date="Y-m-d H:i:s"}<br />结束时间：{$vo.time2|date="Y-m-d H:i:s"}</div>
+                        <div class="status status1">未使用</div>
+                   </div>
+                   {/volist}
+                </div>
+                <div class="coupons_box" style="display: none;">
+                    {volist name="$couponsData1" id="vo"}
+                    <div class="item item2">
+                        <div class="title">{$vo.name}</div>
+                        <div class="description">满{$vo.money1}元可用{$vo.money2}元</div>
+                        <div class="time">开始时间：{$vo.time1|date="Y-m-d H:i:s"}<br />结束时间：{$vo.time2|date="Y-m-d H:i:s"}</div>
+                        <div class="status status2">已使用</div>
+                   </div>
+                   {/volist}
+                 </div>
+                 <div class="coupons_box" style="display: none;">
+                    {volist name="$couponsData2" id="vo"}
+                    <div class="item item3">
+                        <div class="title">{$vo.name}</div>
+                        <div class="description">满{$vo.money1}元可用{$vo.money2}元</div>
+                        <div class="time">开始时间：{$vo.time1|date="Y-m-d H:i:s"}<br />结束时间：{$vo.time2|date="Y-m-d H:i:s"}</div>
+                        <div class="status status3">已过期</div>
+                   </div>
+                   {/volist}
+                 </div>
+                
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+</div>
+
+
+
+
+{include file="public/foot2"}
+
+
+</body>
+</html>
+

@@ -69,7 +69,7 @@ class User extends Base {
 
 	public function wechat() {
 		$appid = 'wx868f988d79a4f25b';
-		$REDIRECT_URI = urlEncode('http://www.xxx.cn/index/user/weixin.html');
+		$REDIRECT_URI = urlEncode('http://qing.cn/index/user/weixin.html');
 		$url = 'https://open.weixin.qq.com/connect/qrconnect?appid=' . $appid . '&redirect_uri=' . $REDIRECT_URI . '&response_type=code&scope=snsapi_login&state=STATE#wechat_redirect';
 		return redirect($url);
 	}
@@ -178,12 +178,21 @@ class User extends Base {
 			$data['time'] = time();
 			$data['username'] = $data['mobile'];
 			$data['code'] = 'YJ' . time();
+			$data['last_login_time'] = time();
 			unset($data['smscode']);
 			if ($code) {
 				Db::startTrans();
 				try {
 					$newUserId = Db::name('user')->insertGetId($data);
 					$this->fenyongScore($newUserId, $code);
+
+					Db::name('score')->insert([
+						'user_id' => $newUserId,
+						'score' => 50,
+						'time' => time(),
+						'source' => 2,
+						'info' => '新用户奖励',
+					]);
 
 					// 提交事务
 					Db::commit();
@@ -220,19 +229,24 @@ class User extends Base {
 		//添加新用户积分
 		Db::name('score')->insert([
 			'user_id' => $newUserId,
-			'score' => 200,
+			'score' => 300,
 			'time' => time(),
 			'source' => 2,
-			'info' => '新用户奖励',
+			'info' => '小伙伴奖励',
 		]);
 
 		//推荐人积分
 		Db::name('score')->insert([
 			'user_id' => $userDataT['id'],
-			'score' => 100,
+			'score' => 500,
 			'source' => 2,
 			'time' => time(),
 			'info' => '推荐返佣',
+		]);
+		//推荐人积分
+		Db::name('fenyong')->insert([
+			'user_id' => $newUserId, //新用户ID
+			'code' => $code,
 		]);
 		return true;
 	}
@@ -446,4 +460,110 @@ class User extends Base {
 		return redirect('/');
 	}
 
+	//我的分佣
+	public function fenyong() {
+		$sessionUserData = $this->isLogin();
+		$code = 'http://qing.cn/index/user/register?code=' . $sessionUserData['code'];
+
+		return view('', [
+			'code' => $code,
+			'left_menu' => 25,
+
+		]);
+	}
+
+	//优惠券
+	public function coupons() {
+		$sessionUserData = $this->isLogin();
+		$time = time();
+
+		//未使用，时间没有过期
+		$couponsData0 = Db::name('coupons_user')->alias('a')->field('b.*,a.status')->join('coupons b', 'a.coupons_id=b.id')->where('a.status', 0)->where('a.user_id', $sessionUserData['id'])->order('id desc')->where('b.time2', '>', $time)->select();
+
+		//已经使用
+		$couponsData1 = Db::name('coupons_user')->alias('a')->field('b.*,a.status')->join('coupons b', 'a.coupons_id=b.id')->where('a.status', 1)->where('a.user_id', $sessionUserData['id'])->order('id desc')->select();
+
+		//时间过期的：包括已使用和未使用
+		$couponsData2 = Db::name('coupons_user')->alias('a')->field('b.*,a.status')->join('coupons b', 'a.coupons_id=b.id')->where('a.user_id', $sessionUserData['id'])->where('b.time2', '<', $time)->order('id desc')->select();
+
+		return view('', [
+			'left_menu' => 24,
+			'couponsData0' => $couponsData0,
+			'couponsData2' => $couponsData2,
+			'couponsData1' => $couponsData1,
+		]);
+	}
+
+	//领取优惠券
+	public function add_coupons() {
+		$sessionUserData = session('sessionUserData');
+		//如果没有登录，则返回登录
+		if (empty($sessionUserData)) {
+			return json(['status' => 0]);
+		}
+
+		//判断是否有该优惠券
+		$coupons_id = input('post.id');
+		$couponsData = Db::name('coupons')->find($coupons_id);
+		if (empty($couponsData) || $couponsData['status'] != 1) {
+			return json(['status' => -1]);
+		}
+
+		//查找是否领取优惠券
+		$couponsUserrData = Db::name('coupons_user')->where('user_id', $sessionUserData['id'])->where('coupons_id', $coupons_id)->find();
+
+		if ($couponsUserrData) {
+			//已经领取了
+			return json(['status' => 1]);
+		} else {
+			//领取优惠券
+			$res = Db::name('coupons_user')->insert([
+				'user_id' => $sessionUserData['id'],
+				'coupons_id' => $coupons_id,
+			]);
+			if ($res) {
+				if ($couponsData['count'] == 1) {
+					Db::name('coupons')->where('id', $coupons_id)->update([
+						'count' => 0,
+						'status' => 0,
+					]);
+				} else {
+					Db::name('coupons')->where('id', $coupons_id)->update([
+						'count' => $couponsData['count'] - 1,
+					]);
+				}
+
+				return json(['status' => 3]);
+			}
+		}
+	}
+	//商品浏览足迹
+	public function mytrace() {
+		$sessionUserData = $this->isLogin();
+
+		$mytraceData = Db::name('user_trace')->alias('a')->join('goods b', 'a.goods_id=b.goods_id')->where('a.user_id', $sessionUserData['id'])->order('a.time desc')->paginate(10);
+
+		return view('', [
+			'left_menu' => 26,
+			'mytraceData' => $mytraceData,
+		]);
+	}
+
+	//删除商品足迹
+	public function delete_mytrace() {
+		$sessionUserData = $this->isLogin();
+
+		$id = input('id');
+
+		//检测是否有该记录
+		$traceData = Db::name('user_trace')->find($id);
+		if (!empty($traceData)) {
+			$res = Db::name('user_trace')->delete($id);
+		}
+		if ($res) {
+			return alert('成功删除记录', 'collect', 6, 3);
+		} else {
+			return alert('删除删除记录', 'collect', 5, 3);
+		}
+	}
 }

@@ -43,10 +43,10 @@
                 <div class="myscore_box">
                     <div class="item title">
                         <div class="content1">ID</div>
-                        <div class="content3">公司名称</div>
+                        <div class="content4">公司名称</div>
                         <div class="content3">纳税人识别号</div>
                         <div class="content3">金额</div>
-                        <div class="content4">收票邮箱</div>
+                        <div class="content3">收票邮箱</div>
                         <div class="content3">备注</div>
                         <div class="content3">申请时间</div>
                         <div class="content3">状态</div>
@@ -54,10 +54,10 @@
                    {volist name="$fapiaoData" id="vo"}
                     <div class="item">
                         <div class="content1">{$vo.id}</div>
-                        <div class="content3">{$vo.company}</div>
+                        <div class="content4">{$vo.company}</div>
                         <div class="content3">{$vo.code}</div>
                         <div class="content3">{$vo.money}</div>
-                        <div class="content4">{$vo.email}</div>
+                        <div class="content3">{$vo.email}</div>
                         <div class="content3">{$vo.beizhu}</div>
                         <div class="content3">{$vo.time|date='Y-m-d'}</div>
                         <div class="content3">{if condition='$vo.status eq 1'}已开具{else/}<span class="color1">未开具</span>{/if}</div>

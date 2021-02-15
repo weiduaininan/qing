@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/shop.css"/>
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/user.css"/>
+    <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_1646840_t7bpz26ersp.css"/>
+    <link rel="stylesheet" href="/public/static/index/layui/css/layui.css">
+    <script src="/public/static/index/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="/public/static/index/js/layer-v3.1.1/layer.js"></script>
+    <script src="/public/static/index/js/common.js"></script>
+    <script src="/public/static/index/js/user.js"></script>
+    <title>我的分佣</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+</head>
+<body>
+
+{include file="public/head"}
+
+<div class="wrapbg">
+<div class="wrap">
+
+    <div class="user_position">
+        当前位置：<a href="/shop/">首页</a> > <a href="{:url('user/index')}">会员中心</a> > 我的分佣
+    </div>
+    <div class="user_box">
+        {include file="public/left_menu"}
+        <div class="user_box_right">
+            
+            <div class="yongjin_info_box">
+               <div class="content">
+                   <div class="item title">推荐有礼！</div>
+                   <div class="item"><i  class="iconiconfangkuai iconfont"></i> 把邀请码发给自己身边的小伙伴，并邀请他们来小刘官网注册用户。</div>
+                   <div class="item"><i  class="iconiconfangkuai iconfont"></i> 一旦邀请成功，你可以获得500个积分奖励，小伙伴获得300个积分奖励，同时平台还会奖励小伙伴50个注册新用户积分奖励。</div>
+                   <div class="item"><i  class="iconiconfangkuai iconfont"></i> 赶快介绍更多新朋友加入小刘吧!</div>
+               </div>
+            </div>
+            <div class="yongjin_input_box">
+                <input type="text" value="{$code}" class="input" placeholder="{$code}"><div class="btn" onclick="copyUrl2(this)">复制链接</div>
+                
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+</div>
+
+
+
+
+{include file="public/foot2"}
+
+
+
+
+<script type="text/javascript">
+
+    //复制文字功能
+    function copyUrl2(a) {
+        var Url2 = $(a).parent().find("input");
+        Url2.select(); // 选择对象
+        document.execCommand("Copy"); // 执行浏览器复制命令
+        alert("已复制好，可贴粘!");
+    }
+    
+</script>
+</body>
+</html>
+
