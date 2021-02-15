@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/shop.css"/>
+
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/cart.css"/>
+
+    <link rel="stylesheet" type="text/css" href="/public/static/index/layui/css/layui.css" />
+
+    <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_1907378_h1th65cwy9j.css"/>
+
+    <script src="/public/static/index/js/jquery-3.4.1.min.js"></script>
+
+    <script src="/public/static/index/layui/layui.js"></script>
+
+    <script src="/public/static/index/js/cart.js"></script>
+
+    <script src="/public/static/index/js/common.js"></script>
+
+    <title>购物车</title>
+
+    <meta name="keywords" content="">
+
+    <meta name="description" content="">
+
+
+
+</head>
+
+<body>
+
+
+
+{include file="public/head"}
+
+<div class="header_line"></div>
+
+<div class="wrap">
+
+    <div class="public_ad"><a href="#"><img src="/public/static/index/images/ad.jpg"></a></div>
+
+    <div class="cart_title">
+
+       <img src="/public/static/index/images/cart.jpg">
+
+    </div>
+
+    <div class="gouwuche">
+
+        <table class="cart_table" cellpadding="0" cellspacing="0">
+
+
+
+            <tbody>
+
+                <tr>
+
+
+
+                    <td width="12%" class="text_left select_all">
+
+                        <div class="public_checkbox display_block"><input type="checkbox" name="check"></div>
+
+                    </td>
+
+                    <td width="20%">商品名称</td>
+
+                    <td width="20%">商品属性</td>
+
+                    <td width="10%">单价</td>
+
+                    <td width="10%">数量</td>
+
+                    <td width="15%">金额</td>
+
+                    <td width="10%">操作</td>
+
+                </tr>
+                
+                {volist name="$cartData" id="vo"}
+                <tr attr-id="{$vo.id}">
+
+                        <td width="5%" class="text_left">
+
+                            <div class="public_checkbox display_block"><input type="checkbox" name="check" {if condition="$vo.status eq 1"}checked{/if} class="gouwuche_check"></div>
+
+                        </td>
+
+                    <td width="25%">
+
+                        <a class="goods_style1" href="{:url('index/goods/index',array('goods_id'=>$vo.goods_id))}">
+
+                            <div class="cart_pic"><img src="{$vo.goods_thumb}"></div>
+
+                            <div class="info">{$vo.goods_name}</div>
+
+                        </a>
+
+                    </td>
+
+                    <td width="15%">{$vo.sku|default='标准规格'} </td>
+
+                    <td width="10%">￥<span class="goods_price">{$vo.goods_price}</span></td>
+
+                    <td width="10%">×<input type="number" class="borderddd number" value="{$vo.amount}" min="1" oninput="if(value < 1 ){alert('数量最小为1！');value = '1'}"></td>
+
+                    <td width="10%" class="fb f16 price_xiaoji"></td>
+
+                    <td width="10%">
+
+                        <a class="colorblue mar_t_5 display_block gouwuche_delete"><i class="iconfont iconlajitong"></i></a>
+
+                    </td>
+
+                </tr>
+                {/volist}
+             
+    
+
+            </tbody>
+
+        </table>
+
+        <div class="pay_box">
+
+            <div class="pay_box_left">
+
+                <div class="delete_all display_block">清空</div>
+
+            </div>
+
+            <div class="pay_box_right">
+
+                    已选购商品 <span class="color1 fb check_number">3</span> 件&nbsp;&nbsp;
+
+                    合计 <span class="color1 fb total_price">{$total_price}</span>
+
+                    <a class="btn_pay f16" href="/index/order/index">结算</a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    
+
+</div>
+
+
+
+<div class="foot_line"></div>
+
+{include file="public/foot2"}
+
+
+
+</body>
+
+</html>
+
+
+
