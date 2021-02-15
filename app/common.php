@@ -72,3 +72,46 @@ function delImg($path) {
 		return false;
 	}
 }
+
+//二维数组根据某个元素去重复
+function second_array_unique_bykey($arr, $key) {
+	$tmp_arr = array();
+	foreach ($arr as $k => $v) {
+		if (in_array($v[$key], $tmp_arr)) //搜索$v[$key]是否在$tmp_arr数组中存在，若存在返回true
+		{
+			unset($arr[$k]); //销毁一个变量  如果$tmp_arr中已存在相同的值就删除该值
+		} else {
+			$tmp_arr[$k] = $v[$key]; //将不同的值放在该数组中保存
+		}
+	}
+	//ksort($arr); //ksort函数对数组进行排序(保留原键值key)  sort为不保留key值
+	return $arr;
+}
+
+//   //二维数组根据某个元素去重复
+//   function arrcomb($arr1,$arr2){
+//    foreach($arr1 as $key1=>$value1){
+//        foreach($arr2 as $key2=>$value2){
+//            if($value1['id']==$value2['id']){
+//                $arr3[]=$value2;
+//            }
+//        }
+//    }
+//    return $arr3;
+// }
+
+//二维数组根据某个元素去重复
+function second_array_unique_bykey1($arr, $key) {
+	$tmp_arr = array();
+	$tmp_arr1 = array();
+	foreach ($arr as $k => $v) {
+		if (in_array($v[$key], $tmp_arr)) //搜索$v[$key]是否在$tmp_arr数组中存在，若存在返回true
+		{
+			$tmp_arr1[$k] = $v; //销毁一个变量  如果$tmp_arr中已存在相同的值就删除该值
+		} else {
+			$tmp_arr[$k] = $v[$key]; //将不同的值放在该数组中保存
+		}
+	}
+	//ksort($arr); //ksort函数对数组进行排序(保留原键值key)  sort为不保留key值
+	return $tmp_arr1;
+}

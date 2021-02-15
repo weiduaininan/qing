@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/shop.css"/>
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/goods.css"/>
+
+    <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_1646840_lskp4ol16mr.css"/>
+
+    <link rel="stylesheet" type="text/css" href="/public/static/index/layui/css/layui.css"/>
+
+
+    <script src="/public/static/index/js/jquery-3.4.1.min.js"></script>
+
+    <script src="/public/static/index/js/common.js"></script>
+
+    <script src="/public/static/index/layui/layui.js"></script>
+
+
+    <title>商品评论</title>
+
+    <meta name="keywords" content="商品详情">
+
+    <meta name="description" content="商品详情">
+
+
+
+</head>
+
+<body>
+
+
+
+{include file="public/head"}
+
+<div class="header_line"></div>
+
+<div class="wrapbg">
+  <div class="wrap" style="padding: 30px 0;">
+    <div class="goods_comment_box">
+      {if condition='$count > 0'}
+      <div class="goods_comment_left">
+        {volist name="$commentData" id="vo"}
+        <div class="item">
+          <div class="pic"><img src="{$vo.face}"></div>
+          <div class="info">
+            <div class="username">{$vo.username}</div>
+            <div class="time">{$vo.time|date='Y-m-d'}</div>
+            <div class="content">{$vo.content}</div>
+          </div>
+          <div class="score_box">
+            <i class="layui-icon layui-icon-rate-solid isstar"></i>
+            <i class="layui-icon layui-icon-rate-solid {if condition='$vo.star > 1'}isstar{/if}"></i>
+            <i class="layui-icon layui-icon-rate-solid {if condition='$vo.star > 2'}isstar{/if}"></i>
+            <i class="layui-icon layui-icon-rate-solid {if condition='$vo.star > 3'}isstar{/if}"></i>
+            <i class="layui-icon layui-icon-rate-solid {if condition='$vo.star > 4'}isstar{/if}"></i>
+          </div>
+        </div>
+        {/volist}
+       
+
+      </div>
+      <div class="goods_comment_right">
+          <div class="text">商品满意度</div>
+          <div class="score">{$satify}%</div>
+      </div>
+      {else/}
+      <div style="background: #fff; display: flex;justify-content: center;align-items: center;width: 100%;">
+        <img src="/public/static/index/images/no.jpg">
+      </div>
+      {/if}
+      
+    
+    </div>
+  </div>
+</div>
+
+
+<div class="foot_line"></div>
+{include file="public/foot2"}
+
+
+
+</body>
+
+</html>
+
+
+
