@@ -15,9 +15,15 @@ class User extends Base {
 	public function index() {
 		$sessionUserData = $this->isLogin();
 		$collectCount = Db::name('collect')->where('user_id', $sessionUserData['id'])->count();
+		$myorder = Db::name('order')->where('user_id', $sessionUserData['id'])->count();
+		$myorder0 = Db::name('order')->where('user_id', $sessionUserData['id'])->where('status', '0')->count();
+		$myorder4 = Db::name('order')->where('user_id', $sessionUserData['id'])->where('status', '4')->count();
 		return view('', [
 			'left_menu' => 0,
 			'collectCount' => $collectCount,
+			'myorder' => $myorder,
+			'myorder0' => $myorder0,
+			'myorder4' => $myorder4,
 		]);
 	}
 

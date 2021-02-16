@@ -17,7 +17,7 @@ class Index extends Base {
 		}
 
 		//轮播
-		$bannerData = Db::name('ad')->where('type_id', 1)->select();
+		$bannerData = Db::name('adverts')->where('type_id', 1)->select();
 
 		//热销推荐
 		$goodsData5 = Db::name('goods')->where('ishot', 1)->limit(8)->order('goods_id desc')->order('listorder asc')->where('goods_status', 1)->select();

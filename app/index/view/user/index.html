@@ -84,9 +84,9 @@
                             <div class="info">
                                 <div class="title">
                                     <span class="span1">全部订单：</span>
-                                    <span class="span2">1</span>
+                                    <span class="span2">{$myorder|default=0}</span>
                                 </div>
-                                <div class="description"><a href="#" >查看全部付订单 <i class="iconchevron-copy-copy-copy-copy-copy iconfont"></i></a></div>
+                                <div class="description"><a href="{:url('index/orderlist/myorder')}">查看全部付订单</a><i class="iconchevron-copy-copy-copy-copy-copy iconfont"></i></a></div>
                             </div>
                         </div>
                         <div class="item">
@@ -94,9 +94,9 @@
                             <div class="info">
                                 <div class="title">
                                     <span class="span1">待支付的订单：</span>
-                                    <span class="span2">2</span>
+                                    <span class="span2">{$myorder0|default=0}</span>
                                 </div>
-                                <div class="description"><a href="#" >查看待支付订单 <i class="iconchevron-copy-copy-copy-copy-copy iconfont"></i></a></div>
+                                <div class="description"><a href="{:url('index/orderlist/myorder0')}">查看待支付订单 <i class="iconchevron-copy-copy-copy-copy-copy iconfont"></i></a></div>
                             </div>
                         </div>
                         <div class="item ">
@@ -104,9 +104,9 @@
                             <div class="info">
                                 <div class="title">
                                     <span class="span1">待收货的订单：</span>
-                                    <span class="span2">3</span>
+                                    <span class="span2">{$myorder4|default=0}</span>
                                 </div>
-                                <div class="description"><a href="#" >查看待收货订单 <i class="iconchevron-copy-copy-copy-copy-copy iconfont"></i></a></div>
+                                <div class="description"><a href="{:url('index/orderlist/myorder4')}">查看待收货订单 <i class="iconchevron-copy-copy-copy-copy-copy iconfont"></i></a></div>
                             </div>
                         </div>
                         <div class="item">

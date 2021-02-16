@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/shop.css" />
+    <link rel="stylesheet" type="text/css" href="/public/static/index/layui/css/layui.css" />
+    <link rel="stylesheet" type="text/css" href="http:////at.alicdn.com/t/font_1907378_h1th65cwy9j.css" />
+
+    <script src="/public/static/index/js/jquery-3.4.1.min.js"></script>
+    <script src="/public/static/index/js/common.js"></script>
+    <title>搜索页面-{$keywords}的搜索结果</title>
+    <meta name="keywords" content="搜索页面">
+    <meta name="description" content="搜索页面">
+
+</head>
+
+<body>
+
+    {include file="public/head"}
+    <div class="header_line"></div>
+    <div class="wrap">
+        <div class="position">
+            <a href="/index">首页</a> &gt; <span style="color:#ff6709;"><b>{$keywords}</b></span>的搜索结果
+            
+        </div>
+        
+        <div class="order_box">
+            <div class="order2 {if condition='$order eq 1'}current{/if}"><a href="{:url('index/lists/search',array('keywords'=>$keywords,'order'=>1))}">综合排序</a></div>
+            <div class="order2 {if condition='$order eq 2'}current{/if}"><a href="{:url('index/lists/search',array('keywords'=>$keywords,'order'=>2))}">销量 <i
+                        class="iconfont iconpaixujiantouxia"></i></a></div>
+           
+            <div class="order2 {if condition='$order eq 3'}current{/if}"><a href="{:url('index/lists/search',array('keywords'=>$keywords,'order'=>3))}">价格 <i
+                        class="iconfont iconpaixujiantouxia"></i></a></div>
+            <div class="order2 {if condition='$order eq 4'}current{/if}"><a href="{:url('index/lists/search',array('keywords'=>$keywords,'order'=>4))}">价格 <i
+                        class="iconfont iconpaixujiantoushang"></i></a></div>
+        </div>
+        <div class="lists_goods">
+            {volist name="$goodsData" id="vo"}
+            <a class="item" href="/index/goods/index.html?goods_id={$vo.goods_id}">
+                <div class="pic"><img src="{$vo.goods_thumb}"></div>
+                <div class="info">
+                    <div class="goods_name">{$vo.goods_name}</div>
+                    <div class="price">￥{$vo.goods_price}</div>
+                    <div class="icon"><i class="iconfont icongouwuche"></i></div>
+                </div>
+            </a>
+           {/volist}
+        
+           {$goodsData|raw}
+
+        </div>
+    </div>
+
+    <div class="foot_line"></div>
+    {include file="public/foot2"}
+
+
+    <style>
+        .order2{
+            position: relative;
+        }
+        .iconpaixujiantoushang{
+            position: absolute;
+            bottom: -3px;
+        }
+        .iconpaixujiantouxia{
+            position: absolute;
+            bottom: 3px;
+        }
+    </style>
+
+</body>
+
+</html>
