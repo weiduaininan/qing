@@ -75,7 +75,7 @@ class Goods extends Base {
 				//当前浏览的商品
 				$currentTrace = Db::name('user_trace')->where('user_id', $sessionUserData['id'])->where('goods_id', $goods_id)->find();
 
-				if ($totalCount == 3) {
+				if ($totalCount == 6) {
 					//删除最旧的记录
 					//插入新的浏览记录
 					//当前的，更新时间

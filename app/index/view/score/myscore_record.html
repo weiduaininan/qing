@@ -27,7 +27,7 @@
 
 
     <div class="user_position">
-        当前位置：<a href="/shop/">首页</a> > <a href="{:url('user/index')}">会员中心</a> > 我的积分
+        当前位置：<a href="/index">首页</a> > <a href="{:url('user/index')}">会员中心</a> > 我的积分
     </div>
     <div class="user_box">
         {include file="public/left_menu"}
@@ -56,7 +56,7 @@
                         <div class="content3">时间</div>
                     </div>
                     {volist name="$scoreGoodsRecordData" id="vo"}
-                    <a class="item" href="{:url('index/index/score_goods_detail',array('id'=>$vo.id))}">
+                    <a class="item" href="{:url('index/score/score_goods_detail',array('goods_id'=>$vo.goods_id))}">
                         <div class="content1"><img src="{$vo.thumb}"></div>
                         <div class="content2">{$vo.score}</div>
                         <div class="content2">{$vo.empress}</div>

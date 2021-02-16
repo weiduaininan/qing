@@ -384,9 +384,9 @@ class Order extends Base {
 		$id = input('id');
 		$res = Db::name('order')->where('id', $id)->update(['status' => 2]);
 		if ($res) {
-			return alert('操作成功', 'myorder', 6);
+			return alert('操作成功', '/index/orderlist/myorder', 6);
 		} else {
-			return alert('操作失败', 'myorder', 5);
+			return alert('操作失败', '/index/orderlist/myorder', 5);
 		}
 	}
 
@@ -396,9 +396,9 @@ class Order extends Base {
 		$res = Db::name('order')->where('id', $id)->delete();
 		Db::name('order_goods')->where('order_id', $id)->delete();
 		if ($res) {
-			return alert('操作成功', 'myorder', 6);
+			return alert('操作成功', '/index/orderlist/myorder', 6);
 		} else {
-			return alert('操作失败', 'myorder', 5);
+			return alert('操作失败', '/index/orderlist/myorder', 5);
 		}
 	}
 
@@ -410,7 +410,7 @@ class Order extends Base {
 
 		//做下判断
 		if (empty($orderData) || $orderData['status'] != 2) {
-			return redirect('myorder');
+			return redirect('/index/orderlist/myorder');
 		}
 
 		//获取商品数据
@@ -439,13 +439,51 @@ class Order extends Base {
 				Db::name('order')->where('id', $data['order_id'])->update(['iscomment' => 1]);
 			}
 
-			return alert('操作成功', 'myorder', 6);
+			return alert('操作成功', '/index/orderlist/myorder', 6);
 		} else {
-			return alert('操作失败', 'myorder', 5);
+			return alert('操作失败', '/index/orderlist/myorder', 5);
 		}
 
 		halt($data);
 
 	}
+	//我的订单详情
+	public function myorder_detail() {
+		//0 待付款 取消订单 立即支付  订单详情
+		//1 已经支付待发货  订单详情
+		//4 待确认收货  确认收货  订单详情
+		//2 已完成  商品评价  订单详情 联系客服  删除订单
 
+		$sessionUserData = $this->isLogin();
+
+		$id = input('id');
+
+		//订单数据
+		$orderData = Db::name('order')->find($id);
+		if (empty($orderData)) {
+			return redirect('/index/orderlist/myorder');
+		}
+
+		//商品订单数据
+		$orderGoodsData = Db::name('order_goods')->alias('a')->field('a.*,b.goods_name,b.goods_thumb')->join('goods b', 'a.goods_id=b.goods_id')->where('a.order_id', $orderData['id'])->select()->toArray();
+
+		$post_money = 0;
+		$goods_price = 0;
+		foreach ($orderGoodsData as $k => $v) {
+			$post_money = $v['post_money'] + $post_money;
+			$goods_price = $goods_price + $v['goods_price'] * $v['amount'];
+		}
+
+		//收货信息
+		$addressData = Db::name('address')->find($orderData['address_id']);
+
+		return view('', [
+			'left_menu' => 11,
+			'orderData' => $orderData,
+			'orderGoodsData' => $orderGoodsData,
+			'addressData' => $addressData,
+			'post_money' => $post_money,
+			'goods_price' => $goods_price,
+		]);
+	}
 }

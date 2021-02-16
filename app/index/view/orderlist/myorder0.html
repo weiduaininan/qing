@@ -26,7 +26,7 @@
 <div class="wrap">
 
     <div class="user_position">
-        当前位置：<a href="/shop/">首页</a> > <a href="{:url('user/index')}">会员中心</a> > 全部订单
+        当前位置：<a href="/index">首页</a> > <a href="{:url('user/index')}">会员中心</a> > 全部订单
     </div>
     <div class="user_box">
         {include file="public/left_menu"}
@@ -36,11 +36,11 @@
                 <div class="myorder_nav">
                     <div class="myorder_nav_left">
                         <div class="item">
-                            <a href="{:url('index/orderlist/myorder')}" class="current">全部订单</a>
+                            <a href="{:url('index/orderlist/myorder')}">全部订单</a>
                             <span class="line"></span>
                         </div>
                         <div class="item">
-                            <a href="{:url('index/orderlist/myorder0')}">待支付</a>
+                            <a href="{:url('index/orderlist/myorder0')}" class="current">待支付</a>
                             <span class="line"></span>
                         </div>
                         <div class="item">
@@ -77,7 +77,7 @@
                             <div class="pay_box">
 
                                
-                                <div class="pay_button2" ><a href="{:url('index/orderlist/myorder_detail',array('id'=>$vo.id))}">订单详情</a></div>
+                                <div class="pay_button2" ><a href="{:url('index/order/myorder_detail',array('id'=>$vo.id))}">订单详情</a></div>
                                 
                                 <div class="pay_button2"><a href="{:url('index/order/order_delete',array('id'=>$vo.id))}" >取消订单</a></div>
                                 <div class="pay_button1">

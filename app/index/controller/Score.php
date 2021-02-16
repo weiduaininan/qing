@@ -28,7 +28,7 @@ class Score extends Base {
 		$sessionUserData = $this->isLogin();
 
 		$scoreGoodsRecordData = Db::name('score_record')->alias('a')->field('a.*,b.thumb')->join('score_goods b', 'a.goods_id=b.id')->where('a.user_id', $sessionUserData['id'])->order('a.id desc')->paginate(10);
-
+		//halt($scoreGoodsRecordData);
 		//总积分
 		$total_socre = Db::name('score')->where('user_id', $sessionUserData['id'])->sum('score');
 
@@ -52,7 +52,7 @@ class Score extends Base {
 	//积分商品详情
 	public function score_goods_detail() {
 		$sessionUserData = $this->isLogin();
-		$id = input('id');
+		$id = input('goods_id');
 
 		$scoreGoodsData = Db::name('score_goods')->find($id);
 		if (empty($scoreGoodsData)) {
