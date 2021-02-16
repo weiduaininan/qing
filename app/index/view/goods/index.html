@@ -47,14 +47,11 @@
 <div class="goods_position">
   <div class="wrap"><a href="/">首页</a> &gt;
     {volist name="$positionData" id="vo"}
-    <a href="/index/lists/index.html?cate_id={$vo.id}">{$vo.cate_name} &gt; </a>
+    <a href="/index/lists/index.html?cate_id={$vo.id}">{$vo.cate_name} <if condition="$i eq count($positionData)">&gt;</if> </a>
     {/volist}</div>
 </div>
 <div class="wrap">
-
-
     <div class="goods1">
-
         <div class="goods1_left">
 
           <div class="swiper-container">

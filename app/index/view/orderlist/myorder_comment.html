@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/shop.css" />
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/user.css" />
+    <link rel="stylesheet" href="/public/static/index/layui/css/layui.css">
+    <script src="/public/static/index/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="/public/static/index/js/layer-v3.1.1/layer.js"></script>
+    <script src="/public/static/index/js/common.js"></script>
+    <script src="/public/static/index/js/user.js"></script>
+    <script src="/public/static/index/layui/layui.js"></script>
+    <title>服务评价</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+</head>
+
+<body>
+
+    {include file="public/head"}
+
+    <div class="wrapbg">
+        <div class="wrap">
+
+            <div class="user_position">
+                当前位置：<a href="/shop/">首页</a> > <a href="{:url('user/index')}">会员中心</a> > 服务评价
+            </div>
+            <div class="user_box">
+                {include file="public/left_menu"}
+                <div class="user_box_right">
+                    <div class="user_content_box">
+                        <div class="myorder_title">服务评价</div>
+                        <div class="myorder_comment">
+
+                            {volist name="$orderGoodsData" id="vo"}
+                            <form class="item" method="post" action="{:url('index/user/myorder_comment_add')}">
+                                <div class="pic"><a href="{:url('index/goods/index',array('goods_id'=>$vo.goods_id))}"><img src="{$vo.goods_thumb}"></a></div>
+                                <input type="hidden" name="goods_id" value="{$vo.goods_id}">
+                                <input type="hidden" name="order_id" value="{$vo.order_id}">
+                                <div class="info">
+
+                                    <div class="rating-stars block" id="another-rating">
+                                        <input type="hidden"  class="form-control rating-value" name="star" id="another-rating-stars-value"
+                                            value="5">
+                                            
+                                        <div class="rating-stars-container">
+                                            <div class="rating-star">
+                                                <i class="layui-icon layui-icon-rate-solid"></i>
+                                            </div>
+                                            <div class="rating-star">
+                                                <i class="layui-icon layui-icon-rate-solid"></i>
+                                            </div>
+                                            <div class="rating-star">
+                                                <i class="layui-icon layui-icon-rate-solid"></i>
+                                            </div>
+                                            <div class="rating-star">
+                                                <i class="layui-icon layui-icon-rate-solid"></i>
+                                            </div>
+                                            <div class="rating-star">
+                                                <i class="layui-icon layui-icon-rate-solid"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="comment_content"><textarea class="comnment_textarea"
+                                            placeholder="外形如何？品质如何？赶快来写评价吧" name="content"></textarea></div>
+                                    <div class="btn_box">
+                                        <button class="btn">发表评价</button>
+                                    </div>
+                                </div>
+                            </form>
+                            
+                            {/volist}
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <script src="/public/static/index/js/jquery.rating-stars.min.js"></script>
+    <script>
+        var ratingOptions = {
+            selectors: {
+                starsSelector: '.rating-stars',
+                starSelector: '.rating-star',
+                starActiveClass: 'is--active',
+                starHoverClass: 'is--hover',
+                starNoHoverClass: 'is--no-hover',
+                targetFormElementSelector: '.rating-value'
+            }
+        };
+
+        $(".rating-stars").ratingStars(ratingOptions);
+    </script>
+
+
+    {include file="public/foot2"}
+
+
+</body>
+
+</html>

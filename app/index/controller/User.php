@@ -561,9 +561,9 @@ class User extends Base {
 			$res = Db::name('user_trace')->delete($id);
 		}
 		if ($res) {
-			return alert('成功删除记录', 'collect', 6, 3);
+			return alert('成功删除记录', 'mytrace', 6, 3);
 		} else {
-			return alert('删除删除记录', 'collect', 5, 3);
+			return alert('删除删除记录', 'mytrace', 5, 3);
 		}
 	}
 }

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/shop.css"/>
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/user.css"/>
+    <link rel="stylesheet" href="/public/static/index/layui/css/layui.css">
+    <script src="/public/static/index/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="/public/static/index/js/layer-v3.1.1/layer.js"></script>
+    <script src="/public/static/index/js/common.js"></script>
+    <script src="/public/static/index/js/user.js"></script>
+    <title>全部订单</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+</head>
+<body>
+
+{include file="public/head"}
+
+<div class="wrapbg">
+<div class="wrap">
+
+    <div class="user_position">
+        当前位置：<a href="/shop/">首页</a> > <a href="{:url('user/index')}">会员中心</a> > 全部订单
+    </div>
+    <div class="user_box">
+        {include file="public/left_menu"}
+        <div class="user_box_right">
+            <div class="user_content_box">
+                <div class="myorder_title">我的订单</div>
+                <div class="myorder_nav">
+                    <div class="myorder_nav_left">
+                        <div class="item">
+                            <a href="{:url('index/orderlist/myorder')}" class="current">全部订单</a>
+                            <span class="line"></span>
+                        </div>
+                        <div class="item">
+                            <a href="{:url('index/orderlist/myorder0')}">待支付</a>
+                            <span class="line"></span>
+                        </div>
+                        <div class="item">
+                            <a href="{:url('index/orderlist/myorder4')}">待收货</a>
+                            <span class="line"></span>
+                        </div>
+                    </div>
+                    <form action="{:url('myorder_search')}" method="post" class="myorder_nav_form">
+                        <div class="input_box">
+                            <input type="text" placeholder="{$searchkey|default='输入商品名称'}" name="searchkey">
+                        </div>
+                        <button class="icon"><i class="icontubiao1 iconfont"></i></button>
+                    </form>
+                </div>
+                <div class="myorder_box">
+                    {volist name="$orderData1" id="vo"}
+                    <div class="item 
+                    {switch $vo.status}
+                        {case 1}style_color3{/case}
+                        {case 2}style_color1{/case}
+                        {case 4}style_color1{/case}
+                        {default /}style_color2
+                    {/switch}
+                    ">
+                        <div class="item_info">
+                            <div class="item_info_left">
+                                <div class="text2">
+                                {switch $vo.status}
+                                    {case 1}待发货{/case}
+                                    {case 2}已完成{/case}
+                                    {case 4}待收货{/case}
+                                    {default /}待支付
+                                {/switch}</div>
+                                <div class="text3">{$vo.time|date="Y-m-d"} &nbsp;|&nbsp;{$vo.shou_name} &nbsp;|&nbsp; 订单号：{$vo.out_trade_no}&nbsp;|&nbsp;{if condition='$vo.pay_method eq 1'}微信支付{else/}支付宝{/if}</div>
+                            </div>
+                            <div class="item_info_right">
+                                应付金额：<div class="text1">{$vo.total_price}&nbsp;</div>元
+                            </div>
+                        </div>
+                        <div class="item_goods">
+                            <div class="goods_box">
+                                {volist name="$vo.goods" id="vo1"}
+                                <div class="goods_item">
+                                    <div class="pic"><img src="{$vo1.goods_thumb}"></div>
+                                    <div class="info">
+                                        <div class="goods_name"><?php echo str_replace($searchkey,"<span style='color:#f00'>".$searchkey."</span>",$vo1['goods_name']);?> &nbsp;{$vo1.sku}</div>
+                                        <div class="goods_price">{$vo1.goods_price}元×{$vo1.amount}</div>
+                                    </div>
+                                </div>
+                                {/volist}
+                            </div>
+                            <div class="pay_box">
+
+                               
+                                <div class="pay_button2" ><a href="{:url('index/orderlist/myorder_detail',array('id'=>$vo.id))}">订单详情</a></div>
+                                
+                                
+
+                                {if condition='$vo.status eq 2'}
+                                {if condition='$vo.iscomment eq 0'}
+                                <div class="pay_button2"><a href="{:url('index/order/myorder_comment',array('id'=>$vo.id))}" >商品评价</a></div>
+                                {/if}
+
+                                <div class="pay_button2"><a href="{:url('index/order/myorder_delete',array('id'=>$vo.id))}" >删除订单</a></div>
+                                {/if}
+
+                                {if condition='$vo.status eq 4'}
+                                <div class="pay_button1"><a href="{:url('index/order/order_status2',array('id'=>$vo.id))}" >确认收货</a></div>
+                                {/if}
+
+                                {if condition='$vo.status eq 0'}
+                                <div class="pay_button2"><a href="{:url('index/order/order_delete',array('id'=>$vo.id))}" >取消订单</a></div>
+                                <div class="pay_button1">
+                                    {if condition="$vo.pay_method eq 1"}
+                                    <a href="{:url('index/weixinpay/index',array('out_trade_no'=>$vo.out_trade_no))}" >立即付款</a>
+                                    {else/}
+                                    <a href="{:url('index/alipay/index',array('out_trade_no'=>$vo.out_trade_no))}" >立即付款</a>
+                                    {/if}
+                                </div>
+                                {/if}
+                            </div>
+                        </div>
+                    </div>
+                    {/volist}
+
+                    {$page|raw}
+                    
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+</div>
+
+
+
+
+{include file="public/foot2"}
+
+
+</body>
+</html>
+

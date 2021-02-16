@@ -1,0 +1,305 @@
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/shop.css"/>
+
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/pay.css"/>
+
+    <link rel="stylesheet" href="/public/static/index/layui/css/layui.css">
+
+    <script src="/public/static/index/js/jquery-3.4.1.min.js"></script>
+
+    <script src="/public/static/index/js/pay.js"></script>
+
+    <script src="/public/static/index/layui/layui.js"></script>
+
+    <script src="/public/static/index/js/common.js"></script>
+
+    <title>北京小米科技有限公司</title>
+
+    <meta name="keywords" content="">
+
+    <meta name="description" content="">
+
+
+
+</head>
+
+<body>
+
+
+{include file="public/head"}
+
+<div class="header_line"></div>
+
+<div class="wrap">
+
+    <div class="public_ad"><a href="#"><img src="/public/static/index/images/ad.jpg"></a></div>
+
+
+
+    <form class="pay_box">
+
+        <div class="title_box">
+
+            核对订单信息
+
+        </div>
+
+        <div class="info_box">
+
+            <div class="address">
+
+                <div class="pay_public_title"><b>收货人信息</b> <a href="/index/user/address_list.html" style="color: #6084a5;">[收货人管理]</a></div>
+
+                {if condition="$addressDefaultData"}
+                <div class="item">
+
+                    <input type="radio" name="address_id" checked value="{$addressDefaultData.id}">
+
+                    <span class="color1">收货人：{$addressDefaultData.shou_name} 电话：{$addressDefaultData.shou_mobile}  收货地址：{$addressDefaultData.province}  {$addressDefaultData.city}  {$addressDefaultData.district} {$addressDefaultData.shou_address}</span>
+
+                </div>
+                {/if}
+
+                {volist name="$addressData" id="vo"}
+                <div class="item">
+
+                    <input type="radio" name="address_id" value="1">
+
+                    <span>收货人：{$vo.shou_name} 电话：{$vo.shou_mobile}  收货地址：{$vo.province}  {$vo.city}  {$vo.district} {$vo.shou_address}</span>
+
+                </div>
+                {/volist}
+                
+                
+            </div>
+
+            <div class="pay_method">
+
+                <div class="pay_public_title"><b>支付方式</b></div>
+
+                <div class="current_method item">
+
+                    <img src="/public/static/index/images/weixinpay.jpg">
+
+                    <input type="radio" name="pay"  value="1"  style="display: none;">
+
+                </div>
+                <div class=" item">
+
+                    <img src="/public/static/index/images/zhifubao.jpg">
+
+                    <input type="radio" name="pay"  value="2" checked style="display: none;">
+
+                </div>
+
+            </div>
+
+            <div class="pay_public_title"><b>商品清单</b></div>
+
+            <div class="goods">
+
+                <div class="goods_box">
+
+                    <div class="xiang_title item">
+
+                        <div class="name1">商品</div>
+
+                        <div class="name3">规格</div>
+
+                        <div class="name3">价格</div>
+
+                        <div class="name3">数量</div>
+                        <div class="name3">邮费</div>
+
+                        <div class="name3">小计</div>
+
+                    </div>
+                
+                   
+                    <div class="goods_item item" >
+
+                        <div class="name1 name11">
+
+                            <a class="goods_style1" href="{:url('index/goods/index',array('goods_id'=>$goodsData.goods_id))}">
+
+                                <div class="pic"><img src="{$goodsData.goods_thumb}"></div>
+
+                                <div class="info">{$goodsData.goods_name}</div>
+
+                            </a>
+
+                        </div>
+
+                        <div class="name3">{$goodsData.skustr|default='标准规格'}<input type="hidden" name="sku" value="{$goodsData.sku}"></div>
+
+                        <div class="name3">￥<span class="price">{$goodsData.goods_price}</span></div>
+
+                        <div class="name3 amount"><input type="number" value="{$goodsData.amount}" name="amount" oninput="if(value < 1 ){alert('数量最小为1！');value = '1'}"/></div>
+
+                        <div class="name3">
+                          ￥<span class="post_money">{$goodsData.post_money}</span>
+                        </div>
+
+                        <div class="name3">￥<span class="xiaoji"></span></div>
+                        <input type="hidden" name="goods_id" value="{$goodsData.goods_id}">
+
+                    </div>
+                
+                 
+                    
+                </div>
+
+            </div>
+
+            <div class="order_content">
+                <div class="pay_public_title"><b>订单备注</b></div>
+                <textarea class="order_content_textarea" name="content" placeholder="备注信息"></textarea>
+            </div>
+
+
+        </div>
+
+        <div class="total_box">
+
+            <div class="total">
+
+                应付金额：<span class="color1">￥</span><span class="color1 price"></span>
+
+            </div>
+
+            <div class="pay_button">结算</div>
+
+        </div>
+
+    </form>
+
+
+
+
+
+    <div class="foot2_line"></div>
+
+</div>
+
+
+
+
+
+{include file="public/foot2"}
+
+
+
+<script>
+
+
+
+    $(function(){
+
+        $(".pay_method .item").click(function(){
+
+            $(this).toggleClass("current_method");
+
+            $(this).siblings().removeClass("current_method");
+        });
+
+        //结算
+        $(".pay_button").click(function(){
+
+            var address_id=$('input[name="address_id"]:checked').val();
+            //如果没有地址信息，不能提交订单
+            if($('.address .item').length==0){
+                layui.use('layer', function(){
+                    layer.alert('请填写地址信息'); 
+                });
+                return false;
+            }
+
+            var pay_method=$('.current_method input').val();
+            var content=$("textarea[name='content']").val();
+            var goods_id=$("input[name='goods_id']").val();
+            var amount=$("input[name='amount']").val();
+            var sku=$("input[name='sku']").val();
+            
+
+            // 执行AJAX更新到服务器
+            url ="/index/order/order_create2";
+            postData = {'address_id':address_id,'pay_method':pay_method,'content':content,'goods_id':goods_id,'amount':amount,'sku':sku};
+
+            $.post(url,postData,function(result){
+
+                    //如果没有地址信息，不能提交订单
+                    if(result.status==0){
+                        layui.use('layer', function(){
+                            layer.alert(result.msg); 
+                        });
+                    }
+                    if(result.status==-1){
+
+                        layui.use('layer', function(){
+                            layer.alert(result.msg, function(index){
+                            location.href="/";
+                            }); 
+                        });
+                    }
+
+                    //请登录
+                    if(result.status==-2){
+
+                        layui.use('layer', function(){
+                            layer.alert(result.msg, function(index){
+                            location.href="/index/user/login";
+                            }); 
+                        });
+                    }
+                    
+                    if(result.status==2){
+
+                        layui.use('layer', function(){
+                            layer.alert(result.msg, function(index){
+                            location.href="/index/Alipay/index?out_trade_no="+result.out_trade_no;
+                            }); 
+                        });
+                    }
+
+                    if(result.status==1){
+
+                        layui.use('layer', function(){
+                            layer.alert(result.msg, function(index){
+                            location.href="/index/Weixinpay/index?out_trade_no="+result.out_trade_no;
+                            }); 
+                        });
+                    }
+
+            }, 'json');
+
+        });
+   
+
+    });
+
+
+
+</script>
+
+
+
+</body>
+
+</html>
+
+
+
