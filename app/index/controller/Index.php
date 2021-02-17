@@ -27,10 +27,11 @@ class Index extends Base {
 		$indexCate = $category_model->getNavCateData();
 
 		//获取手机商品
-		$goodsData18 = Db::name('goods')->limit(8)->where('goods_cate_id', 'in', '16,17,18,26,27,28,29')->order('goods_id desc')->order('listorder asc')->where('goods_status', 1)->select();
-
+		$goods_cate = Db::name('category')->field('id')->where('parent_id', 18)->select()->toArray();
+		$goods_cate_id = array_column($goods_cate, 'id');
+		$goodsData18 = Db::name('goods')->limit(8)->whereIn('goods_cate_id', $goods_cate_id)->order('goods_id desc')->order('listorder asc')->where('goods_status', 1)->select();
+		//生活电器
 		$goodsData4 = Db::name('goods')->limit(8)->where('goods_cate_id', 'in', '8,9,155,156,157,158')->order('goods_id desc')->order('listorder asc')->where('goods_status', 1)->select();
-
 		//获取手机分类
 		$goodsCate18 = Db::name('category')->field('id,cate_name')->where('parent_id', 18)->select();
 
@@ -51,15 +52,28 @@ class Index extends Base {
 	}
 
 	//优惠券专题
-	// public function coupons(){
-
-	//     //不能获取已经过期的优惠券
-	//     $time=time();
-	//     $couponsData=Db::name('coupons')->order('id desc')->where('time2','>',$time)->select();
-	//     return view('',[
-	//         'couponsData'=>$couponsData
-	//     ]);
-	// }
+	public function coupons() {
+		$sessionUserData = $this->isLogin();
+		//不能获取已经过期的优惠券
+		$time = time();
+		$couponsData = Db::name('coupons')->order('id desc')->where('status', '1')->where('time2', '>', $time)->select()->toArray();
+		//halt($couponsData);
+		foreach ($couponsData as $k => $v) {
+			// halt($v);
+			//返回该优惠券是否被该用户领取
+			$res = Db::name('coupons_user')->where('coupons_id', $v['id'])->where('user_id', $sessionUserData['id'])->select()->toArray();
+			//halt($v);
+			//var_dump($res);
+			if (!empty($res)) {
+				$couponsData[$k]['cu_status'] = 1; //领取过
+			} else {
+				$couponsData[$k]['cu_status'] = 0; //未领取
+			}
+		}
+		return view('', [
+			'couponsData' => $couponsData,
+		]);
+	}
 
 	//表单令牌
 	public function message(Request $request) {

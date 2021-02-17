@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+
+    <link rel="stylesheet" type="text/css" href="/public/static/index/css/shop.css"/>
+
+
+    <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_1646840_lskp4ol16mr.css"/>
+
+    <link rel="stylesheet" type="text/css" href="/public/static/index/layui/css/layui.css"/>
+
+
+    <script src="/public/static/index/js/jquery-3.4.1.min.js"></script>
+
+    <script src="/public/static/index/js/common.js"></script>
+    <script src="/public/static/index/layui/layui.js"></script>
+
+    <title>优惠券专题</title>
+
+    <meta name="keywords" content="优惠券专题">
+
+    <meta name="description" content="优惠券专题">
+
+
+
+</head>
+
+<body>
+
+
+
+{include file="public/head"}
+
+<div class="index_coupons_banner"></div>
+
+<div class="wrap">
+  <div class="index_coupons_title">
+    <h2>新人福利活动</h2>
+  </div>
+    <div class="index_coupons_box">
+      {volist name="$couponsData" id="vo"}
+        <div class="item">
+            <div class="title_box"><div class="title">{$vo.name}</div></div>
+            <div class="description">满{$vo.money1}减{$vo.money2}</div>
+            <div class="time">使用时间：{$vo.time1|date="Y-m-d"}至{$vo.time2|date="Y-m-d"}</div>
+            <input type="hidden" name="id" value="{$vo.id}">
+            {if condition="$vo.cu_status eq 0"}
+            <div class="btn1"  onclick="add_coupons(this)">立即领取</div>
+            {else/}
+            <div class="btn2">领完了</div>
+            {/if}
+        </div>
+        
+      {/volist}
+    </div>
+   
+</div>
+<br><br><br>
+
+
+
+<div class="foot_line"></div>
+{include file="public/foot2"}
+
+
+<script type="text/javascript">
+
+  //领取优惠券操作
+  function add_coupons(a) {
+    var id=$(a).parent().children("input[ name='id']").val();
+  
+    //抛送数据
+    postData = {'id':id};
+    url='/index/user/add_coupons';
+    $.post(url,postData,function(result){
+        
+        //已经领取了
+        if(result.status==1){
+            layui.use('layer', function(){
+            var layer = layui.layer;
+            
+            layer.open({
+                type: 1
+                ,offset: 'auto' 
+                ,id: 'layerDemo'+1 //防止重复弹出
+                ,content: '<div style="text-align:center;padding:20px 80px">已经领取了</div>'
+                ,btn: '确定'
+                ,btnAlign: 'c' //按钮居中
+                ,shade: 0 //不显示遮罩
+                ,yes: function(){
+                    location.reload()
+                }
+            });
+          });  
+        }
+
+        //领取成功
+        if(result.status==3){
+           layui.use('layer', function(){
+            var layer = layui.layer;
+            
+            layer.open({
+                type: 1
+                ,offset: 'auto' 
+                ,id: 'layerDemo'+1 //防止重复弹出
+                ,content: '<div style="text-align:center;padding:20px 80px">领取成功</div>'
+                ,btn: '确定'
+                ,btnAlign: 'c' //按钮居中
+                ,shade: 0 //不显示遮罩
+                ,yes: function(){
+                    location.reload()
+                }
+            });
+          });  
+        }
+
+        //服务异常
+        if(result.status==-1){
+          layui.use('layer', function(){
+            var layer = layui.layer;
+            layer.msg('优惠券已经领完了或者出现其他异常');
+          }); 
+        }
+
+        //没有登录
+        if(result.status==0){
+          
+          layui.use('layer', function(){
+            var layer = layui.layer;
+            
+            layer.open({
+                type: 1
+                ,offset: 'auto' 
+                ,id: 'layerDemo'+1 //防止重复弹出
+                ,content: '<div style="text-align:center;padding:20px 80px">请登录！</div>'
+                ,btn: '确定'
+                ,btnAlign: 'c' //按钮居中
+                ,shade: 0 //不显示遮罩
+                ,yes: function(){
+                    window.location.href='/index/user/login';
+                }
+            });
+          });  
+        }
+
+
+      
+    },'json');
+  }
+  
+  </script>
+
+
+</body>
+
+</html>
+
+
+

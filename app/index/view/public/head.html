@@ -7,6 +7,7 @@
         <div class="top_left">
             {if condition="$sessionUserData"}
             <a href="{:url('index/user/index')}">{$sessionUserData.username}</a>
+            <a href="{:url('index/index/coupons')}">领取优惠券</a>
             {else/}
             <a href="{:url('index/user/login')}">登录</a>
             <a href="{:url('index/user/register')}">注册</a>
