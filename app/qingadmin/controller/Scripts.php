@@ -3,6 +3,7 @@ namespace app\qingadmin\controller;
 use app\BaseController;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use think\facade\Db;
 use think\facade\Log;
 
 //引入文件
@@ -161,11 +162,11 @@ class Scripts extends BaseController {
 			}
 			$orderData[$k]['time'] = date('Y-m-d H:i', $v['time']);
 			$orderData[$k]['express_code'] = Db::name('express')->where('code', $v['express_code'])->value('name');
-			if ($orderData[$k]['shou_time']) {
-				$orderData[$k]['shou_time'] = date('Y-m-d H:i', $v['shou_time']);
-			} else {
-				$orderData[$k]['shou_time'] = '没有收货';
-			}
+			// if ($orderData[$k]['shou_time']) {
+			// 	$orderData[$k]['shou_time'] = date('Y-m-d H:i', $v['shou_time']);
+			// } else {
+			// 	$orderData[$k]['shou_time'] = '没有收货';
+			// }
 			if ($orderData[$k]['pay_time']) {
 				$orderData[$k]['pay_time'] = date('Y-m-d H:i', $v['pay_time']);
 			} else {
@@ -192,9 +193,6 @@ class Scripts extends BaseController {
 				<th class='name'>订单号</th>
 				<th class='name'>会员手机号</th>
 				<th class='name'>下单时间</th>
-				<th class='name'>收货人姓名</th>
-				<th class='name'>收货人电话</th>
-				<th class='name'>收货人地址</th>
 				<th class='name'>订单备注</th>
 				<th class='name'>订单总价</th>
 				<th class='name'>订单状态</th>
@@ -202,7 +200,6 @@ class Scripts extends BaseController {
 				<th class='name'>支付时间</th>
 				<th class='name'>快递单号</th>
 				<th class='name'>快递公司</th>
-				<th class='name'>收货时间</th>
 			</tr>
 		</thead>
 		<tbody>";
@@ -212,9 +209,6 @@ class Scripts extends BaseController {
 					<td class='name'>{$v['out_trade_no']}</td>
 					<td class='name'>{$v['mobile']}</td>
 					<td class='name'>{$v['time']}</td>
-					<td class='name'>{$v['shou_name']}</td>
-					<td class='name'>{$v['shou_mobile']}</td>
-					<td class='name'>{$v['shou_address']}</td>
 					<td class='name'>{$v['content']}</td>
 					<td class='name'>{$v['total_price']}</td>
 					<td class='name'>{$v['status']}</td>
@@ -222,7 +216,6 @@ class Scripts extends BaseController {
 					<td class='name'>{$v['pay_time']}</td>
 					<td class='name'>{$v['postcode']}</td>
 					<td class='name'>{$v['express_code']}</td>
-					<td class='name'>{$v['shou_time']}</td>
 				</tr>";
 		}
 		$table .= "</tbody>
