@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>购物车</title>
+  <link rel="stylesheet" href="/public/static/mobile/css/common.css">
+  <link rel="stylesheet" href="/public/static/mobile/css/index.css">
+  <link rel="stylesheet" href="http://at.alicdn.com/t/font_1646840_ygalgtt63r.css">
+</head>
+
+<body class="bgf5f5f5" style="height: 100vh;">
+  <header class="cart_header">
+    <div class="return">
+      <i class="iconfont iconarrow-right-copy-copy-copy"></i>
+    </div>
+    <div class="text">
+      购物车
+    </div>
+    <div class="search">
+      <i class="iconfont icontubiao1"></i>
+    </div>
+  </header>
+
+  <div class="cart_box">
+    {volist name="$cartData" id="vo"}
+    <li class="item" data-id="{$vo.id}">
+      <div class="left_content">
+        <input class="status" type="checkbox" {if condition='$vo.status eq 1'}checked{/if} name="status">
+      </div>
+      <div class="middle_content">
+        <div class="pic">
+          <a href="{:url('mobile/goods/index',array('goods_id'=>$vo.goods_id))}">
+            <img src="{$vo.goods_thumb}">
+          </a>
+        </div>
+        <div class="info">
+          <div class="goods_name"><a href="{:url('mobile/goods/index',array('goods_id'=>$vo.goods_id))}">{$vo.goods_name}</a>
+          </div>
+          <div class="attr">
+            {$vo.sku}&nbsp;&nbsp;&nbsp;
+          </div>
+          <div class="number_box">
+            <div class="reduce_num">
+              <i class="fa fa-minus-square-o"></i>
+            </div>
+            <div class="amount">
+              <input type="number" class="amount_input" value="{$vo.amount}" oninput="if(value < 1 ){alert('数量最小为1！');value = '1'}">
+            </div>
+            <div class="add_num">
+              <i class="fa fa-plus-square-o"></i>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="right_content">
+        <span class="price">{$vo.goods_price}</span>
+        <div class="delete_goods"><i class="iconfont iconlajitong"></i></div>
+      </div>
+
+    </li>
+    {/volist}
+  </div>
+
+  <div class="cart_pay_box">
+      <div class="selectall">
+          <input class="" type="checkbox" checked="checked" onclick="checkAll(this,'status')">
+          <label class="buy">全选</label>
+      </div>
+      <div class="total_box">
+          ￥<strong id="total">2500</strong>
+      </div>
+      <div class="pay_btn" id="pay">结算</div>
+  </div>
+
+  <script src="/public/static/mobile/js/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="/public/static/index/layer/2.4/layer.js"></script>
+  <script>
+
+    $(function () {
+
+        //删除
+        $(".delete_goods").click(function () {
+
+            // 先获取所在的li
+            var li = $(this).parent().parent();
+            var id = li.data('id');
+            var price = li.children(".price");
+
+            layer.open({
+                content: '确定删除吗',
+                btn: ['确定', '取消']
+                ,yes: function(index){
+                //如果点击的是确定
+                if (index = 1) {
+                        // 执行AJAX更新到服务器
+                        url = "/mobile/cart/delete_to_cart";
+                        postData = { 'id': id };
+                        $.post(url, postData, function (result) {
+                            if (result.status == 1) {
+                                li.remove();
+                                window.location.reload();
+
+                                //再重新算下价钱
+                                // var newTp = parseFloat($("#total").html()) - parseFloat(li.find("#price").html());
+                                // $("#total").html(newTp.toFixed(2));
+                            }
+                        }, 'json');
+                    } else {
+                        return false;
+                    }
+                }
+            });
+
+        });
+
+
+        //增加数量
+        $('.amount_input').bind('input porpertychange',function(){
+            var amount = $(this).val();
+
+
+            // 先获取所在的li
+            var li = $(this).parent().parent().parent().parent().parent();
+            var id = li.data('id');
+            var price = li.find(".price").html();
+
+
+            // 执行AJAX更新到服务器
+            url = "/mobile/cart/update_cart_amount";
+            postData = { 'id': id, amount: amount };
+            $.post(url, postData, function (result) {
+                if (result.status == 1) {
+                    li.find(".amount").children().val(amount);
+
+                    //再重新算下价钱
+                    if (li.find('.status').is(':checked')) {
+                        var total = $("#total").html();
+
+                        total = parseFloat(price) + parseFloat(total);
+                        $("#total").text(total);
+                    }
+
+                }
+            }, 'json');
+
+        });
+
+
+
+        //结算
+        $('#pay').click(function () {
+
+            var idArr = [];//存放已选的id
+
+            $('.status').each(function () {
+
+                if ($(this).is(':checked')) {
+                    var id = $(this).parent().parent().data('id');
+                    idArr.push(id);
+                }
+
+            });
+            idArr = JSON.stringify(idArr);
+
+            // 执行AJAX更新到服务器
+            url = "/mobile/cart/update_status_cart";
+            postData = { 'idArr': idArr };
+            $.post(url, postData, function (result) {
+                if (result.status = 1) {
+                    window.location.href = '/mobile/order/order_confirm';
+                }
+            }, 'json');
+
+
+        });
+
+        //勾选改变价钱
+        $('.status').click(function () {
+            var price = $(this).parent().parent().children().find('.price').html();
+            var amount = $(this).parent().parent().children().find('.amount_input').val();
+            var total_price = parseFloat(price) * amount;
+
+
+            //获取现在的总价
+            var total = $("#total").html();
+
+            if ($(this).is(':checked')) {
+                total = parseFloat(total) + total_price;
+            } else {
+                var a=parseFloat(total);
+                var b=parseFloat(total_price);
+                total = parseFloat(total) - parseFloat(total_price);
+            }
+
+            $("#total").html(total);
+
+        });
+
+
+    });
+
+
+    //全选
+    function checkAll(e, itemName) {
+        var aa = document.getElementsByName(itemName);
+        for (var i = 0; i < aa.length; i++) {
+            aa[i].checked = e.checked;    //改变所有复选框的状态为全选复选框的状态
+        }
+
+        //计算总价
+        var total = 0;
+        $(".status").each(function () {
+            if ($(this).is(':checked')) {
+                var price = $(this).parent().parent().children().find('.price').html();
+                var amount = $(this).parent().parent().children().find('.amount_input').val();
+                total += price * amount;
+            }
+        });
+        $("#total").html(total);
+    }
+
+    //计算总价
+    var total = 0;
+    $(".status").each(function () {
+        if ($(this).is(':checked')) {
+            var price = $(this).parent().parent().children().find('.price').html();
+            var amount = $(this).parent().parent().children().find('.amount_input').val();
+            total += price * amount;
+        }
+    });
+    $("#total").html(total);
+
+
+ </script>
+</body>
+
+</html>
