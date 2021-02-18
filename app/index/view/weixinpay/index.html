@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+
+    <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_1646840_6dboo9fuop6.css"/>
+
+    <link rel="stylesheet" href="/public/static/index/layui/css/layui.css">
+    <link rel="stylesheet" href="/public/static/index/css/shop.css">
+
+    <script src="/public/static/index/js/jquery-3.4.1.min.js"></script>
+    <script src="/public/static/index/layui/layui.js"></script>
+
+    <title>微信扫码支付</title>
+
+    <meta name="keywords" content="">
+
+    <meta name="description" content="">
+
+
+
+</head>
+
+<body>
+
+ {include file="public/head"}
+ <div class="header_line"></div>
+ 
+
+ <div class="wrap"> 
+
+    <div class="weixinpay_box">
+
+        <p><img src="/public/weixin_qrcode/qrcode.php?data={$url2}"/></p>
+        <p class="text_center">微信扫码支付：{$orderData.total_price}元</p>
+
+    </div>
+
+</div>
+
+
+<style>
+
+    .weixinpay_box{
+        width: 100%;
+        text-align: center;
+        margin: 50px 0;
+    }
+    .weixinpay_box img{
+        width: 200px;
+    }
+    </style>
+
+<div class="foot_line"></div>
+{include file="public/foot2"}
+
+
+
+<script>
+    function get_pay_status(){
+        var url='/index/order/get_pay_status';
+        var pay_success_url='/index/user/myorder.html';//跳转页面
+        var out_trade_no="{$orderData.out_trade_no}";
+        postData={
+            'out_trade_no':out_trade_no,
+        };
+        $.post(url,postData,function(result){
+
+             //请登录
+             if(result.status==-2){
+                clearInterval(ispay); 
+                layui.use('layer', function(){
+                    layer.alert('请登录', function(index){
+                        self.location="/index/user/login";
+                    }); 
+                });
+            }
+
+            //订单异常
+            if(result.status==-1){
+                clearInterval(ispay); 
+                layui.use('layer', function(){
+                    layer.alert('订单异常', function(index){
+                        self.location=pay_success_url;
+                    }); 
+                });
+            }
+
+
+            if(result.status==1){   
+                clearInterval(ispay);  
+                layui.use('layer', function(){
+                    layer = layui.layer; 
+                    layer.msg('hello');
+                    layer.open({
+                        type: 1
+                        ,offset: 'auto' //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+                        ,content: '<div style="padding: 20px 50px;">支付成功！</div>'
+                        ,btn: '确定'
+                        ,btnAlign: 'c' //按钮居中
+                        ,shade: 0 //不显示遮罩
+                        ,yes: function(){
+                            self.location=pay_success_url;
+                        }
+                    });
+                });           
+                
+                
+                
+            }
+        },'JSON');
+    }
+
+    var ispay = setInterval('get_pay_status()',2000);
+</script>
+
+
+</body>
+
+</html>
+
+
+

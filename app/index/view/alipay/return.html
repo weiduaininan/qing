@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <meta charset="UTF-8">
+    
+        <meta name="viewport"
+    
+              content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    
+        <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    
+        <link rel="stylesheet" type="text/css" href="/public/static/index/css/shop.css"/>
+
+    
+        <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_1907378_iq1ohekmvcf.css"/>
+    
+        <link rel="stylesheet" href="/public/static/index/layui/css/layui.css">
+    
+        <script src="/public/static/index/js/jquery-3.4.1.min.js"></script>
+    
+        <script src="/public/static/index/layui/layui.js"></script>
+    
+        <script src="/public/static/index/js/common.js"></script>
+    
+        <title>支付宝支付</title>
+    
+        <meta name="keywords" content="">
+    
+        <meta name="description" content="">
+    
+    
+    
+    </head>
+<body>
+
+{include file="public/head"}
+<div class="header_line"></div>
+
+<div class="wrap"> 
+
+    <div class="weixinpay_box">
+        {if condition='$ispay eq 1'}
+        <p><i class="iconfont iconduihao1"></i></p>
+        <p class="text2">恭喜，订单支付成功！</p>
+        <p class="text1">订单号：{$out_trade_no}</p>
+        <p class="text3"><a href="{:url('/shop/user/myorder')}">查看我的订单</a></p>
+        {/if}
+        {if condition='$ispay eq 0'}
+        <p><i class="iconfont iconcuo"></i></p>
+        <p class="textcuo">遗憾，支付失败！</p>
+        <p class="text3"><a href="{:url('/shop/user/myorder')}">查看我的订单</a></p>
+        {/if}
+    </div>
+
+</div>
+
+<div class="foot_line"></div>
+{include file="public/foot2"}
+
+<style>
+
+.weixinpay_box{
+    width: 100%;
+    text-align: center;
+    margin: 50px 0;
+}
+.weixinpay_box .iconfont{
+    font-size: 48px;
+    color: #49af4f;
+    border: 2px solid #49af4f;
+    padding: 30px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.weixinpay_box .iconcuo{
+    font-size: 48px;
+    color: #ff6700;
+    border: 2px solid #ff6700;
+    padding: 30px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.text1{
+    color: #888;
+    margin: 5px 0;
+}
+.text2{
+    margin-top: 20px;
+    color: #49af4f;
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.textcuo{
+    margin-top: 20px;
+    color: #ff6700;
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+.text3{
+    border: 1px solid #ff6700;
+    padding: 5px 10px;
+    width: 130px;
+    border-radius: 5px;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+.text3 a{
+    color: #ff6700;
+}
+</style>
+
+
+</body>
+</html>
+
