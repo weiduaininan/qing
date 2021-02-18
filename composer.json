@@ -29,7 +29,7 @@
         "alibabacloud/sdk": "^1.8",
         "predis/predis": "^1.1",
         "phpmailer/phpmailer": "^6.2",
-        "phpoffice/phpexcel": "^1.8"
+        "phpoffice/phpspreadsheet": "^1.16"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2",
