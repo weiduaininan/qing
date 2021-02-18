@@ -6,5 +6,6 @@ return [
 	// 指令定义
 	'commands' => [
 		'send_mail' => 'app\command\Scripts',
+		'comment' => 'app\mommand\Comment',
 	],
 ];

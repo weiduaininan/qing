@@ -2,6 +2,7 @@
 
 namespace app\index\controller;
 
+use app\common\lib\KDapiSearch;
 use think\facade\Db;
 use think\facade\Session;
 
@@ -304,79 +305,24 @@ class Order extends Base {
 	}
 
 	//查看订单物流信息
-
 	public function showOrderPost() {
 
-		$order_id = input("request.order_id", 1); //订单号
-
-		$postcode = input("request.postcode", 1); //物流电话
-
+		// $order_id = input("request.order_id", 1); //订单号
+		// $postcode = input("request.postcode", 1); //物流电话
+		//$order_id = '18';
+		//$postcode = 'SF1108389126359';
 		//获取订单信息填充
 
-		$orderData = db('order')->field('shou_address,express_code,postcode')->where('id', $order_id)->find();
-
+		//$orderData = Db::name('order')->field('express_code,postcode')->where('id', $order_id)->find();
 		//找下物流公司代号
 
-		$expressCompanyCode = db('express')->field('code')->where('id', $orderData['express_code'])->find();
-
-		header("Content-type:text/html;charset=utf-8");
-
-		vendor('express.bird');
-
-		$config = array(
-
-			'EBusinessID' => '1321786', //请到快递鸟官网申请http://kdniao.com/reg
-
-			'AppKey' => '0cae0728-a610-42e3-98d2-6e954e0a771c', //请到快递鸟官网申请http://kdniao.com/reg
-
-		);
-
-		$obj = new \express_bird($config);
-
-		$data = array(
-
-			'OrderCode' => $order_id, //订单编号
-
-			'ShipperCode' => $expressCompanyCode['code'], //快递类型
-
-			'LogisticCode' => $orderData['postcode'], //物流单号
-
-		);
-
-		$res = $obj->getOrderTracesByJson($data);
-
-		$res = json_decode($res);
-
-		if (is_object($res)) {
-
-			$array = (array) $res;
-
-		}
-
-		$echoData = array();
-
-		foreach ($array['Traces'] as $k => $v) {
-
-			if (is_object($v)) {
-
-				$info[$k] = (array) $v;
-
-			}
-
-		}
-
-		if (empty($info)) {
-
-			$info = '';
-
-		} else {
-
-			$info = array_reverse($info);
-
-		}
-
-		ajaxmsg('true', 1, $info);
-
+		//$expressCompanyCode = Db::name('express')->field('code')->where('name', $orderData['express_code'])->find();
+		// $code = $expressCompanyCode['code'];
+		$code = 'YTO';
+		$postcode = 'YT2123903294572';
+		$kdsearch = new KDapiSearch();
+		$res = $kdsearch->getOrderTracesByJson($code, $postcode);
+		halt($res);
 	}
 
 	//我的订单-确认收货
