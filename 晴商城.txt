@@ -1,0 +1,39 @@
+本项目为PC端商城项目
+其中包含 
+小晴商城
+小晴商城后台管理员系统
+小晴手机H5端系统
+
+开发环境：
+ThinkPHP 6.0框架 
+MacOS Catalina 10.15.7
+PHP 7.2.34
+MySQL 8.0.22 
+Nginx 1.19.5
+Ridis 6.0.9
+
+
+使用插件及服务
+Echarts 实现的开源可视化库，涵盖各行业图表
+Layui  弹层插件
+My97DatePicker   日期控制插件
+webuploader  图片上传插件
+Layui 上传
+jQuery Validate  表单验证插件
+laypage    分页插件
+distpicker  地区选择器 三级联动插件
+H-ui  前端框架
+Swiper 轮播图
+JqueryRatingstar 评分插件
+Ueditor  富文本编辑器
+阿里云短信服务
+快递鸟快递查询服务
+微信登录
+支付宝、微信扫码支付 
+
+TP6框架使用技术点
+TP6 多应用
+TP6 搜索器
+TP6 验证器
+TP6 命令行指令 (使用ThinkPHP 自带命令指令结合crontab 每日凌晨2点 导出execl 发送给邮件管理员)
+TP6 表单令牌 __token__

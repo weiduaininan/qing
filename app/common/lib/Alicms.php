@@ -14,7 +14,6 @@ class Alicms {
 
 		$code = rand(1000, 9999);
 		Cache::store('redis')->set($phone, $code, 90);
-		return true;
 
 		AlibabaCloud::accessKeyClient('LTAI4GB8xJxXwaHc4Yt6VPYY', 'oJyx2ps1x5EbbPMjTVjrZFNWeo6CJd')
 			->regionId('cn-hangzhou')

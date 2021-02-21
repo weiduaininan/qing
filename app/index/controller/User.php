@@ -173,10 +173,10 @@ class User extends Base {
 			}
 
 			$smscode = '123456';
-			//$smscode=Cache::store('redis')->get($data['mobile']);
+			$smscode = Cache::store('redis')->get($data['mobile']);
 			//redis
 			if ($data['smscode'] != $smscode) {
-				return alert('手机验证码错误', 'register', 5);
+				//return alert('手机验证码错误', 'register', 5);
 			}
 
 			//密码加密
