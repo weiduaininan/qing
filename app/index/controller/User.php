@@ -8,6 +8,7 @@ use app\common\validate\User as UserValidate;
 use think\Controller;
 use think\exception\ValidateException;
 use think\facade\Db;
+use think\facade\Event;
 use think\facade\view;
 
 class User extends Base {
@@ -50,8 +51,8 @@ class User extends Base {
 			//$userData = UserModel::where('mobile', $data['mobile'])->find();
 			//$userData = Db::name('user')->where('mobile', $data['mobile'])->find();
 			//使用服务+容器的形式
-			$user = app('user_m');
-			$userData = $user->where('mobile', $data['mobile'])->find();
+			$user_m = app('user_m');
+			$userData = $user_m->where('mobile', $data['mobile'])->find();
 			if (!$userData) {
 				return alert('手机号不存在或者错误', 'login', 5);
 			}
@@ -67,8 +68,14 @@ class User extends Base {
 			}
 			Db::name('user')->where('id', $userData['id'])->update(['last_login_time' => time(), 'last_login_ip' => $_SERVER['REMOTE_ADDR']]);
 			session('sessionUserData', $userData);
+			//使用服务容器+事件+监听 用户的登录次数
+			// halt($userData['id']);
+			$userInfo = $user_m->getUserInfo($userData['id']);
+			echo '控制器输出：' . json_encode($userInfo, JSON_UNESCAPED_UNICODE) . '<br />';
+			//Event::listen('UserLogin', 'app\listener\User');
+			Event::trigger('UserLogin');
 
-			return alert('登录成功', 'index', 6);
+			//return alert('登录成功', 'index', 6);
 
 		} else {
 			return view();

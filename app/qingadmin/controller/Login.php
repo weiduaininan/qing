@@ -1,6 +1,7 @@
 <?php
 namespace app\qingadmin\controller;
 use think\facade\Db;
+use think\Request;
 
 class Login extends Base {
 	public function index() {
@@ -24,7 +25,6 @@ class Login extends Base {
 			if (!$adminData) {
 				return alert('用户名错误', 'index', 5);
 			}
-
 			//如果管理员有状态，status=1合法  0禁止
 			if ($adminData['status'] == 0) {
 				return alert('您的账号被禁止登录', 'index', 5);
