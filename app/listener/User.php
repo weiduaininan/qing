@@ -10,10 +10,11 @@ class User {
 	 * @return mixed
 	 */
 	public function handle(\app\event\User $event) {
-		$session = app('session');
-		$loginAdmin = $session->get('sessionUserData');
-		$userInfo = $event->user->getUserInfo($loginAdmin['id']);
-		echo 'listen监听器输出：' . json_encode($userInfo, JSON_UNESCAPED_UNICODE) . '<br />';
-		echo 'listen监听器输出：' . json_encode($event->setLoginCount(), JSON_UNESCAPED_UNICODE) . '<br />';
+		//$session = app('session');
+		//$loginAdmin = $session->get('sessionUserData');
+		//$userInfo = $event->user->getUserInfo($loginAdmin['id']);
+		//echo 'listen监听器输出：' . json_encode($userInfo, JSON_UNESCAPED_UNICODE) . '<br />';
+		//echo 'listen监听器输出：' . json_encode($event->setLoginCount(), JSON_UNESCAPED_UNICODE) . '<br />';
+		$event->setLoginCount();
 	}
 }

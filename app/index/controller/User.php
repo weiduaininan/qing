@@ -71,11 +71,11 @@ class User extends Base {
 			//使用服务容器+事件+监听 用户的登录次数
 			// halt($userData['id']);
 			$userInfo = $user_m->getUserInfo($userData['id']);
-			echo '控制器输出：' . json_encode($userInfo, JSON_UNESCAPED_UNICODE) . '<br />';
+			//echo '控制器输出：' . json_encode($userInfo, JSON_UNESCAPED_UNICODE) . '<br />';
 			//Event::listen('UserLogin', 'app\listener\User');
 			Event::trigger('UserLogin');
 
-			//return alert('登录成功', 'index', 6);
+			return alert('登录成功', 'index', 6);
 
 		} else {
 			return view();

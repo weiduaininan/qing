@@ -6,7 +6,6 @@ return [
 	],
 
 	'listen' => [
-		'UserLogin' => '',
 		'AppInit' => [],
 		'HttpRun' => [],
 		'HttpEnd' => [],
