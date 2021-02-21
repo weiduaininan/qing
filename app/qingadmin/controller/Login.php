@@ -11,7 +11,6 @@ class Login extends Base {
 		if (session('adminSessionData')) {
 			return redirect('/qingadmin/index');
 		}
-
 		if (request()->isPost()) {
 			$data = input('post.');
 
@@ -37,7 +36,12 @@ class Login extends Base {
 			}
 
 			Db::name('admin')->where('id', $adminData['id'])->update(['last_login_time' => time()]);
-			session('adminSessionData', $adminData);
+
+			//session('adminSessionData', $adminData);
+
+			//使用服务的形式
+			$session = app('session');
+			$session->set('adminSessionData', $adminData);
 
 			return alert('登录成功', '/qingadmin/index/index', 6);
 

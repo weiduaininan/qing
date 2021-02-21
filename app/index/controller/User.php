@@ -47,8 +47,11 @@ class User extends Base {
 			}
 
 			//验证码用户名
-			$userData = UserModel::where('mobile', $data['mobile'])->find();
+			//$userData = UserModel::where('mobile', $data['mobile'])->find();
 			//$userData = Db::name('user')->where('mobile', $data['mobile'])->find();
+			//使用服务+容器的形式
+			$user = app('user_m');
+			$userData = $user->where('mobile', $data['mobile'])->find();
 			if (!$userData) {
 				return alert('手机号不存在或者错误', 'login', 5);
 			}
